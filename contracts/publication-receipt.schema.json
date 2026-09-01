@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/publication-receipt.schema.json",
+  "title": "Projection Publication Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receiptId",
+    "runId",
+    "coordinate",
+    "fencingToken",
+    "profileManifestId",
+    "profileContentHash",
+    "capabilityManifestId",
+    "capabilityContentHash",
+    "projectionSafetyReceiptId",
+    "projectionSafetyReceiptHash",
+    "indexes",
+    "previousProjectionId",
+    "pointerTransition",
+    "publishedAt",
+    "hashAlgorithm",
+    "receiptHash",
+    "issuerKeyId",
+    "signatureAlgorithm",
+    "signature"
+  ],
+  "properties": {
+    "receiptId": { "type": "string", "format": "uuid" },
+    "runId": { "type": "string", "format": "uuid" },
+    "coordinate": { "$ref": "projection-coordinate.schema.json" },
+    "fencingToken": { "type": "integer", "minimum": 1 },
+    "profileManifestId": { "type": "string", "format": "uuid" },
+    "profileContentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "capabilityManifestId": { "type": "string", "format": "uuid" },
+    "capabilityContentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "projectionSafetyReceiptId": { "type": "string", "format": "uuid" },
+    "projectionSafetyReceiptHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "indexes": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["indexId", "kind", "version", "contentHash"],
+        "properties": {
+          "indexId": { "type": "string", "format": "uuid" },
+          "kind": { "enum": ["lexical", "semantic", "graph", "temporal", "faceted"] },
+          "version": { "type": "string", "minLength": 1 },
+          "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+        }
+      }
+    },
+    "previousProjectionId": { "type": ["string", "null"], "format": "uuid" },
+    "pointerTransition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pointerId", "observedPreviousProjectionId", "observedPreviousFencingToken", "newProjectionId", "newFencingToken", "compareAndSwapHash", "assertedAt", "outcome", "storageTransitionReceiptRef"],
+      "properties": {
+        "pointerId": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "observedPreviousProjectionId": { "type": ["string", "null"], "format": "uuid" },
+        "observedPreviousFencingToken": { "type": "integer", "minimum": 0 },
+        "newProjectionId": { "type": "string", "format": "uuid" },
+        "newFencingToken": { "type": "integer", "minimum": 1 },
+        "compareAndSwapHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical array [pointerId, observedPreviousProjectionId, observedPreviousFencingToken, newProjectionId, newFencingToken, policyHash, revocationEpoch]." },
+        "assertedAt": { "type": "string", "format": "date-time" },
+        "outcome": { "const": "signer-attested" },
+        "storageTransitionReceiptRef": { "type": "null", "description": "A null value means this conformance fixture does not independently prove a storage commit. Production committed state requires a separately purpose-signed storage receipt." }
+      }
+    },
+    "publishedAt": { "type": "string", "format": "date-time" },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "receiptHash": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$",
+      "description": "SHA-256 over the RFC 8785 canonical receipt with receiptHash and signature removed."
+    },
+    "issuerKeyId": { "type": "string", "minLength": 1, "maxLength": 255 },
+    "signatureAlgorithm": { "const": "ed25519" },
+    "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$", "minLength": 80, "maxLength": 100, "description": "Ed25519 signature over the raw 32-byte receiptHash." }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/index-manifest.schema.json",
+  "title": "Derived Index Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["indexId", "kind", "version", "hashAlgorithm", "contentHash", "sourceId", "sourceVersion", "connectorId", "connectorVersion", "connectorCapabilityHash", "projectionId", "manifestVersion", "policyHash", "authorizationScopeId", "taxonomyVersion", "pipelineVersion", "methodSetHash", "evidenceCutoff", "status", "namespace", "evidenceRefs", "coverage", "builtAt", "revocationEpoch"],
+  "properties": {
+    "indexId": { "type": "string", "format": "uuid" },
+    "kind": { "enum": ["lexical", "semantic", "graph", "temporal", "faceted"] },
+    "version": { "type": "string", "minLength": 1 },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical index manifest with contentHash removed." },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "projectionId": { "type": "string", "format": "uuid", "description": "Identifies the projection attempt this index belongs to; assigned before indexes are built and embedded in the manifest sealed over them." },
+    "manifestVersion": { "type": "string", "minLength": 1, "maxLength": 200, "description": "Assigned with projectionId before index construction and shared by the manifests, receipts, and responses sealed over this index." },
+    "taxonomyVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "pipelineVersion": { "type": "string", "minLength": 1 },
+    "methodSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "evidenceCutoff": { "type": "string", "format": "date-time" },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["building", "ready", "partial", "failed", "revoked", "deleted"] },
+    "namespace": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical array [sourceId, sourceVersion, connectorId, connectorVersion, connectorCapabilityHash, projectionId, manifestVersion, authorizationScopeId, policyHash, revocationEpoch, kind, version]." },
+    "modelRef": { "type": ["string", "null"] },
+    "dimensions": { "type": ["integer", "null"], "minimum": 0 },
+    "evidenceRefs": { "type": "array", "items": { "type": "string", "format": "uuid" } },
+    "coverage": { "type": "number", "minimum": 0, "maximum": 1 },
+    "builtAt": { "type": "string", "format": "date-time" },
+    "validUntil": { "type": ["string", "null"], "format": "date-time" },
+    "revocationEpoch": { "type": "integer", "minimum": 0 }
+  },
+  "allOf": [
+    {
+      "if": { "required": ["kind"], "properties": { "kind": { "const": "semantic" } } },
+      "then": {
+        "required": ["modelRef", "dimensions"],
+        "properties": {
+          "modelRef": { "type": "string", "minLength": 1 },
+          "dimensions": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  ]
+}

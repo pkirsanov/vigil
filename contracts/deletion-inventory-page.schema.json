@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/deletion-inventory-page.schema.json",
+  "title": "Deletion Inventory Page",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["inventoryId", "ordinal", "entries", "hashAlgorithm", "contentHash"],
+  "properties": {
+    "inventoryId": { "type": "string", "format": "uuid" },
+    "ordinal": { "type": "integer", "minimum": 0 },
+    "entries": {
+      "type": "array",
+      "maxItems": 100000,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["storeKind", "artifactId"],
+        "properties": {
+          "storeKind": { "enum": ["samples", "evidence", "lexical-index", "semantic-index", "graph-index", "temporal-index", "faceted-index", "cache", "parser-output", "model-output", "profile-manifest", "capability-manifest", "usage-patterns", "source-registration", "audit", "backup"] },
+          "artifactId": { "type": "string", "minLength": 1, "maxLength": 500 }
+        }
+      }
+    },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical page with contentHash removed." }
+  }
+}

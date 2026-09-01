@@ -1,0 +1,1265 @@
+{
+  "comparisonVersion": "1.0.0",
+  "corpusVersion": "1.0.0",
+  "evidenceStatus": "illustrative-conformance-fixture",
+  "baseline": {
+    "implementationVersion": "baseline-v1",
+    "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "precision": {
+      "numerator": 88,
+      "denominator": 100,
+      "value": 0.88,
+      "unit": "ratio",
+      "unavailableReason": null
+    },
+    "recall": {
+      "numerator": 84,
+      "denominator": 100,
+      "value": 0.84,
+      "unit": "ratio",
+      "unavailableReason": null
+    },
+    "coverage": {
+      "numerator": 90,
+      "denominator": 100,
+      "value": 0.9,
+      "unit": "ratio",
+      "unavailableReason": null
+    },
+    "latency": {
+      "numerator": 1200,
+      "denominator": 1,
+      "value": 1200,
+      "unit": "milliseconds",
+      "unavailableReason": null
+    },
+    "bytesRead": {
+      "numerator": 5000000,
+      "denominator": 1,
+      "value": 5000000,
+      "unit": "bytes",
+      "unavailableReason": null
+    },
+    "modelUsage": {
+      "numerator": 3000,
+      "denominator": 1,
+      "value": 3000,
+      "unit": "tokens",
+      "unavailableReason": null
+    },
+    "calibration": {
+      "numerator": 8,
+      "denominator": 100,
+      "value": 0.08,
+      "unit": "ratio",
+      "unavailableReason": null
+    }
+  },
+  "candidate": {
+    "implementationVersion": "candidate-v1",
+    "methodSetHash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "precision": {
+      "numerator": 91,
+      "denominator": 100,
+      "value": 0.91,
+      "unit": "ratio",
+      "unavailableReason": null
+    },
+    "recall": {
+      "numerator": 86,
+      "denominator": 100,
+      "value": 0.86,
+      "unit": "ratio",
+      "unavailableReason": null
+    },
+    "coverage": {
+      "numerator": 92,
+      "denominator": 100,
+      "value": 0.92,
+      "unit": "ratio",
+      "unavailableReason": null
+    },
+    "latency": {
+      "numerator": 1000,
+      "denominator": 1,
+      "value": 1000,
+      "unit": "milliseconds",
+      "unavailableReason": null
+    },
+    "bytesRead": {
+      "numerator": 4500000,
+      "denominator": 1,
+      "value": 4500000,
+      "unit": "bytes",
+      "unavailableReason": null
+    },
+    "modelUsage": {
+      "numerator": 2800,
+      "denominator": 1,
+      "value": 2800,
+      "unit": "tokens",
+      "unavailableReason": null
+    },
+    "calibration": {
+      "numerator": 7,
+      "denominator": 100,
+      "value": 0.07,
+      "unit": "ratio",
+      "unavailableReason": null
+    }
+  },
+  "caseResults": [
+    {
+      "caseId": "positive-structure",
+      "expectedOutcome": "accepted",
+      "slices": [
+        "positive"
+      ],
+      "baselineExecution": {
+        "observedOutcome": "accepted",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "candidateExecution": {
+        "observedOutcome": "accepted",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "metricContributions": {
+        "baseline": {
+          "precision": {
+            "numerator": 9.777777777777779,
+            "denominator": 11.11111111111111,
+            "value": 0.8800000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.333333333333334,
+            "denominator": 11.11111111111111,
+            "value": 0.8400000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.0,
+            "denominator": 11.11111111111111,
+            "value": 0.9,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 133.33333333333334,
+            "denominator": 0.1111111111111111,
+            "value": 1200.0000000000002,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 555555.5555555555,
+            "denominator": 0.1111111111111111,
+            "value": 5000000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 333.3333333333333,
+            "denominator": 0.1111111111111111,
+            "value": 3000.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.8888888888888888,
+            "denominator": 11.11111111111111,
+            "value": 0.08,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        },
+        "candidate": {
+          "precision": {
+            "numerator": 10.11111111111111,
+            "denominator": 11.11111111111111,
+            "value": 0.91,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.555555555555555,
+            "denominator": 11.11111111111111,
+            "value": 0.86,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.222222222222221,
+            "denominator": 11.11111111111111,
+            "value": 0.9199999999999999,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 111.11111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 1000.0000000000001,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 500000.0,
+            "denominator": 0.1111111111111111,
+            "value": 4500000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 311.1111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 2800.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.7777777777777778,
+            "denominator": 11.11111111111111,
+            "value": 0.07,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        }
+      }
+    },
+    {
+      "caseId": "negative-registration",
+      "expectedOutcome": "rejected",
+      "slices": [
+        "negative"
+      ],
+      "baselineExecution": {
+        "observedOutcome": "rejected",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "candidateExecution": {
+        "observedOutcome": "rejected",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "metricContributions": {
+        "baseline": {
+          "precision": {
+            "numerator": 9.777777777777779,
+            "denominator": 11.11111111111111,
+            "value": 0.8800000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.333333333333334,
+            "denominator": 11.11111111111111,
+            "value": 0.8400000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.0,
+            "denominator": 11.11111111111111,
+            "value": 0.9,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 133.33333333333334,
+            "denominator": 0.1111111111111111,
+            "value": 1200.0000000000002,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 555555.5555555555,
+            "denominator": 0.1111111111111111,
+            "value": 5000000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 333.3333333333333,
+            "denominator": 0.1111111111111111,
+            "value": 3000.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.8888888888888888,
+            "denominator": 11.11111111111111,
+            "value": 0.08,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        },
+        "candidate": {
+          "precision": {
+            "numerator": 10.11111111111111,
+            "denominator": 11.11111111111111,
+            "value": 0.91,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.555555555555555,
+            "denominator": 11.11111111111111,
+            "value": 0.86,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.222222222222221,
+            "denominator": 11.11111111111111,
+            "value": 0.9199999999999999,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 111.11111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 1000.0000000000001,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 500000.0,
+            "denominator": 0.1111111111111111,
+            "value": 4500000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 311.1111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 2800.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.7777777777777778,
+            "denominator": 11.11111111111111,
+            "value": 0.07,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        }
+      }
+    },
+    {
+      "caseId": "sparse-relationship",
+      "expectedOutcome": "completed-partial",
+      "slices": [
+        "sparse"
+      ],
+      "baselineExecution": {
+        "observedOutcome": "completed-partial",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "candidateExecution": {
+        "observedOutcome": "completed-partial",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "metricContributions": {
+        "baseline": {
+          "precision": {
+            "numerator": 9.777777777777779,
+            "denominator": 11.11111111111111,
+            "value": 0.8800000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.333333333333334,
+            "denominator": 11.11111111111111,
+            "value": 0.8400000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.0,
+            "denominator": 11.11111111111111,
+            "value": 0.9,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 133.33333333333334,
+            "denominator": 0.1111111111111111,
+            "value": 1200.0000000000002,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 555555.5555555555,
+            "denominator": 0.1111111111111111,
+            "value": 5000000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 333.3333333333333,
+            "denominator": 0.1111111111111111,
+            "value": 3000.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.8888888888888888,
+            "denominator": 11.11111111111111,
+            "value": 0.08,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        },
+        "candidate": {
+          "precision": {
+            "numerator": 10.11111111111111,
+            "denominator": 11.11111111111111,
+            "value": 0.91,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.555555555555555,
+            "denominator": 11.11111111111111,
+            "value": 0.86,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.222222222222221,
+            "denominator": 11.11111111111111,
+            "value": 0.9199999999999999,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 111.11111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 1000.0000000000001,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 500000.0,
+            "denominator": 0.1111111111111111,
+            "value": 4500000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 311.1111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 2800.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.7777777777777778,
+            "denominator": 11.11111111111111,
+            "value": 0.07,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        }
+      }
+    },
+    {
+      "caseId": "skewed-statistics",
+      "expectedOutcome": "accepted",
+      "slices": [
+        "skewed"
+      ],
+      "baselineExecution": {
+        "observedOutcome": "accepted",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "candidateExecution": {
+        "observedOutcome": "accepted",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "metricContributions": {
+        "baseline": {
+          "precision": {
+            "numerator": 9.777777777777779,
+            "denominator": 11.11111111111111,
+            "value": 0.8800000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.333333333333334,
+            "denominator": 11.11111111111111,
+            "value": 0.8400000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.0,
+            "denominator": 11.11111111111111,
+            "value": 0.9,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 133.33333333333334,
+            "denominator": 0.1111111111111111,
+            "value": 1200.0000000000002,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 555555.5555555555,
+            "denominator": 0.1111111111111111,
+            "value": 5000000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 333.3333333333333,
+            "denominator": 0.1111111111111111,
+            "value": 3000.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.8888888888888888,
+            "denominator": 11.11111111111111,
+            "value": 0.08,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        },
+        "candidate": {
+          "precision": {
+            "numerator": 10.11111111111111,
+            "denominator": 11.11111111111111,
+            "value": 0.91,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.555555555555555,
+            "denominator": 11.11111111111111,
+            "value": 0.86,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.222222222222221,
+            "denominator": 11.11111111111111,
+            "value": 0.9199999999999999,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 111.11111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 1000.0000000000001,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 500000.0,
+            "denominator": 0.1111111111111111,
+            "value": 4500000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 311.1111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 2800.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.7777777777777778,
+            "denominator": 11.11111111111111,
+            "value": 0.07,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        }
+      }
+    },
+    {
+      "caseId": "high-cardinality-identity",
+      "expectedOutcome": "accepted",
+      "slices": [
+        "high-cardinality"
+      ],
+      "baselineExecution": {
+        "observedOutcome": "accepted",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "candidateExecution": {
+        "observedOutcome": "accepted",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "metricContributions": {
+        "baseline": {
+          "precision": {
+            "numerator": 9.777777777777779,
+            "denominator": 11.11111111111111,
+            "value": 0.8800000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.333333333333334,
+            "denominator": 11.11111111111111,
+            "value": 0.8400000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.0,
+            "denominator": 11.11111111111111,
+            "value": 0.9,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 133.33333333333334,
+            "denominator": 0.1111111111111111,
+            "value": 1200.0000000000002,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 555555.5555555555,
+            "denominator": 0.1111111111111111,
+            "value": 5000000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 333.3333333333333,
+            "denominator": 0.1111111111111111,
+            "value": 3000.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.8888888888888888,
+            "denominator": 11.11111111111111,
+            "value": 0.08,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        },
+        "candidate": {
+          "precision": {
+            "numerator": 10.11111111111111,
+            "denominator": 11.11111111111111,
+            "value": 0.91,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.555555555555555,
+            "denominator": 11.11111111111111,
+            "value": 0.86,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.222222222222221,
+            "denominator": 11.11111111111111,
+            "value": 0.9199999999999999,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 111.11111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 1000.0000000000001,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 500000.0,
+            "denominator": 0.1111111111111111,
+            "value": 4500000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 311.1111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 2800.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.7777777777777778,
+            "denominator": 11.11111111111111,
+            "value": 0.07,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        }
+      }
+    },
+    {
+      "caseId": "scoped-collision",
+      "expectedOutcome": "accepted",
+      "slices": [
+        "scoped"
+      ],
+      "baselineExecution": {
+        "observedOutcome": "accepted",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "candidateExecution": {
+        "observedOutcome": "accepted",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "metricContributions": {
+        "baseline": {
+          "precision": {
+            "numerator": 9.777777777777779,
+            "denominator": 11.11111111111111,
+            "value": 0.8800000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.333333333333334,
+            "denominator": 11.11111111111111,
+            "value": 0.8400000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.0,
+            "denominator": 11.11111111111111,
+            "value": 0.9,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 133.33333333333334,
+            "denominator": 0.1111111111111111,
+            "value": 1200.0000000000002,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 555555.5555555555,
+            "denominator": 0.1111111111111111,
+            "value": 5000000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 333.3333333333333,
+            "denominator": 0.1111111111111111,
+            "value": 3000.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.8888888888888888,
+            "denominator": 11.11111111111111,
+            "value": 0.08,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        },
+        "candidate": {
+          "precision": {
+            "numerator": 10.11111111111111,
+            "denominator": 11.11111111111111,
+            "value": 0.91,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.555555555555555,
+            "denominator": 11.11111111111111,
+            "value": 0.86,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.222222222222221,
+            "denominator": 11.11111111111111,
+            "value": 0.9199999999999999,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 111.11111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 1000.0000000000001,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 500000.0,
+            "denominator": 0.1111111111111111,
+            "value": 4500000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 311.1111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 2800.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.7777777777777778,
+            "denominator": 11.11111111111111,
+            "value": 0.07,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        }
+      }
+    },
+    {
+      "caseId": "versioned-grain",
+      "expectedOutcome": "accepted",
+      "slices": [
+        "versioned"
+      ],
+      "baselineExecution": {
+        "observedOutcome": "accepted",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "candidateExecution": {
+        "observedOutcome": "accepted",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "metricContributions": {
+        "baseline": {
+          "precision": {
+            "numerator": 9.777777777777779,
+            "denominator": 11.11111111111111,
+            "value": 0.8800000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.333333333333334,
+            "denominator": 11.11111111111111,
+            "value": 0.8400000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.0,
+            "denominator": 11.11111111111111,
+            "value": 0.9,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 133.33333333333334,
+            "denominator": 0.1111111111111111,
+            "value": 1200.0000000000002,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 555555.5555555555,
+            "denominator": 0.1111111111111111,
+            "value": 5000000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 333.3333333333333,
+            "denominator": 0.1111111111111111,
+            "value": 3000.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.8888888888888888,
+            "denominator": 11.11111111111111,
+            "value": 0.08,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        },
+        "candidate": {
+          "precision": {
+            "numerator": 10.11111111111111,
+            "denominator": 11.11111111111111,
+            "value": 0.91,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.555555555555555,
+            "denominator": 11.11111111111111,
+            "value": 0.86,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.222222222222221,
+            "denominator": 11.11111111111111,
+            "value": 0.9199999999999999,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 111.11111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 1000.0000000000001,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 500000.0,
+            "denominator": 0.1111111111111111,
+            "value": 4500000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 311.1111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 2800.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.7777777777777778,
+            "denominator": 11.11111111111111,
+            "value": 0.07,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        }
+      }
+    },
+    {
+      "caseId": "adversarial-content",
+      "expectedOutcome": "rejected",
+      "slices": [
+        "adversarial"
+      ],
+      "baselineExecution": {
+        "observedOutcome": "rejected",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "candidateExecution": {
+        "observedOutcome": "rejected",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "metricContributions": {
+        "baseline": {
+          "precision": {
+            "numerator": 9.777777777777779,
+            "denominator": 11.11111111111111,
+            "value": 0.8800000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.333333333333334,
+            "denominator": 11.11111111111111,
+            "value": 0.8400000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.0,
+            "denominator": 11.11111111111111,
+            "value": 0.9,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 133.33333333333334,
+            "denominator": 0.1111111111111111,
+            "value": 1200.0000000000002,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 555555.5555555555,
+            "denominator": 0.1111111111111111,
+            "value": 5000000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 333.3333333333333,
+            "denominator": 0.1111111111111111,
+            "value": 3000.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.8888888888888888,
+            "denominator": 11.11111111111111,
+            "value": 0.08,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        },
+        "candidate": {
+          "precision": {
+            "numerator": 10.11111111111111,
+            "denominator": 11.11111111111111,
+            "value": 0.91,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.555555555555555,
+            "denominator": 11.11111111111111,
+            "value": 0.86,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.222222222222221,
+            "denominator": 11.11111111111111,
+            "value": 0.9199999999999999,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 111.11111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 1000.0000000000001,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 500000.0,
+            "denominator": 0.1111111111111111,
+            "value": 4500000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 311.1111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 2800.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.7777777777777778,
+            "denominator": 11.11111111111111,
+            "value": 0.07,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        }
+      }
+    },
+    {
+      "caseId": "no-evidence-refusal",
+      "expectedOutcome": "unavailable",
+      "slices": [
+        "no-evidence"
+      ],
+      "baselineExecution": {
+        "observedOutcome": "unavailable",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "candidateExecution": {
+        "observedOutcome": "unavailable",
+        "executed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "notRun": 0,
+        "agreement": true
+      },
+      "metricContributions": {
+        "baseline": {
+          "precision": {
+            "numerator": 9.777777777777779,
+            "denominator": 11.11111111111111,
+            "value": 0.8800000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.333333333333334,
+            "denominator": 11.11111111111111,
+            "value": 0.8400000000000001,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.0,
+            "denominator": 11.11111111111111,
+            "value": 0.9,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 133.33333333333334,
+            "denominator": 0.1111111111111111,
+            "value": 1200.0000000000002,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 555555.5555555555,
+            "denominator": 0.1111111111111111,
+            "value": 5000000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 333.3333333333333,
+            "denominator": 0.1111111111111111,
+            "value": 3000.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.8888888888888888,
+            "denominator": 11.11111111111111,
+            "value": 0.08,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        },
+        "candidate": {
+          "precision": {
+            "numerator": 10.11111111111111,
+            "denominator": 11.11111111111111,
+            "value": 0.91,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "recall": {
+            "numerator": 9.555555555555555,
+            "denominator": 11.11111111111111,
+            "value": 0.86,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "coverage": {
+            "numerator": 10.222222222222221,
+            "denominator": 11.11111111111111,
+            "value": 0.9199999999999999,
+            "unit": "ratio",
+            "unavailableReason": null
+          },
+          "latency": {
+            "numerator": 111.11111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 1000.0000000000001,
+            "unit": "milliseconds",
+            "unavailableReason": null
+          },
+          "bytesRead": {
+            "numerator": 500000.0,
+            "denominator": 0.1111111111111111,
+            "value": 4500000.0,
+            "unit": "bytes",
+            "unavailableReason": null
+          },
+          "modelUsage": {
+            "numerator": 311.1111111111111,
+            "denominator": 0.1111111111111111,
+            "value": 2800.0,
+            "unit": "tokens",
+            "unavailableReason": null
+          },
+          "calibration": {
+            "numerator": 0.7777777777777778,
+            "denominator": 11.11111111111111,
+            "value": 0.07,
+            "unit": "ratio",
+            "unavailableReason": null
+          }
+        }
+      }
+    }
+  ],
+  "acceptance": {
+    "targetMetric": "precision",
+    "maximumCorrectnessRegression": 0.01,
+    "maximumCalibrationRegression": 0.01,
+    "requireEveryCaseAgreement": true,
+    "decision": "PASS"
+  }
+}

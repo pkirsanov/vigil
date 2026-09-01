@@ -1,0 +1,99 @@
+{
+  "executionId": "85000000-0000-4000-8000-000000000001",
+  "validationReceiptId": "30000000-0000-4000-8000-000000000002",
+  "planId": "30000000-0000-4000-8000-000000000001",
+  "operationId": "30000000-0000-4000-8000-000000000003",
+  "operation": "tabular-query",
+  "operationHash": "0c0b002298ea1ba5a08a949875dbe4323e56a160132246e39bda2e01ecce2af7",
+  "resultShape": "bounded-tabular-normalization",
+  "targetId": "work-events",
+  "planHash": "1c7b640d6aaa659c1d5793ead961b514474a95157c28c2cf30d729e4114fd07b",
+  "parameterValuesHash": "9bbba0a3f657c3fee8ed93d6306a376dcab0820ebd809355bdc7ebd4d21960d6",
+  "traceId": "trace-execution-example",
+  "executedAt": "2026-01-01T00:11:00Z",
+  "coordinate": {
+    "sourceId": "11111111-1111-4111-8111-111111111111",
+    "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+    "projectionId": "80000000-0000-4000-8000-000000000001",
+    "manifestVersion": "manifest-v1",
+    "connectorId": "connectors/tabular-reader-v1",
+    "connectorVersion": "1.0.0",
+    "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+    "authorizationScopeId": "authorized-assets",
+    "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "taxonomyVersion": "1.0.0",
+    "pipelineVersion": "1.0.0",
+    "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "evidenceCutoff": "2026-01-01T00:09:00Z",
+    "revocationEpoch": 0
+  },
+  "columns": [
+    {
+      "name": "ScopeId",
+      "physicalType": "string",
+      "contentProvenance": "source-derived"
+    },
+    {
+      "name": "RecordId",
+      "physicalType": "string",
+      "contentProvenance": "source-derived"
+    },
+    {
+      "name": "EventTime",
+      "physicalType": "date-time",
+      "contentProvenance": "source-derived"
+    }
+  ],
+  "rows": [
+    {
+      "ScopeId": "scope-a",
+      "RecordId": "record-1",
+      "EventTime": "2026-01-01T00:00:00Z"
+    },
+    {
+      "ScopeId": "scope-a",
+      "RecordId": "record-2",
+      "EventTime": "2026-01-01T00:01:00Z"
+    }
+  ],
+  "receipt": {
+    "rowsReturned": 2,
+    "bytesReturned": 426,
+    "durationMilliseconds": 25,
+    "truncated": false
+  },
+  "hashAlgorithm": "sha256-jcs",
+  "resultHash": "634d89c35c87c2be87d4931bd4e92c41b7f4b6cfb6275f8f541f4a8e41e977b5",
+  "responsePolicy": {
+    "maximumSerializedBytes": 10485760,
+    "maximumTextCharacters": 4000,
+    "defaultContentProvenance": "source-derived",
+    "serviceGeneratedPathPatterns": [
+      "/responsePolicy",
+      "/traceId",
+      "/coordinate",
+      "/coverage",
+      "/coverageReceipt",
+      "/receipt",
+      "/hashAlgorithm",
+      "/resultHash"
+    ],
+    "sourceDerivedPathPatterns": [
+      "/summary",
+      "/assets/*/name",
+      "/assets/*/purpose",
+      "/assets/*/domain",
+      "/assets/*/fields/*/businessMeaning",
+      "/businessModel",
+      "/modelPatterns",
+      "/capabilities",
+      "/retrievalHints",
+      "/warnings",
+      "/items/*/subject",
+      "/items/*/summary",
+      "/caveats/*/summary",
+      "/conflicts",
+      "/rows/*"
+    ]
+  }
+}

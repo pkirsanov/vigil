@@ -1,0 +1,27 @@
+{
+  "manifestId": "33000000-0000-4000-8000-000000000001",
+  "runId": "33333333-3333-4333-8333-333333333330",
+  "stageId": "discover-structure",
+  "checkpointUnit": "asset",
+  "sourceId": "11111111-1111-4111-8111-111111111111",
+  "sourceVersionCandidate": "registration-generation-v1",
+  "authorizationScopeId": "authorized-assets",
+  "pages": [
+    {
+      "ordinal": 0,
+      "pageUri": "package://examples/work-progress-page-0001.json",
+      "pageContentHash": "a121df51bbc8b96cc7c1491f5bc7f4e86223190eae45199f77a35f24f83ccc3d",
+      "completedItemCount": 1,
+      "failedItemCount": 0,
+      "pendingItemCount": 1,
+      "completedItemSetHash": "8fe59899ae3f57c9608abc460a4736d4a97d263005ed0414011714f7c28eea2f"
+    }
+  ],
+  "completedItemCount": 1,
+  "failedItemCount": 0,
+  "pendingItemCount": 1,
+  "completedItemSetHash": "8fe59899ae3f57c9608abc460a4736d4a97d263005ed0414011714f7c28eea2f",
+  "capturedAt": "2026-01-01T00:07:29Z",
+  "hashAlgorithm": "sha256-jcs",
+  "contentHash": "46eab7d5fa38d45ed19e63a25c07784c164890334f285847cb9e7ebfcbe37b85"
+}

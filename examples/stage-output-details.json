@@ -1,0 +1,74 @@
+{
+  "contractVersion": "1.0.0",
+  "outputs": [
+    {
+      "stageId": "extract-semantics",
+      "items": [
+        {
+          "itemId": "semantic-work-records",
+          "assetId": "work-records",
+          "outcome": "completed",
+          "summary": "Scoped versioned entity-history purpose inferred from current structure and identity evidence.",
+          "evidenceRefs": ["66666666-6666-4666-8666-666666666666", "77777777-7777-4777-8777-777777777777"]
+        },
+        {
+          "itemId": "semantic-work-events",
+          "assetId": "work-events",
+          "outcome": "completed",
+          "summary": "Timestamped state-change event purpose inferred from current grain and relationship evidence.",
+          "evidenceRefs": ["13131313-1313-4313-8313-131313131313", "88888888-8888-4888-8888-888888888888"]
+        }
+      ]
+    },
+    {
+      "stageId": "generate-relationship-hypotheses",
+      "items": [
+        {
+          "itemId": "candidate-work-records-to-work-events",
+          "assetId": "work-records",
+          "outcome": "completed",
+          "summary": "A scoped composite relationship candidate was generated before source validation.",
+          "evidenceRefs": ["66666666-6666-4666-8666-666666666666", "13131313-1313-4313-8313-131313131313"]
+        }
+      ]
+    },
+    {
+      "stageId": "quality-freshness",
+      "items": [
+        {
+          "itemId": "quality-work-records",
+          "assetId": "work-records",
+          "outcome": "completed",
+          "summary": "Quality and freshness were evaluated for the entity-history asset.",
+          "evidenceRefs": ["aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"]
+        },
+        {
+          "itemId": "quality-work-events",
+          "assetId": "work-events",
+          "outcome": "unavailable",
+          "summary": "Quality validation was unavailable and is represented explicitly rather than as a score.",
+          "evidenceRefs": ["12121212-1212-4212-8212-121212121212"]
+        }
+      ]
+    },
+    {
+      "stageId": "lineage-usage",
+      "items": [
+        {
+          "itemId": "lineage-work-records",
+          "assetId": "work-records",
+          "outcome": "unavailable",
+          "summary": "Native lineage and privacy-filtered usage evidence were unavailable for the entity-history asset.",
+          "evidenceRefs": ["22222222-2222-4222-8222-222222222222"]
+        },
+        {
+          "itemId": "lineage-work-events",
+          "assetId": "work-events",
+          "outcome": "unavailable",
+          "summary": "Native lineage and privacy-filtered usage evidence were unavailable for the event-log asset.",
+          "evidenceRefs": ["12121212-1212-4212-8212-121212121212"]
+        }
+      ]
+    }
+  ]
+}

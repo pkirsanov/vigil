@@ -1,0 +1,5 @@
+{
+  "temperature": 0.0,
+  "responseFormat": "strict-json-schema",
+  "correctiveParseRetries": 1
+}

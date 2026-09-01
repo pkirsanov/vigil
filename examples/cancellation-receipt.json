@@ -1,0 +1,15 @@
+{
+  "cancellationId": "82000000-0000-4000-8000-000000000001",
+  "runId": "33333333-3333-4333-8333-333333333333",
+  "state": "requested",
+  "actorSubjectHash": "7960befad07fdd60ae0edea6f19a4f629f5e714526db35421602c9ffcfb10b4e",
+  "subjectHashSaltId": "conformance-deployment-v1",
+  "requestHash": "495e382be7d3b708b9311a475d6e07f3ce59c46b6b2309b89cd4d527e489f9d4",
+  "idempotencyKeyHash": "0b78bebad20e1b6c8dfdf0f947b8ac77e7dcb5ffea56e5719cc1bf7c8735de43",
+  "requestedAt": "2026-01-01T00:06:00Z",
+  "statusUrl": "/runs/33333333-3333-4333-8333-333333333333",
+  "traceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "auditEventId": "84000000-0000-4000-8000-000000000001",
+  "hashAlgorithm": "sha256-jcs",
+  "receiptHash": "495d4bdc10540ab660320c2639c8e97a3d04c21b893b9497d1023bfd7572d6b3"
+}

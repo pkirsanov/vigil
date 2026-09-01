@@ -1,0 +1,78 @@
+taxonomyVersion: 1.0.0
+
+# maturityRank orders the retrievable states; unranked states are reachable only as counter-evidence.
+maturityRank:
+  inferred: 1
+  observed: 3
+  validated: 4
+  curated: 5
+  usage-proven: 6
+
+maturityStates:
+  - id: observed
+    meaning: Directly measured or read from an authoritative source interface.
+  - id: inferred
+    meaning: Proposed by a heuristic, statistical model, embedding, or language model.
+  - id: validated
+    meaning: Tested against source data or an authoritative contract with a recorded validator.
+  - id: curated
+    meaning: Reviewed and approved under a named policy.
+  - id: usage-proven
+    meaning: Repeatedly exercised successfully by authorized consumers.
+  - id: rejected
+    meaning: Evaluated and found unsupported under the recorded evidence version.
+  - id: unavailable
+    meaning: Evaluation could not run or could not reach a decision.
+
+evaluationOutcomes:
+  - passed
+  - failed
+  - evaluated-empty
+  - not-applicable
+  - not-run
+  - unavailable
+  - blocked
+  - cancelled
+
+evidenceKinds:
+  - source-capability
+  - structural-schema
+  - field-profile
+  - type-variant
+  - value-format
+  - value-distribution
+  - temporal-coverage
+  - freshness
+  - semantic-label
+  - asset-purpose
+  - business-entity
+  - business-event
+  - business-measure
+  - glossary-term
+  - identity
+  - grain
+  - relationship-hypothesis
+  - relationship-validation
+  - functional-dependency
+  - hierarchy
+  - storage-pattern
+  - quality-score
+  - anomaly
+  - schema-change
+  - lineage
+  - usage-pattern
+  - business-scenario
+  - analysis-capability
+  - policy-classification
+  - embedding
+  - index-entry
+  - manifest-coverage
+
+strengthOrder:
+  - authoritative-contract
+  - exact-source-validation
+  - bounded-source-validation
+  - repeated-successful-usage
+  - multi-signal-inference
+  - single-model-inference
+  - name-only-heuristic

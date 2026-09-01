@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/work-progress-manifest.schema.json",
+  "title": "Durable Work Progress Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifestId",
+    "runId",
+    "stageId",
+    "checkpointUnit",
+    "sourceId",
+    "sourceVersionCandidate",
+    "authorizationScopeId",
+    "pages",
+    "completedItemCount",
+    "failedItemCount",
+    "pendingItemCount",
+    "completedItemSetHash",
+    "capturedAt",
+    "hashAlgorithm",
+    "contentHash"
+  ],
+  "properties": {
+    "manifestId": { "type": "string", "format": "uuid" },
+    "runId": { "type": "string", "format": "uuid" },
+    "stageId": { "enum": ["register-negotiate", "authorize-pre-read", "open-source-boundary", "discover-structure", "classify-redact", "profile-statistics", "extract-semantics", "validate-identities", "generate-relationship-hypotheses", "validate-relationships", "quality-freshness", "lineage-usage", "detect-model-patterns", "derive-business-model", "verify-source-boundary", "build-indexes", "build-manifests", "consumption-probes", "publish"] },
+    "checkpointUnit": { "enum": ["asset", "partition", "document", "segment", "relationship-candidate", "work-item"] },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersionCandidate": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "authorizationScopeId": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ordinal", "pageUri", "pageContentHash", "completedItemCount", "failedItemCount", "pendingItemCount", "completedItemSetHash"],
+        "properties": {
+          "ordinal": { "type": "integer", "minimum": 0 },
+          "pageUri": { "type": "string", "pattern": "^package://[A-Za-z0-9._/-]+$" },
+          "pageContentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+          "completedItemCount": { "type": "integer", "minimum": 0 },
+          "failedItemCount": { "type": "integer", "minimum": 0 },
+          "pendingItemCount": { "type": "integer", "minimum": 0 },
+          "completedItemSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+        }
+      }
+    },
+    "completedItemCount": { "type": "integer", "minimum": 0 },
+    "failedItemCount": { "type": "integer", "minimum": 0 },
+    "pendingItemCount": { "type": "integer", "minimum": 0 },
+    "completedItemSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "capturedAt": { "type": "string", "format": "date-time" },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical manifest with contentHash removed." }
+  }
+}

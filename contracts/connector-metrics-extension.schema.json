@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/extensions/connector-metrics/1.0.0",
+  "title": "Connector Metrics Extension Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metrics"],
+  "properties": {
+    "metrics": {
+      "type": "array",
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "value", "unit"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._-]{0,127}$" },
+          "value": { "type": ["number", "integer", "boolean", "null"] },
+          "unit": { "type": ["string", "null"], "pattern": "^[A-Za-z][A-Za-z0-9._/%-]{0,63}$" }
+        }
+      }
+    }
+  }
+}

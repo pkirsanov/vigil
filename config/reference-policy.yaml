@@ -1,0 +1,219 @@
+policyVersion: 1.0.0
+
+validation:
+  maximumArtifactBytes: 16777216
+
+# Starting values are hypotheses. Calibrate them on an approved benchmark corpus before production use.
+execution:
+  readOnly: true
+  maximumConcurrentRunsPerSource: 1
+  persistQueue: true
+  checkpointUnit: asset
+  stageFailureMode: explicit-partial
+  lease:
+    durationSeconds: 300
+    renewEverySeconds: 60
+    requireFencingToken: true
+  budgets:
+    wallClockSeconds: 7200
+    sourceBytesRead: 10737418240
+    modelInputTokens: 200000
+    modelOutputTokens: 30000
+    relationshipValidations: 5000
+
+readExecution:
+  maximumRows: 10000
+  maximumBytes: 10485760
+  maximumDurationMilliseconds: 30000
+  maximumColumns: 500
+  maximumTextCharacters: 4000
+  requirePaginationAboveCeiling: true
+
+agentResponses:
+  maximumSerializedBytes: 10485760
+  maximumTextCharacters: 4000
+  requireContentProvenanceDefault: true
+  requireRevocationEpoch: true
+
+operationBudgets:
+  connector-call: { limit: 10485760, unit: bytes, cancellationCheckInterval: 1048576 }
+  model-call: { limit: 4000, unit: tokens, cancellationCheckInterval: 256 }
+  stage: { limit: 90000, unit: milliseconds, cancellationCheckInterval: 1000 }
+  run: { limit: 7200000, unit: milliseconds, cancellationCheckInterval: 1000 }
+  prompt: { limit: 32000, unit: characters, cancellationCheckInterval: 1000 }
+  queue: { limit: 100000, unit: items, cancellationCheckInterval: 1 }
+  query: { limit: 10000, unit: items, cancellationCheckInterval: 100 }
+  traversal: { limit: 5, unit: depth, cancellationCheckInterval: 1 }
+  manifest: { limit: 6000, unit: tokens, cancellationCheckInterval: 100 }
+
+discovery:
+  maximumAssetsPerRun: 10000
+  maximumFieldsPerAsset: 5000
+  includePatterns: []
+  excludePatterns: []
+  excludeSystemAssets: true
+  followReferences: false
+  maximumReferenceDepth: 2
+
+sampling:
+  deterministicSeed: 17
+  exactScanRowCeiling: 10000
+  boundedSampleRows: 100000
+  maximumSampleRows: 1000000
+  defaultMethod: deterministic-hash
+  preserveRareValues: true
+  minimumRareValueExamples: 20
+  timeWindows: 12
+  recordActualRowsInspected: true
+  recordPopulationEstimate: true
+  recordErrorBounds: true
+
+statistics:
+  topK: 20
+  quantiles: [0.01, 0.05, 0.25, 0.5, 0.75, 0.95, 0.99]
+  approximateDistinctRelativeErrorTarget: 0.02
+  detectTypeVariants: true
+  detectFormats: true
+  detectEntropy: true
+  detectOutliers: true
+  detectTemporalDrift: true
+  minimumGroupSizeForEmission: 10
+
+semantics:
+  enabled: true
+  batchSize: 30
+  requestTimeoutSeconds: 90
+  maximumPromptCharacters: 32000
+  minimumStoredConfidence: 0.60
+  deterministicTemperature: 0.0
+  requireStrictStructuredOutput: true
+  correctiveParseRetries: 1
+  validateReferencedAssetNames: true
+  deterministicFallbacks: true
+
+modelAdmission:
+  policyVersion: 1.0.0
+  denyByDefault: true
+  requireRegisteredDeployment: true
+  requireRegionCompatibility: true
+  requireZeroProviderRetention: true
+  requireTrainingUseDisabled: true
+  requireAbuseMonitoringContract: true
+  permittedInputClassifications: [public, internal, restricted]
+  deniedInputClassifications: [highly-restricted, unknown]
+  residencyCompatibility:
+    restricted-region-set: [source-compatible-region]
+  bindCacheToAdmissionDecision: true
+  bindDeletionToAdmissionDecision: true
+
+parserIsolation:
+  policyVersion: 1.0.0
+  requireCredentialFreeWorker: true
+  outboundNetwork: false
+  externalReferenceResolution: false
+  readOnlyInput: true
+  disposableOutput: true
+  limits:
+    cpuMilliseconds: 120000
+    memoryBytes: 1073741824
+    inputBytes: 268435456
+    expandedBytes: 1073741824
+    fileCount: 10000
+    recursionDepth: 20
+    durationMilliseconds: 180000
+    frames: 10000
+    outputBytes: 268435456
+
+identity:
+  minimumNonEmptyRatio: 0.99
+  exactValidationRowCeiling: 1000000
+  boundedValidationRows: 250000
+  requireScopeSeparation: true
+  requireVersionForVersionedRows: true
+  unknownOnIncompleteValidation: true
+
+relationships:
+  generateBroadHypotheses: true
+  validateBeforeQueryReady: true
+  minimumDistinctValues: 3
+  maximumNullRatio: 0.90
+  highSemanticSimilarity: 0.80
+  mediumSemanticSimilarity: 0.60
+  minimumCoverage: 0.01
+  minimumQueryReadyConfidence: 0.70
+  minimumMatchesForApproximateSparseRelationship: 500
+  exactOrAuthoritativeValidationExemptFromMatchFloor: true
+  exactDistinctCeiling: 2000
+  inlineHighEvidenceOnly: true
+  maximumPathHops: 3
+  pathHopPenalty: 0.15
+  suppressionMissCount: 3
+  suppressionWindowDays: 30
+  persistRejectedCandidates: true
+
+ranking:
+  authorizationPhase: before-candidate-generation
+  hardGates:
+    - authorized
+    - policy-compatible
+    - current-version
+    - validation-status-compatible
+  weights:
+    evidenceStrength: 0.30
+    semanticRelevance: 0.20
+    usageProof: 0.15
+    freshness: 0.10
+    dataQuality: 0.10
+    relationshipPathQuality: 0.10
+    costPenalty: 0.05
+  diversity:
+    maximumPerAsset: 5
+    maximumPerDomain: 20
+    includeCounterEvidence: true
+
+privacy:
+  rawSamplesInManifest: false
+  rawSamplesInModelPrompts: false
+  hashStableIdentifiers: true
+  redactDetectedSecrets: true
+  redactDirectIdentifiers: true
+  minimumGroupSize: 10
+  storePromptPayloads: false
+  storeModelResponses: policy-controlled
+  classifyBeforeSemanticProcessing: true
+  requireIndependentProjectionSafetyReceipt: true
+  rejectOrdinaryRawValueCollisions: true
+
+retention:
+  rawObservationDays: 30
+  statisticalEvidenceDays: 365
+  semanticHypothesisDays: 180
+  validatedEvidenceDays: 730
+  rejectedEvidenceDays: 180
+  runMetadataDays: 365
+  deletionPropagationHours: 24
+  deletionInventory:
+    maximumDeletionInventoryEntries: 10000
+    maximumPages: 10
+    maximumEntriesPerPage: 1000
+
+manifests:
+  immutable: true
+  requireVersionScope: true
+  maximumDataModelTokens: 6000
+  maximumCapabilityTokens: 8000
+  maximumRelationshipsPerAsset: 30
+  maximumCapabilities: 30
+  includeEvidenceReferences: true
+  includeConflicts: true
+  includeCoverageReceipt: true
+
+observability:
+  traceEveryRun: true
+  traceEveryStage: true
+  recordConnectorCalls: true
+  recordBytesAndRowsRead: true
+  recordModelTokensAndLatency: true
+  recordValidationPlan: true
+  recordZeroWorkAsInvalid: true
+  alertOnSilentDegradation: true

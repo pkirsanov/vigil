@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/benchmark-comparison.schema.json",
+  "title": "Profiler Benchmark Before and After Comparison",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["comparisonVersion", "corpusVersion", "evidenceStatus", "baseline", "candidate", "caseResults", "acceptance"],
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerator", "denominator", "value", "unit", "unavailableReason"],
+      "properties": {
+        "numerator": { "type": ["number", "null"], "minimum": 0 },
+        "denominator": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+        "value": { "type": ["number", "null"], "minimum": 0 },
+        "unit": { "enum": ["ratio", "milliseconds", "bytes", "tokens"] },
+        "unavailableReason": { "type": ["string", "null"], "maxLength": 500 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "value": { "type": "number" } } },
+          "then": { "properties": { "numerator": { "type": "number" }, "denominator": { "type": "number", "exclusiveMinimum": 0 }, "unavailableReason": { "type": "null" } } }
+        },
+        {
+          "if": { "properties": { "value": { "type": "null" } } },
+          "then": { "properties": { "unavailableReason": { "type": "string", "minLength": 1 } } }
+        }
+      ]
+    },
+    "ratioMetric": {
+      "allOf": [
+        { "$ref": "#/$defs/metric" },
+        {
+          "properties": {
+            "value": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+            "unit": { "const": "ratio" }
+          }
+        }
+      ]
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementationVersion", "methodSetHash", "policyHash", "precision", "recall", "coverage", "latency", "bytesRead", "modelUsage", "calibration"],
+      "properties": {
+        "implementationVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "methodSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "precision": { "$ref": "#/$defs/ratioMetric" },
+        "recall": { "$ref": "#/$defs/ratioMetric" },
+        "coverage": { "$ref": "#/$defs/ratioMetric" },
+        "latency": { "$ref": "#/$defs/metric" },
+        "bytesRead": { "$ref": "#/$defs/metric" },
+        "modelUsage": { "$ref": "#/$defs/metric" },
+        "calibration": { "$ref": "#/$defs/ratioMetric" }
+      }
+    },
+    "caseExecution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observedOutcome", "executed", "failed", "skipped", "notRun", "agreement"],
+      "properties": {
+        "observedOutcome": { "enum": ["accepted", "rejected", "completed-partial", "unavailable"] },
+        "executed": { "type": "integer", "minimum": 1 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "skipped": { "const": 0 },
+        "notRun": { "const": 0 },
+        "agreement": { "type": "boolean" }
+      }
+    },
+    "metricSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["precision", "recall", "coverage", "latency", "bytesRead", "modelUsage", "calibration"],
+      "properties": {
+        "precision": { "$ref": "#/$defs/ratioMetric" },
+        "recall": { "$ref": "#/$defs/ratioMetric" },
+        "coverage": { "$ref": "#/$defs/ratioMetric" },
+        "latency": { "$ref": "#/$defs/metric" },
+        "bytesRead": { "$ref": "#/$defs/metric" },
+        "modelUsage": { "$ref": "#/$defs/metric" },
+        "calibration": { "$ref": "#/$defs/ratioMetric" }
+      }
+    }
+  },
+  "properties": {
+    "comparisonVersion": { "const": "1.0.0" },
+    "corpusVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "evidenceStatus": { "const": "illustrative-conformance-fixture" },
+    "baseline": { "$ref": "#/$defs/measurement" },
+    "candidate": { "$ref": "#/$defs/measurement" },
+    "caseResults": {
+      "type": "array",
+      "minItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["caseId", "expectedOutcome", "baselineExecution", "candidateExecution", "slices", "metricContributions"],
+        "properties": {
+          "caseId": { "type": "string", "minLength": 1, "maxLength": 100 },
+          "expectedOutcome": { "enum": ["accepted", "rejected", "completed-partial", "unavailable"] },
+          "baselineExecution": { "$ref": "#/$defs/caseExecution" },
+          "candidateExecution": { "$ref": "#/$defs/caseExecution" },
+          "slices": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+          "metricContributions": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["baseline", "candidate"],
+            "properties": {
+              "baseline": { "$ref": "#/$defs/metricSet" },
+              "candidate": { "$ref": "#/$defs/metricSet" }
+            }
+          }
+        }
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetMetric", "maximumCorrectnessRegression", "maximumCalibrationRegression", "requireEveryCaseAgreement", "decision"],
+      "properties": {
+        "targetMetric": { "enum": ["precision", "recall", "coverage", "latency", "bytesRead", "modelUsage", "calibration"] },
+        "maximumCorrectnessRegression": { "type": "number", "minimum": 0, "maximum": 1 },
+        "maximumCalibrationRegression": { "type": "number", "minimum": 0, "maximum": 1 },
+        "requireEveryCaseAgreement": { "const": true },
+        "decision": { "enum": ["PASS", "FAIL"] }
+      }
+    }
+  }
+}

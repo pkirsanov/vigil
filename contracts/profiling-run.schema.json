@@ -1,0 +1,469 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/profiling-run.schema.json",
+  "title": "Profiling Run",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractVersion",
+    "runId",
+    "sourceId",
+    "sourceVersionCandidate",
+    "connectorId",
+    "connectorVersion",
+    "connectorCapabilityHash",
+    "authorizationScopeId",
+    "mode",
+    "trigger",
+    "state",
+    "policyHash",
+    "pipelineVersion",
+    "methodSetHash",
+    "taxonomyVersion",
+    "fencingToken",
+    "revocationEpoch",
+    "acceptedAt",
+    "observedAt",
+    "sourceBoundary",
+    "stages",
+    "coverage",
+    "budget",
+    "startedAt"
+  ],
+  "$defs": {
+    "receiptRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receiptId", "receiptType"],
+      "properties": {
+        "receiptId": { "type": "string", "format": "uuid" },
+        "receiptType": { "$ref": "stage-receipt-bundle.schema.json#/$defs/receiptType" }
+      }
+    },
+    "budgetUsage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceBytesRead", "modelInputTokens", "modelOutputTokens", "wallClockMilliseconds", "relationshipValidations"],
+      "properties": {
+        "sourceBytesRead": { "type": "integer", "minimum": 0 },
+        "modelInputTokens": { "type": "integer", "minimum": 0 },
+        "modelOutputTokens": { "type": "integer", "minimum": 0 },
+        "wallClockMilliseconds": { "type": "integer", "minimum": 0 },
+        "relationshipValidations": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stageId", "applicability", "required", "state", "attempt", "itemsExpected", "itemsAttempted", "itemsCompleted", "itemsFailed", "itemsSkipped", "itemsUnavailable", "itemsNotRun", "itemsDeferred", "methodVersion", "receiptRefs"],
+      "properties": {
+        "stageId": { "enum": ["register-negotiate", "authorize-pre-read", "open-source-boundary", "discover-structure", "classify-redact", "profile-statistics", "extract-semantics", "validate-identities", "generate-relationship-hypotheses", "validate-relationships", "quality-freshness", "lineage-usage", "detect-model-patterns", "derive-business-model", "verify-source-boundary", "build-indexes", "build-manifests", "consumption-probes", "publish"] },
+        "applicability": { "enum": ["applicable", "not-applicable", "unavailable"] },
+        "required": { "type": "boolean" },
+        "state": { "enum": ["pending", "running", "completed", "completed-partial", "failed", "skipped", "cancelled"] },
+        "attempt": { "type": "integer", "minimum": 1 },
+        "itemsExpected": { "type": "integer", "minimum": 0 },
+        "itemsAttempted": { "type": "integer", "minimum": 0 },
+        "itemsCompleted": { "type": "integer", "minimum": 0 },
+        "itemsFailed": { "type": "integer", "minimum": 0 },
+        "itemsSkipped": { "type": "integer", "minimum": 0 },
+        "itemsUnavailable": { "type": "integer", "minimum": 0 },
+        "itemsNotRun": { "type": "integer", "minimum": 0 },
+        "itemsDeferred": { "type": "integer", "minimum": 0 },
+        "methodVersion": { "type": "string", "minLength": 1 },
+        "receiptRefs": { "type": "array", "maxItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/receiptRef" } },
+        "checkpoint": { "type": ["string", "null"] },
+        "startedAt": { "type": ["string", "null"], "format": "date-time" },
+        "completedAt": { "type": ["string", "null"], "format": "date-time" },
+        "reason": { "type": ["string", "null"], "maxLength": 1000 }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["state"], "properties": { "state": { "enum": ["completed", "completed-partial", "failed", "skipped", "cancelled"] } } },
+          "then": {
+            "required": ["startedAt", "completedAt"],
+            "properties": {
+              "startedAt": { "type": "string", "format": "date-time" },
+              "completedAt": { "type": "string", "format": "date-time" },
+              "receiptRefs": { "minItems": 1 }
+            }
+          }
+        },
+        {
+          "if": { "required": ["state"], "properties": { "state": { "const": "completed" } } },
+          "then": {
+            "properties": {
+              "itemsFailed": { "const": 0 },
+              "itemsSkipped": { "const": 0 },
+              "itemsUnavailable": { "const": 0 },
+              "itemsNotRun": { "const": 0 },
+              "itemsDeferred": { "const": 0 }
+            }
+          }
+        },
+        {
+          "if": { "required": ["applicability"], "properties": { "applicability": { "const": "not-applicable" } } },
+          "then": { "properties": { "state": { "const": "skipped" }, "itemsAttempted": { "const": 0 }, "itemsCompleted": { "const": 0 }, "itemsFailed": { "const": 0 } } }
+        },
+        {
+          "if": { "required": ["applicability"], "properties": { "applicability": { "const": "unavailable" } } },
+          "then": { "properties": { "state": { "const": "skipped" }, "itemsAttempted": { "const": 0 }, "itemsCompleted": { "const": 0 }, "itemsFailed": { "const": 0 } } }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "mode": { "const": "resume" } } },
+      "then": { "required": ["predecessorRunId", "resumeFromStage", "resumeCheckpoint"], "properties": { "resumeFromStage": { "type": "string" } } }
+    },
+    {
+      "if": { "properties": { "mode": { "const": "targeted" } } },
+      "then": { "required": ["targetAssetIds"], "properties": { "targetAssetIds": { "type": "array", "minItems": 1 } } }
+    },
+    {
+      "if": { "properties": { "state": { "const": "pending" } } },
+      "then": {
+        "required": ["lease"],
+        "properties": {
+          "fencingToken": { "type": "null" },
+          "lease": { "type": "null" },
+          "startedAt": { "type": "null" },
+          "completedAt": { "type": "null" },
+          "stages": {
+            "items": {
+              "properties": {
+                "state": { "const": "pending" },
+                "receiptRefs": { "maxItems": 0 },
+                "startedAt": { "type": "null" },
+                "completedAt": { "type": "null" }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "state": { "const": "running" } } },
+      "then": {
+        "required": ["lease"],
+        "properties": {
+          "fencingToken": { "type": "integer", "minimum": 1 },
+          "lease": { "type": "object" },
+          "startedAt": { "type": "string", "format": "date-time" },
+          "completedAt": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "sourceBoundary": { "required": ["mode"], "properties": { "mode": { "const": "none" } } } } },
+      "then": { "properties": { "sourceBoundary": { "properties": { "consistencyStatus": { "enum": ["pending", "unavailable"] } } } } }
+    },
+    {
+      "if": {
+        "properties": {
+          "stages": {
+            "contains": {
+              "required": ["stageId", "state"],
+              "properties": {
+                "stageId": { "const": "build-indexes" },
+                "state": { "enum": ["running", "completed", "completed-partial"] }
+              }
+            }
+          }
+        }
+      },
+      "then": { "required": ["projectionId"], "properties": { "projectionId": { "type": "string", "format": "uuid" } } }
+    },
+    {
+      "if": { "properties": { "state": { "enum": ["completed", "completed-partial", "failed", "cancelled"] } } },
+      "then": {
+        "required": ["completedAt"],
+        "properties": {
+          "fencingToken": { "type": "integer", "minimum": 1 },
+          "completedAt": { "type": "string", "format": "date-time" },
+          "lease": { "type": "null" },
+          "stages": {
+            "items": {
+              "required": ["completedAt"],
+              "properties": {
+                "state": { "enum": ["completed", "completed-partial", "failed", "skipped", "cancelled"] },
+                "completedAt": { "type": "string", "format": "date-time" }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "state": { "enum": ["failed", "cancelled"] } } },
+      "then": {
+        "required": ["failureReason"],
+        "properties": { "failureReason": { "type": "string", "minLength": 1 } }
+      }
+    },
+    {
+      "if": { "properties": { "state": { "const": "completed" } } },
+      "then": {
+        "required": ["sourceVersion", "manifestVersion", "projectionId", "evidenceCutoff", "publicationReceiptId"],
+        "properties": {
+          "sourceVersion": { "type": "string", "minLength": 1 },
+          "manifestVersion": { "type": "string", "minLength": 1 },
+          "projectionId": { "type": "string", "format": "uuid" },
+          "evidenceCutoff": { "type": "string", "format": "date-time" },
+          "sourceBoundary": {
+            "required": ["openedAt", "verifiedAt"],
+            "properties": {
+              "consistencyStatus": { "const": "consistent" },
+              "openedAt": { "type": "string", "format": "date-time" },
+              "verifiedAt": { "type": "string", "format": "date-time" }
+            }
+          },
+          "stages": {
+            "contains": {
+              "type": "object",
+              "required": ["stageId", "state"],
+              "properties": { "stageId": { "const": "publish" }, "state": { "const": "completed" } }
+            },
+            "items": {
+              "required": ["completedAt"],
+              "properties": {
+                "state": { "enum": ["completed", "completed-partial", "failed", "skipped", "cancelled"] },
+                "completedAt": { "type": "string", "format": "date-time" }
+              },
+              "allOf": [
+                {
+                  "if": { "required": ["required"], "properties": { "required": { "const": true } } },
+                  "then": { "properties": { "state": { "const": "completed" }, "itemsCompleted": { "minimum": 1 } } }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "state": { "const": "completed-partial" } } },
+      "then": {
+        "required": ["sourceVersion"],
+        "properties": {
+          "sourceVersion": { "type": "string", "minLength": 1 },
+          "sourceBoundary": { "properties": { "consistencyStatus": { "enum": ["consistent", "changed-during-run", "unavailable"] } } },
+          "stages": {
+            "items": {
+              "required": ["completedAt"],
+              "properties": {
+                "state": { "enum": ["completed", "completed-partial", "failed", "skipped", "cancelled"] },
+                "completedAt": { "type": "string", "format": "date-time" }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "contractVersion": { "const": "1.0.0" },
+    "runId": { "type": "string", "format": "uuid" },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersionCandidate": { "type": "string", "minLength": 1, "description": "Stable registration-generation coordinate available before source reads. It is not a structural source version." },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "mode": { "enum": ["full", "incremental", "resume", "targeted"] },
+    "trigger": { "enum": ["registration", "manual", "schedule", "schema-drift", "freshness-gate", "trust-gate", "usage-drift", "method-migration", "policy-migration", "model-migration"] },
+    "state": { "enum": ["pending", "running", "completed", "completed-partial", "failed", "cancelled"] },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "pipelineVersion": { "const": "1.0.0" },
+    "methodSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "taxonomyVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "fencingToken": { "type": ["integer", "null"], "minimum": 1, "description": "Null only before a lease is acquired. Once assigned, the token is preserved after lease release." },
+    "revocationEpoch": { "type": "integer", "minimum": 0 },
+    "sourceVersion": { "type": ["string", "null"] },
+    "projectionId": { "type": ["string", "null"], "format": "uuid", "description": "Assigned before build-indexes; the manifests sealed over those indexes carry the same value." },
+    "manifestVersion": { "type": ["string", "null"] },
+    "evidenceCutoff": { "type": ["string", "null"], "format": "date-time" },
+    "publicationReceiptId": { "type": ["string", "null"], "format": "uuid" },
+    "sourceBoundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["boundaryId", "mode", "consistencyStatus", "openedAt", "verifiedAt", "boundaryTokens"],
+      "properties": {
+        "boundaryId": { "type": "string", "format": "uuid" },
+        "mode": { "enum": ["snapshot", "transaction", "watermark-range", "offset-range", "etag-set", "before-after-check", "none"] },
+        "consistencyStatus": { "enum": ["consistent", "changed-during-run", "expired", "unavailable", "pending"] },
+        "openedAt": { "type": ["string", "null"], "format": "date-time" },
+        "verifiedAt": { "type": ["string", "null"], "format": "date-time" },
+        "expiresAt": { "type": ["string", "null"], "format": "date-time" },
+        "boundaryTokens": { "type": "array", "items": { "type": "string", "maxLength": 500 } },
+        "reason": { "type": ["string", "null"], "maxLength": 1000 }
+      }
+    },
+    "predecessorRunId": { "type": "string", "format": "uuid" },
+    "resumeFromStage": {
+      "type": ["string", "null"],
+      "enum": [null, "register-negotiate", "authorize-pre-read", "open-source-boundary", "discover-structure", "classify-redact", "profile-statistics", "extract-semantics", "validate-identities", "generate-relationship-hypotheses", "validate-relationships", "quality-freshness", "lineage-usage", "detect-model-patterns", "derive-business-model", "verify-source-boundary", "build-indexes", "build-manifests", "consumption-probes", "publish"],
+      "description": "The stage the caller asked to resume from; it narrows the resumable set and never marks an incomplete dependency terminal."
+    },
+    "resumeCheckpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkpointId", "predecessorRunId", "predecessorState", "predecessor", "predecessorRunHash", "completedDependencySetHash", "resumeFromStage", "completedDependencyStageIds", "completedDependencyReceiptIds", "workProgress", "cumulativeBudgetUsage", "sourceId", "sourceVersionCandidate", "sourceVersion", "connectorId", "connectorVersion", "connectorCapabilityHash", "authorizationScopeId", "policyHash", "pipelineVersion", "methodSetHash", "taxonomyVersion", "revocationEpoch", "boundaryId", "boundaryExpiresAt", "createdAt", "hashAlgorithm", "checkpointHash", "sealedAt", "issuerKeyId", "signatureAlgorithm", "signature"],
+      "properties": {
+        "checkpointId": { "type": "string", "format": "uuid" },
+        "predecessorRunId": { "type": "string", "format": "uuid" },
+        "predecessorState": { "enum": ["completed-partial", "failed", "cancelled"] },
+        "predecessor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["runId", "state", "sourceId", "sourceVersionCandidate", "sourceVersion", "connectorId", "connectorVersion", "connectorCapabilityHash", "authorizationScopeId", "policyHash", "pipelineVersion", "methodSetHash", "taxonomyVersion", "revocationEpoch", "boundaryId", "boundaryExpiresAt", "completedStageIds", "completedReceiptIds", "budgetUsage", "completedAt"],
+          "properties": {
+            "runId": { "type": "string", "format": "uuid" },
+            "state": { "enum": ["completed-partial", "failed", "cancelled"] },
+            "sourceId": { "type": "string", "format": "uuid" },
+            "sourceVersionCandidate": { "type": "string", "minLength": 1 },
+            "sourceVersion": { "type": ["string", "null"], "minLength": 1 },
+            "connectorId": { "type": "string", "minLength": 1, "maxLength": 128 },
+            "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+            "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+            "authorizationScopeId": { "type": "string", "minLength": 1, "maxLength": 500 },
+            "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+            "pipelineVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+            "methodSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+            "taxonomyVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+            "revocationEpoch": { "type": "integer", "minimum": 0 },
+            "boundaryId": { "type": "string", "format": "uuid" },
+            "boundaryExpiresAt": { "type": "string", "format": "date-time" },
+            "completedStageIds": { "type": "array", "uniqueItems": true, "maxItems": 19, "items": { "enum": ["register-negotiate", "authorize-pre-read", "open-source-boundary", "discover-structure", "classify-redact", "profile-statistics", "extract-semantics", "validate-identities", "generate-relationship-hypotheses", "validate-relationships", "quality-freshness", "lineage-usage", "detect-model-patterns", "derive-business-model", "verify-source-boundary", "build-indexes", "build-manifests", "consumption-probes", "publish"] } },
+            "completedReceiptIds": { "type": "array", "uniqueItems": true, "maxItems": 19, "items": { "type": "string", "format": "uuid" } },
+            "budgetUsage": { "$ref": "#/$defs/budgetUsage" },
+            "completedAt": { "type": "string", "format": "date-time" }
+          }
+        },
+        "predecessorRunHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "completedDependencySetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical sorted completedDependencyReceiptIds array." },
+        "resumeFromStage": { "type": "string", "enum": ["register-negotiate", "authorize-pre-read", "open-source-boundary", "discover-structure", "classify-redact", "profile-statistics", "extract-semantics", "validate-identities", "generate-relationship-hypotheses", "validate-relationships", "quality-freshness", "lineage-usage", "detect-model-patterns", "derive-business-model", "verify-source-boundary", "build-indexes", "build-manifests", "consumption-probes", "publish"] },
+        "completedDependencyStageIds": { "type": "array", "uniqueItems": true, "maxItems": 19, "items": { "enum": ["register-negotiate", "authorize-pre-read", "open-source-boundary", "discover-structure", "classify-redact", "profile-statistics", "extract-semantics", "validate-identities", "generate-relationship-hypotheses", "validate-relationships", "quality-freshness", "lineage-usage", "detect-model-patterns", "derive-business-model", "verify-source-boundary", "build-indexes", "build-manifests", "consumption-probes", "publish"] } },
+        "completedDependencyReceiptIds": { "type": "array", "uniqueItems": true, "maxItems": 19, "items": { "type": "string", "format": "uuid" } },
+        "workProgress": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manifestId", "manifestUri", "manifestContentHash", "stageId", "checkpointUnit", "completedItemCount", "failedItemCount", "pendingItemCount", "completedItemSetHash"],
+          "properties": {
+            "manifestId": { "type": "string", "format": "uuid" },
+            "manifestUri": { "type": "string", "pattern": "^package://[A-Za-z0-9._/-]+$" },
+            "manifestContentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+            "stageId": { "enum": ["register-negotiate", "authorize-pre-read", "open-source-boundary", "discover-structure", "classify-redact", "profile-statistics", "extract-semantics", "validate-identities", "generate-relationship-hypotheses", "validate-relationships", "quality-freshness", "lineage-usage", "detect-model-patterns", "derive-business-model", "verify-source-boundary", "build-indexes", "build-manifests", "consumption-probes", "publish"] },
+            "checkpointUnit": { "enum": ["asset", "partition", "document", "segment", "relationship-candidate", "work-item"] },
+            "completedItemCount": { "type": "integer", "minimum": 0 },
+            "failedItemCount": { "type": "integer", "minimum": 0 },
+            "pendingItemCount": { "type": "integer", "minimum": 0 },
+            "completedItemSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+          }
+        },
+        "cumulativeBudgetUsage": { "$ref": "#/$defs/budgetUsage" },
+        "sourceId": { "type": "string", "format": "uuid" },
+        "sourceVersionCandidate": { "type": "string", "minLength": 1 },
+        "sourceVersion": { "type": ["string", "null"], "minLength": 1 },
+        "connectorId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "authorizationScopeId": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "pipelineVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "methodSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "taxonomyVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+        "revocationEpoch": { "type": "integer", "minimum": 0 },
+        "boundaryId": { "type": "string", "format": "uuid" },
+        "boundaryExpiresAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "hashAlgorithm": { "const": "sha256-jcs" },
+        "checkpointHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical checkpoint with checkpointHash and signature removed." },
+        "sealedAt": { "type": "string", "format": "date-time" },
+        "issuerKeyId": { "type": "string", "minLength": 1, "maxLength": 255 },
+        "signatureAlgorithm": { "const": "ed25519" },
+        "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$", "minLength": 80, "maxLength": 100 }
+      }
+    },
+    "targetAssetIds": { "type": "array", "maxItems": 10000, "items": { "type": "string", "minLength": 1 } },
+    "lease": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["owner", "fencingToken", "expiresAt"],
+      "properties": {
+        "owner": { "type": "string", "minLength": 1 },
+        "fencingToken": { "type": "integer", "minimum": 1 },
+        "expiresAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 19,
+      "maxItems": 19,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "register-negotiate" }, "required": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "authorize-pre-read" }, "required": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "open-source-boundary" }, "required": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "discover-structure" }, "required": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "classify-redact" }, "required": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "profile-statistics" }, "required": { "const": false } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "extract-semantics" }, "required": { "const": false } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "validate-identities" }, "required": { "const": false } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "generate-relationship-hypotheses" }, "required": { "const": false } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "validate-relationships" }, "required": { "const": false } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "quality-freshness" }, "required": { "const": false } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "lineage-usage" }, "required": { "const": false } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "detect-model-patterns" }, "required": { "const": false } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "derive-business-model" }, "required": { "const": false } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "verify-source-boundary" }, "required": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "build-indexes" }, "required": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "build-manifests" }, "required": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "consumption-probes" }, "required": { "const": true } } }] },
+        { "allOf": [{ "$ref": "#/$defs/stage" }, { "properties": { "stageId": { "const": "publish" }, "required": { "const": true } } }] }
+      ],
+      "items": false
+    },
+    "coverage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["assetsDiscovered", "assetsAttempted", "assetsCompleted", "assetsFailed", "assetsSkipped", "assetsUnavailable", "assetsNotRun", "assetsDeferred", "fieldsDiscovered", "fieldsAttempted", "fieldsProfiled", "fieldsFailed", "fieldsSkipped", "fieldsUnavailable", "fieldsNotRun", "fieldsDeferred"],
+      "properties": {
+        "assetsDiscovered": { "type": "integer", "minimum": 0 }, "assetsAttempted": { "type": "integer", "minimum": 0 }, "assetsCompleted": { "type": "integer", "minimum": 0 }, "assetsFailed": { "type": "integer", "minimum": 0 }, "assetsSkipped": { "type": "integer", "minimum": 0 }, "assetsUnavailable": { "type": "integer", "minimum": 0 }, "assetsNotRun": { "type": "integer", "minimum": 0 }, "assetsDeferred": { "type": "integer", "minimum": 0 }, "fieldsDiscovered": { "type": "integer", "minimum": 0 }, "fieldsAttempted": { "type": "integer", "minimum": 0 }, "fieldsProfiled": { "type": "integer", "minimum": 0 }, "fieldsFailed": { "type": "integer", "minimum": 0 }, "fieldsSkipped": { "type": "integer", "minimum": 0 }, "fieldsUnavailable": { "type": "integer", "minimum": 0 }, "fieldsNotRun": { "type": "integer", "minimum": 0 }, "fieldsDeferred": { "type": "integer", "minimum": 0 }, "relationshipsConsidered": { "type": "integer", "minimum": 0 }, "relationshipsValidated": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "budget": {
+      "type": "object", "additionalProperties": false,
+      "required": ["limits", "usage", "exhaustedDimensions", "stoppedAt"],
+      "properties": {
+        "limits": {
+          "type": "object", "additionalProperties": false,
+          "required": ["sourceBytesRead", "modelInputTokens", "modelOutputTokens", "wallClockMilliseconds", "relationshipValidations"],
+          "properties": {
+            "sourceBytesRead": { "type": "integer", "minimum": 1 },
+            "modelInputTokens": { "type": "integer", "minimum": 1 },
+            "modelOutputTokens": { "type": "integer", "minimum": 1 },
+            "wallClockMilliseconds": { "type": "integer", "minimum": 1 },
+            "relationshipValidations": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "usage": {
+          "type": "object", "additionalProperties": false,
+          "required": ["sourceBytesRead", "modelInputTokens", "modelOutputTokens", "wallClockMilliseconds", "relationshipValidations"],
+          "properties": {
+            "sourceBytesRead": { "type": "integer", "minimum": 0 },
+            "modelInputTokens": { "type": "integer", "minimum": 0 },
+            "modelOutputTokens": { "type": "integer", "minimum": 0 },
+            "wallClockMilliseconds": { "type": "integer", "minimum": 0 },
+            "relationshipValidations": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "exhaustedDimensions": { "type": "array", "uniqueItems": true, "items": { "enum": ["sourceBytesRead", "modelInputTokens", "modelOutputTokens", "wallClockMilliseconds", "relationshipValidations"] } },
+        "stoppedAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "acceptedAt": { "type": "string", "format": "date-time" },
+    "observedAt": { "type": "string", "format": "date-time" },
+    "startedAt": { "type": ["string", "null"], "format": "date-time" },
+    "completedAt": { "type": ["string", "null"], "format": "date-time" },
+    "failureReason": { "type": ["string", "null"], "maxLength": 1000 }
+  }
+}

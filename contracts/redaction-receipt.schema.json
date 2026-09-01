@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/redaction-receipt.schema.json",
+  "title": "Payload Redaction Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["receiptId", "payloadHash", "contentHash", "sourceId", "sourceVersion", "authorizationScopeId", "policyHash", "scannerVersion", "classification", "actions", "containsRawSourceValues", "minimumGroupSizeApplied", "scannedAt", "issuerKeyId", "signatureAlgorithm", "signature"],
+  "properties": {
+    "receiptId": { "type": "string", "format": "uuid" },
+    "payloadHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical decision-bearing content envelope defined by the containing contract, including identity and revocation coordinates to prevent replay." },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "scannerVersion": { "type": "string", "minLength": 1 },
+    "classification": { "enum": ["public", "internal", "restricted", "highly-restricted", "unknown"] },
+    "actions": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["aggregate-only", "counts-only", "redacted-text", "identifier-hash", "small-group-suppression", "exclude"] } },
+    "containsRawSourceValues": { "const": false },
+    "minimumGroupSizeApplied": { "type": ["integer", "null"], "minimum": 1 },
+    "scannedAt": { "type": "string", "format": "date-time" },
+    "issuerKeyId": { "type": "string", "minLength": 1, "maxLength": 255 },
+    "signatureAlgorithm": { "const": "ed25519" },
+    "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$", "minLength": 80, "maxLength": 100, "description": "Ed25519 signature over the RFC 8785 canonical receipt with signature removed." }
+  }
+}

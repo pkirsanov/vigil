@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/projection-coordinate.schema.json",
+  "title": "Sealed Projection Coordinate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sourceId",
+    "sourceVersion",
+    "projectionId",
+    "manifestVersion",
+    "connectorId",
+    "connectorVersion",
+    "connectorCapabilityHash",
+    "authorizationScopeId",
+    "policyHash",
+    "taxonomyVersion",
+    "pipelineVersion",
+    "methodSetHash",
+    "evidenceCutoff",
+    "revocationEpoch"
+  ],
+  "properties": {
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "projectionId": { "type": "string", "format": "uuid" },
+    "manifestVersion": { "type": "string", "minLength": 1 },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "taxonomyVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "pipelineVersion": { "type": "string", "minLength": 1 },
+    "methodSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "evidenceCutoff": { "type": "string", "format": "date-time" },
+    "revocationEpoch": { "type": "integer", "minimum": 0 }
+  }
+}

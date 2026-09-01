@@ -1,0 +1,450 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/profile-manifest.schema.json",
+  "title": "Agent-Ready Profile Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractVersion",
+    "manifestId",
+    "manifestVersion",
+    "hashAlgorithm",
+    "contentHash",
+    "projectionId",
+    "revocationEpoch",
+    "sourceId",
+    "connectorId",
+    "connectorVersion",
+    "connectorCapabilityHash",
+    "sourceVersion",
+    "policyHash",
+    "authorizationScopeId",
+    "taxonomyVersion",
+    "pipelineVersion",
+    "methodSetHash",
+    "evidenceCutoff",
+    "generatedAt",
+    "responsePolicy",
+    "summary",
+    "assets",
+    "relationships",
+    "businessModel",
+    "modelPatterns",
+    "quality",
+    "indexes",
+    "sourceExtensions",
+    "coverage",
+    "evidenceRefs"
+  ],
+  "properties": {
+    "contractVersion": { "const": "1.0.0" },
+    "manifestId": { "type": "string", "format": "uuid" },
+    "manifestVersion": { "type": "string", "minLength": 1 },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical manifest with contentHash removed." },
+    "projectionId": { "type": "string", "format": "uuid" },
+    "revocationEpoch": { "type": "integer", "minimum": 0 },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "taxonomyVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "pipelineVersion": { "const": "1.0.0" },
+    "methodSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "evidenceCutoff": { "type": "string", "format": "date-time" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "responsePolicy": { "$ref": "agent-response-policy.schema.json" },
+    "summary": { "type": "string", "minLength": 1, "maxLength": 4000 },
+    "assets": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/asset" }
+    },
+    "relationships": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relationship" }
+    },
+    "businessModel": { "$ref": "business-model.schema.json" },
+    "modelPatterns": { "type": "array", "items": { "$ref": "#/$defs/modelPattern" } },
+    "quality": { "$ref": "#/$defs/quality" },
+    "indexes": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          { "$ref": "index-manifest.schema.json" },
+          { "properties": { "status": { "const": "ready" } } }
+        ]
+      }
+    },
+    "sourceExtensions": {
+      "type": "array",
+      "items": { "$ref": "source-profile-extension.schema.json" }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["score", "missingSections", "failedStages", "sampleCoverage"],
+      "properties": {
+        "score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "missingSections": { "type": "array", "items": { "type": "string" } },
+        "failedStages": { "type": "array", "items": { "type": "string" } },
+        "sampleCoverage": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "format": "uuid" }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["subject", "claim", "evidenceRefs"],
+        "properties": {
+          "subject": { "type": "string" },
+          "claim": { "type": "string" },
+          "evidenceRefs": { "type": "array", "items": { "type": "string", "format": "uuid" } }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "dataHandling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "containsRawSourceValues", "redactionMethod", "minimumGroupSizeApplied"],
+      "properties": {
+        "classification": { "enum": ["public", "internal", "restricted", "highly-restricted", "unknown"] },
+        "containsRawSourceValues": { "const": false },
+        "redactionMethod": { "type": "string", "minLength": 1 },
+        "minimumGroupSizeApplied": { "type": ["integer", "null"], "minimum": 1 }
+      }
+    },
+    "aggregateStatistics": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Aggregate-only. Raw values, sample rows, and value exemplars are forbidden in a served projection.",
+      "required": ["method", "methodVersion", "exact", "sampleEvidenceRef", "families", "minimumGroupSizeApplied"],
+      "properties": {
+        "method": { "type": "string", "minLength": 1 },
+        "methodVersion": { "type": "string", "minLength": 1 },
+        "exact": { "type": "boolean" },
+        "sampleEvidenceRef": { "type": "string", "format": "uuid" },
+        "families": {
+          "type": "array", "minItems": 7, "maxItems": 7,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["family", "outcome", "reason"],
+            "properties": {
+              "family": { "enum": ["missingness", "cardinality", "distribution", "format", "temporal", "outlier", "nesting"] },
+              "outcome": { "enum": ["passed", "failed", "not-applicable", "unavailable"] },
+              "reason": { "type": ["string", "null"], "maxLength": 500 }
+            }
+          }
+        },
+        "count": { "type": ["integer", "null"], "minimum": 0 },
+        "nullRatio": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "distinctCount": { "type": ["integer", "null"], "minimum": 0 },
+        "distinctCountIsApproximate": { "type": "boolean" },
+        "minimum": { "type": ["number", "null"] },
+        "maximum": { "type": ["number", "null"] },
+        "minimumTime": { "type": ["string", "null"], "format": "date-time" },
+        "maximumTime": { "type": ["string", "null"], "format": "date-time" },
+        "mean": { "type": ["number", "null"] },
+        "variance": { "type": ["number", "null"], "minimum": 0 },
+        "standardDeviation": { "type": ["number", "null"], "minimum": 0 },
+        "interquartileRange": { "type": ["number", "null"], "minimum": 0 },
+        "concentration": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "quantiles": { "type": "object", "additionalProperties": { "type": ["number", "string", "null"] } },
+        "entropy": { "type": ["number", "null"], "minimum": 0 },
+        "formatShares": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 } },
+        "outlierRatio": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "minimumLength": { "type": ["integer", "null"], "minimum": 0 },
+        "maximumLength": { "type": ["integer", "null"], "minimum": 0 },
+        "meanLength": { "type": ["number", "null"], "minimum": 0 },
+        "cadenceSeconds": { "type": ["number", "null"], "minimum": 0 },
+        "maximumGapSeconds": { "type": ["number", "null"], "minimum": 0 },
+        "lateArrivalRatio": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "nestingMaximumDepth": { "type": ["integer", "null"], "minimum": 0 },
+        "variantCount": { "type": ["integer", "null"], "minimum": 0 },
+        "sampleCoverage": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "minimumGroupSizeApplied": { "type": ["integer", "null"], "minimum": 1 }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assetId", "sourceId", "authorizationScopeId", "name", "kind", "semanticStatus", "role", "purpose", "dataHandling", "fields", "identities", "freshness", "quality", "evidenceRefs"],
+      "properties": {
+        "assetId": { "type": "string", "minLength": 1 },
+        "sourceId": { "type": "string", "format": "uuid" },
+        "authorizationScopeId": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "kind": { "type": "string", "minLength": 1 },
+        "semanticStatus": { "enum": ["available", "partial", "unavailable", "not-applicable"] },
+        "role": { "enum": ["current-state", "event-log", "transaction", "periodic-snapshot", "accumulating-snapshot", "entity-history", "reference", "dimension", "fact", "bridge", "hierarchy", "edge-list", "aggregate", "materialized-projection", "configuration", "audit", "document-collection", "media-collection", "unknown"] },
+        "purpose": { "type": ["string", "null"], "maxLength": 2000 },
+        "domain": { "type": ["string", "null"], "maxLength": 500 },
+        "dataHandling": { "$ref": "#/$defs/dataHandling" },
+        "fields": { "type": "array", "items": { "$ref": "#/$defs/field" } },
+        "identities": { "type": "array", "items": { "$ref": "#/$defs/identity" } },
+        "grain": { "$ref": "#/$defs/grain" },
+        "freshness": { "$ref": "#/$defs/freshness" },
+        "quality": { "$ref": "#/$defs/quality" },
+        "lineage": { "type": "array", "items": { "type": "string" } },
+        "usageHints": { "type": "array", "items": { "type": "string" } },
+        "evidenceRefs": { "type": "array", "items": { "type": "string", "format": "uuid" } }
+      }
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "physicalType", "semanticRoles", "statistics", "dataHandling", "policyTags", "confidence", "evidenceRefs"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "physicalType": { "type": "string", "minLength": 1 },
+        "typeVariants": { "type": "array", "items": { "type": "string" } },
+        "semanticRoles": { "type": "array", "uniqueItems": true, "items": { "enum": ["identity", "scope-identity", "version-identity", "foreign-reference", "temporal-instant", "temporal-interval", "measure-additive", "measure-semi-additive", "measure-non-additive", "categorical", "ordinal", "boolean", "descriptive-text", "display-label", "path", "location", "contact", "code", "status", "policy-tag", "embedding", "nested-object", "media-reference", "unknown"] } },
+        "businessMeaning": { "type": ["string", "null"], "maxLength": 2000 },
+        "statistics": { "$ref": "#/$defs/aggregateStatistics" },
+        "dataHandling": { "$ref": "#/$defs/dataHandling" },
+        "policyTags": { "type": "array", "items": { "type": "string" } },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidenceRefs": { "type": "array", "items": { "type": "string", "format": "uuid" } }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identityType", "scopePaths", "localKeyPaths", "versionPaths", "validationStatus", "confidence", "evidenceRefs"],
+      "properties": {
+        "identityType": { "enum": ["single", "composite", "scoped-composite", "versioned", "content-addressed", "unknown"] },
+        "scopePaths": { "type": "array", "items": { "type": "string" } },
+        "localKeyPaths": { "type": "array", "items": { "type": "string" } },
+        "versionPaths": { "type": "array", "items": { "type": "string" } },
+        "validationStatus": { "enum": ["hypothesis", "validated", "rejected", "unavailable"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidenceRefs": { "type": "array", "items": { "type": "string", "format": "uuid" } }
+      }
+    },
+    "grain": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["description", "paths", "validationStatus", "confidence", "evidenceRefs"],
+      "properties": {
+        "description": { "type": "string" },
+        "paths": { "type": "array", "items": { "type": "string" } },
+        "validationStatus": { "enum": ["hypothesis", "validated", "rejected", "unavailable"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidenceRefs": { "type": "array", "items": { "type": "string", "format": "uuid" } }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relationshipId", "kind", "left", "right", "predicates", "validationStatus", "validationEvidenceRef", "validationBasis", "validationExact", "validationPlanHash", "confidence", "coverage", "cardinality", "normalization", "recommendedOperation", "evidenceRefs"],
+      "properties": {
+        "relationshipId": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["key-reference", "scoped-key-reference", "version-reference", "parent-child", "containment", "derivation", "lineage", "temporal-alignment", "state-transition", "citation", "entity-mention", "semantic-similarity", "co-usage", "bridge-resolution", "aggregate-to-detail", "inferred-path"] },
+        "left": { "$ref": "#/$defs/endpoint" },
+        "right": { "$ref": "#/$defs/endpoint" },
+        "predicates": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["leftPath", "rightPath", "operator"],
+            "properties": {
+              "leftPath": { "type": "string", "minLength": 1 },
+              "rightPath": { "type": "string", "minLength": 1 },
+              "operator": { "enum": ["equals", "temporal-overlap", "contains", "resolves-to", "native-edge"] }
+            }
+          }
+        },
+        "validationStatus": { "enum": ["hypothesis", "validated", "inferred-path", "rejected", "unavailable"] },
+        "validationEvidenceRef": { "type": ["string", "null"], "format": "uuid" },
+        "validationBasis": { "enum": ["empirical", "authoritative-constraint"] },
+        "validationExact": { "type": "boolean" },
+        "validationPlanHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["left", "right", "matches", "confidenceBound", "method"],
+          "properties": {
+            "left": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+            "right": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+            "matches": { "type": ["integer", "null"], "minimum": 0 },
+            "confidenceBound": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+            "method": { "type": "string", "minLength": 1 }
+          }
+        },
+        "cardinality": { "enum": ["one-to-one", "one-to-many", "many-to-one", "many-to-many", "unknown"] },
+        "normalization": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["predicateIndex", "family", "leftExpression", "rightExpression"],
+            "properties": {
+              "predicateIndex": { "type": "integer", "minimum": 0 },
+              "family": { "enum": ["exact", "case-folded-text", "canonical-number", "canonical-identifier", "normalized-path", "normalized-uri", "normalized-time", "connector-native"] },
+              "leftExpression": { "type": "string", "minLength": 1 },
+              "rightExpression": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "recommendedOperation": { "enum": ["inner", "left-preserving", "right-preserving", "lookup", "path-only", "none"] },
+        "path": { "type": "array", "items": { "type": "string" } },
+        "warnings": { "type": "array", "items": { "type": "string" } },
+        "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "validationStatus": { "const": "validated" } } },
+          "then": { "properties": { "validationEvidenceRef": { "type": "string", "format": "uuid" } } }
+        }
+      ]
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "sourceVersion", "authorizationScopeId", "revocationEpoch", "assetId", "paths"],
+      "properties": {
+        "sourceId": { "type": "string", "format": "uuid" },
+        "sourceVersion": { "type": "string", "minLength": 1 },
+        "authorizationScopeId": { "type": "string", "minLength": 1 },
+        "revocationEpoch": { "type": "integer", "minimum": 0 },
+        "assetId": { "type": "string", "minLength": 1 },
+        "paths": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "modelPattern": {
+      "type": "object", "additionalProperties": false,
+      "required": ["patternId", "kind", "name", "description", "maturity", "confidence", "assetIds", "evidenceRefs", "alternatives", "conflicts", "details"],
+      "properties": {
+        "patternId": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["storage", "hierarchy", "graph", "dimensional", "temporal"] },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "maturity": { "enum": ["inferred", "validated", "curated", "usage-proven", "unavailable"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "assetIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "evidenceRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "format": "uuid" } },
+        "alternatives": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "conflicts": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "details": { "type": "object" }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "storage" } } }, "then": { "properties": { "details": { "$ref": "#/$defs/storagePatternDetails" } } } },
+        { "if": { "properties": { "kind": { "const": "hierarchy" } } }, "then": { "properties": { "details": { "$ref": "#/$defs/hierarchyPatternDetails" } } } },
+        { "if": { "properties": { "kind": { "const": "graph" } } }, "then": { "properties": { "details": { "$ref": "#/$defs/graphPatternDetails" } } } },
+        { "if": { "properties": { "kind": { "const": "dimensional" } } }, "then": { "properties": { "details": { "$ref": "#/$defs/dimensionalPatternDetails" } } } },
+        { "if": { "properties": { "kind": { "const": "temporal" } } }, "then": { "properties": { "details": { "$ref": "#/$defs/temporalPatternDetails" } } } }
+      ]
+    },
+    "storagePatternDetails": {
+      "type": "object", "additionalProperties": false,
+      "required": ["layout", "historyMode", "identityPaths", "versionPaths"],
+      "properties": {
+        "layout": { "enum": ["current-state", "append-only", "versioned-history", "snapshot", "bridge", "aggregate"] },
+        "historyMode": { "enum": ["none", "overwrite", "append", "versioned"] },
+        "identityPaths": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "versionPaths": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "hierarchyPatternDetails": {
+      "type": "object", "additionalProperties": false,
+      "required": ["levelPaths", "parentRelationshipIds"],
+      "properties": {
+        "levelPaths": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "parentRelationshipIds": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "graphPatternDetails": {
+      "type": "object", "additionalProperties": false,
+      "required": ["nodeAssetIds", "edgeRelationshipIds", "directed"],
+      "properties": {
+        "nodeAssetIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "edgeRelationshipIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "directed": { "type": "boolean" }
+      }
+    },
+    "dimensionalPatternDetails": {
+      "type": "object", "additionalProperties": false,
+      "required": ["factAssetIds", "dimensionAssetIds", "relationshipIds"],
+      "properties": {
+        "factAssetIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "dimensionAssetIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "relationshipIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "temporalPatternDetails": {
+      "type": "object", "additionalProperties": false,
+      "required": ["eventAssetIds", "entityAssetIds", "timePaths", "relationshipIds"],
+      "properties": {
+        "eventAssetIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "entityAssetIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "timePaths": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "relationshipIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "observedAt"],
+      "properties": {
+        "state": { "enum": ["fresh", "stale", "expired", "unknown", "not-applicable"] },
+        "latestDataAt": { "type": ["string", "null"], "format": "date-time" },
+        "expectedCadence": { "type": ["string", "null"] },
+        "observedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["overall", "dimensions", "warnings"],
+      "properties": {
+        "overall": { "$ref": "#/$defs/qualityResult" },
+        "dimensions": { "type": "object", "additionalProperties": { "$ref": "#/$defs/qualityResult" } },
+        "warnings": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "qualityResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["granularity", "applicability", "outcome", "score", "reason", "evidenceRefs"],
+      "properties": {
+        "granularity": { "enum": ["source", "asset", "field", "relationship"] },
+        "applicability": { "enum": ["applicable", "not-applicable", "unavailable"] },
+        "outcome": { "enum": ["passed", "failed", "not-applicable", "unavailable", "not-run"] },
+        "score": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "reason": { "type": ["string", "null"], "maxLength": 1000 },
+        "evidenceRefs": { "type": "array", "uniqueItems": true, "items": { "type": "string", "format": "uuid" } }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "outcome": { "enum": ["passed", "failed"] } } },
+          "then": {
+            "properties": {
+              "applicability": { "const": "applicable" },
+              "score": { "type": "number", "minimum": 0, "maximum": 1 },
+              "evidenceRefs": { "minItems": 1 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "outcome": { "enum": ["not-applicable", "unavailable", "not-run"] } } },
+          "then": {
+            "properties": {
+              "score": { "type": "null" },
+              "reason": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

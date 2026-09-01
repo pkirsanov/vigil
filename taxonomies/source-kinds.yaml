@@ -1,0 +1,52 @@
+taxonomyVersion: 1.0.0
+sourceKinds:
+  - id: relational
+    unit: table
+    members: [column, row, constraint, view, routine]
+    relationshipValidators: [key-overlap, constraint-check, query-history]
+  - id: tabular-file
+    unit: file-table
+    members: [column, row, partition]
+    relationshipValidators: [key-overlap, partition-correlation]
+  - id: semi-structured
+    unit: record-collection
+    members: [path, object, array, variant]
+    relationshipValidators: [path-value-overlap, reference-resolution]
+  - id: document-corpus
+    unit: document
+    members: [section, chunk, entity-mention, claim, citation]
+    relationshipValidators: [explicit-reference, entity-resolution, citation-check]
+  - id: api
+    unit: operation
+    members: [parameter, response-field, error, pagination-contract]
+    relationshipValidators: [contract-reference, sampled-response-check]
+  - id: stream
+    unit: event-type
+    members: [event, field, partition, state-transition, time-window]
+    relationshipValidators: [correlation-key-overlap, sequence-check, temporal-alignment]
+  - id: graph
+    unit: node-or-edge-type
+    members: [property, label, direction, path]
+    relationshipValidators: [edge-existence, endpoint-type-check, path-support]
+  - id: multimodal
+    unit: media-asset
+    members: [segment, frame, region, transcript, extracted-text, embedding]
+    relationshipValidators: [shared-identifier, temporal-alignment, cross-modal-similarity]
+  - id: custom
+    unit: connector-defined
+    members: [connector-defined]
+    relationshipValidators: [connector-defined]
+
+capabilities:
+  - enumerate-assets
+  - read-structure
+  - estimate-size
+  - deterministic-sample
+  - aggregate-statistics
+  - read-constraints
+  - read-lineage
+  - read-usage-history
+  - read-change-feed
+  - fetch-content
+  - execute-safe-probe
+  - resolve-reference

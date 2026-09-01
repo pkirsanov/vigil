@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/agent-response-policy.schema.json",
+  "title": "Agent Response Safety Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "maximumSerializedBytes",
+    "maximumTextCharacters",
+    "defaultContentProvenance",
+    "serviceGeneratedPathPatterns",
+    "sourceDerivedPathPatterns"
+  ],
+  "properties": {
+    "maximumSerializedBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10485760,
+      "description": "Hard upper bound on the UTF-8 RFC 8785 canonical response body. Runtime serialization stops before this limit is exceeded."
+    },
+    "maximumTextCharacters": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4000,
+      "description": "Hard upper bound applied to every free-text scalar, including fields whose local schema is more restrictive."
+    },
+    "defaultContentProvenance": {
+      "enum": ["service-generated", "source-derived"],
+      "description": "Provenance applied to every free-text JSON pointer not matched by an override pattern."
+    },
+    "serviceGeneratedPathPatterns": {
+      "type": "array",
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+    },
+    "sourceDerivedPathPatterns": {
+      "type": "array",
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+    }
+  }
+}

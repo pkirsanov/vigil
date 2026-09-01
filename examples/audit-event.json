@@ -1,0 +1,48 @@
+{
+  "eventId": "40000000-0000-4000-8000-000000000001",
+  "sequenceNumber": 0,
+  "occurredAt": "2026-01-01T00:00:00Z",
+  "action": "run.start",
+  "outcome": "succeeded",
+  "actor": {
+    "subjectId": "7960befad07fdd60ae0edea6f19a4f629f5e714526db35421602c9ffcfb10b4e",
+    "subjectHashSaltId": "conformance-deployment-v1",
+    "actorType": "service",
+    "authenticationMethod": "signed-token",
+    "delegatedBySubjectId": null
+  },
+  "authorization": {
+    "scopeId": "authorized-assets",
+    "decision": "allowed",
+    "requiredPermissions": [
+      "profile.write"
+    ],
+    "grantedPermissions": [
+      "profile.write"
+    ],
+    "reasonCode": null
+  },
+  "correlationId": "40000000-0000-4000-8000-000000000002",
+  "traceId": "0123456789abcdef0123456789abcdef",
+  "runId": "33333333-3333-4333-8333-333333333333",
+  "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "target": {
+    "resourceType": "run",
+    "resourceId": "33333333-3333-4333-8333-333333333333",
+    "sourceId": "11111111-1111-4111-8111-111111111111",
+    "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+  },
+  "requestSummary": {
+    "mode": "full",
+    "trigger": "registration"
+  },
+  "resultSummary": {
+    "state": "running"
+  },
+  "errorCode": null,
+  "integrity": {
+    "hashAlgorithm": "sha256-jcs",
+    "payloadSha256": "b825743b844873a88d37ceeecfb84ba514335f0d351c1ca32c7c3a097a67a286",
+    "previousEventSha256": null
+  }
+}

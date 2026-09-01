@@ -1,0 +1,12 @@
+{
+  "manifestId": "33000000-0000-4000-8000-000000000001",
+  "ordinal": 0,
+  "checkpointUnit": "asset",
+  "completedItemIds": [
+    "asset:work-events"
+  ],
+  "failedItemIds": [],
+  "pendingItemIds": [
+    "asset:work-records"
+  ]
+}

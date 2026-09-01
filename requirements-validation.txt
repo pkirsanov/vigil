@@ -1,0 +1,6 @@
+jsonschema==4.25.1
+openapi-spec-validator==0.7.2
+PyYAML==6.0.3
+gherkin-official==42.0.1
+rfc8785==0.1.4
+cryptography==46.0.7

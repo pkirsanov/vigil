@@ -1,0 +1,12 @@
+{
+  "registryVersion": "1.0.0",
+  "schemas": [
+    {
+      "schemaId": "connector-metrics",
+      "schemaVersion": "1.0.0",
+      "schemaPath": "contracts/connector-metrics-extension.schema.json",
+      "schemaHash": "839e79edf7dc0b8e37f2bbc4e11f440115449de5db2809e5e8cb1ccf35a05985",
+      "allowedSourceKinds": ["relational", "tabular-file", "semi-structured", "api", "stream", "graph", "multimodal", "custom"]
+    }
+  ]
+}

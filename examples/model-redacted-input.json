@@ -1,0 +1,25 @@
+{
+  "sourceId": "11111111-1111-4111-8111-111111111111",
+  "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+  "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "authorizationScopeId": "authorized-assets",
+  "evidenceSetHash": "ec2b9ae498b6560a4a9cf813572340b72c71d37cc3623bf9070d3c7210e0981b",
+  "asset": {
+    "assetId": "work-records",
+    "kind": "table",
+    "name": "work-records",
+    "fields": []
+  },
+  "nativeConstraints": [],
+  "validatedRelationshipSummaries": [],
+  "evidenceIds": [
+    "22222222-2222-4222-8222-222222222222",
+    "66666666-6666-4666-8666-666666666666",
+    "77777777-7777-4777-8777-777777777777",
+    "88888888-8888-4888-8888-888888888888",
+    "99999999-9999-4999-8999-999999999999",
+    "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+    "12121212-1212-4212-8212-121212121212",
+    "13131313-1313-4313-8313-131313131313"
+  ]
+}

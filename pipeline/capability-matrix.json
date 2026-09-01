@@ -1,0 +1,32 @@
+{
+  "matrixVersion": "1.0.0",
+  "authorizationOperations": [
+    "enumerate",
+    "read-structure",
+    "read-content",
+    "sample",
+    "aggregate",
+    "read-constraints",
+    "read-lineage",
+    "read-usage-history",
+    "read-change-feed",
+    "resolve-reference",
+    "safe-probe"
+  ],
+  "capabilities": [
+    { "id": "enumerate-assets", "requiresAuthorization": ["enumerate"] },
+    { "id": "read-structure", "requiresAuthorization": ["read-structure"] },
+    { "id": "estimate-size", "requiresAuthorization": ["read-structure"] },
+    { "id": "deterministic-sample", "requiresAuthorization": ["sample", "read-content"] },
+    { "id": "aggregate-statistics", "requiresAuthorization": ["aggregate"] },
+    { "id": "read-constraints", "requiresAuthorization": ["read-constraints"] },
+    { "id": "read-lineage", "requiresAuthorization": ["read-lineage"] },
+    { "id": "read-usage-history", "requiresAuthorization": ["read-usage-history"] },
+    { "id": "read-change-feed", "requiresAuthorization": ["read-change-feed"] },
+    { "id": "fetch-content", "requiresAuthorization": ["read-content"] },
+    { "id": "execute-safe-probe", "requiresAuthorization": ["safe-probe"] },
+    { "id": "resolve-reference", "requiresAuthorization": ["resolve-reference"] }
+  ],
+  "negotiationRule": "effective = requested intersect connector-declared intersect policy-authorized",
+  "denyByDefault": true
+}

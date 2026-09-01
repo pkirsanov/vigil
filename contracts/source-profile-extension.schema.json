@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/source-profile-extension.schema.json",
+  "title": "Source-Specific Profile Extension",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["extensionId", "extensionVersion", "sourceKind", "sourceId", "sourceVersion", "connectorId", "connectorVersion", "connectorCapabilityHash", "authorizationScopeId", "revocationEpoch", "policyHash", "assetId", "payloadKind", "payload", "payloadHash", "dataHandling", "redactionReceipt", "evidenceRefs"],
+  "properties": {
+    "extensionId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "extensionVersion": { "type": "string", "minLength": 1 },
+    "sourceKind": { "enum": ["relational", "tabular-file", "semi-structured", "document-corpus", "api", "stream", "graph", "multimodal", "custom"] },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "revocationEpoch": { "type": "integer", "minimum": 0 },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "assetId": { "type": "string", "minLength": 1 },
+    "payloadKind": { "enum": ["nested-variants", "document-structure", "api-operation", "stream-window", "graph-shape", "media-segments", "connector-defined"] },
+    "payloadSchemaId": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._/-]{2,127}$" },
+    "payloadSchemaVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "payloadSchemaHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "payload": { "type": "object" },
+    "payloadHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "dataHandling": { "$ref": "profile-manifest.schema.json#/$defs/dataHandling" },
+    "redactionReceipt": { "$ref": "redaction-receipt.schema.json", "description": "contentHash covers the RFC 8785 canonical extension envelope { extensionId, extensionVersion, assetId, sourceKind, connectorId, connectorVersion, connectorCapabilityHash, revocationEpoch, payloadKind, payloadSchemaId, payloadSchemaVersion, payloadSchemaHash, payloadHash, dataHandling, evidenceRefs }." },
+    "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } }
+  },
+  "allOf": [
+    { "if": { "required": ["payloadKind"], "properties": { "payloadKind": { "const": "nested-variants" } } }, "then": { "properties": { "payload": { "$ref": "#/$defs/nestedVariants" } } } },
+    { "if": { "required": ["payloadKind"], "properties": { "payloadKind": { "const": "document-structure" } } }, "then": { "properties": { "payload": { "$ref": "#/$defs/documentStructure" } } } },
+    { "if": { "required": ["payloadKind"], "properties": { "payloadKind": { "const": "api-operation" } } }, "then": { "properties": { "payload": { "$ref": "#/$defs/apiOperation" } } } },
+    { "if": { "required": ["payloadKind"], "properties": { "payloadKind": { "const": "stream-window" } } }, "then": { "properties": { "payload": { "$ref": "#/$defs/streamWindow" } } } },
+    { "if": { "required": ["payloadKind"], "properties": { "payloadKind": { "const": "graph-shape" } } }, "then": { "properties": { "payload": { "$ref": "#/$defs/graphShape" } } } },
+    { "if": { "required": ["payloadKind"], "properties": { "payloadKind": { "const": "media-segments" } } }, "then": { "properties": { "payload": { "$ref": "#/$defs/mediaSegments" } } } },
+    { "if": { "required": ["payloadKind"], "properties": { "payloadKind": { "const": "connector-defined" } } }, "then": { "required": ["payloadSchemaId", "payloadSchemaVersion", "payloadSchemaHash"], "description": "Payload is validated against the allowlisted schema identified by payloadSchemaId, payloadSchemaVersion, and payloadSchemaHash." } }
+  ],
+  "$defs": {
+    "nestedVariants": {
+      "type": "object", "additionalProperties": false,
+      "required": ["pathCount", "variantCount", "maximumDepth", "sampleCoverage"],
+      "properties": {
+        "pathCount": { "type": "integer", "minimum": 0 },
+        "variantCount": { "type": "integer", "minimum": 0 },
+        "maximumDepth": { "type": "integer", "minimum": 0 },
+        "sampleCoverage": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "documentStructure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["documentCount", "sectionCount", "chunkCount", "mediaTypeCounts"],
+      "properties": {
+        "documentCount": { "type": "integer", "minimum": 0 },
+        "sectionCount": { "type": "integer", "minimum": 0 },
+        "chunkCount": { "type": "integer", "minimum": 0 },
+        "mediaTypeCounts": { "type": "object", "maxProperties": 100, "propertyNames": { "type": "string", "maxLength": 200 }, "additionalProperties": { "type": "integer", "minimum": 0 } }
+      }
+    },
+    "apiOperation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["operationCount", "parameterCount", "responsePathCount", "errorVariantCount", "paginationObserved"],
+      "properties": {
+        "operationCount": { "type": "integer", "minimum": 0 },
+        "parameterCount": { "type": "integer", "minimum": 0 },
+        "responsePathCount": { "type": "integer", "minimum": 0 },
+        "errorVariantCount": { "type": "integer", "minimum": 0 },
+        "paginationObserved": { "type": "boolean" }
+      }
+    },
+    "streamWindow": {
+      "type": "object", "additionalProperties": false,
+      "required": ["eventTypeCount", "partitionCount", "windowStart", "windowEnd", "eventsInspected", "schemaVariantCount"],
+      "properties": {
+        "eventTypeCount": { "type": "integer", "minimum": 0 },
+        "partitionCount": { "type": "integer", "minimum": 0 },
+        "windowStart": { "type": "string", "format": "date-time" },
+        "windowEnd": { "type": "string", "format": "date-time" },
+        "eventsInspected": { "type": "integer", "minimum": 0 },
+        "schemaVariantCount": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "graphShape": {
+      "type": "object", "additionalProperties": false,
+      "required": ["nodeTypeCount", "edgeTypeCount", "propertyCount", "maximumObservedPathDepth"],
+      "properties": {
+        "nodeTypeCount": { "type": "integer", "minimum": 0 },
+        "edgeTypeCount": { "type": "integer", "minimum": 0 },
+        "propertyCount": { "type": "integer", "minimum": 0 },
+        "maximumObservedPathDepth": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "mediaSegments": {
+      "type": "object", "additionalProperties": false,
+      "required": ["assetCount", "segmentCount", "frameCount", "transcriptSegmentCount", "opticalTextSegmentCount", "coverage"],
+      "properties": {
+        "assetCount": { "type": "integer", "minimum": 0 },
+        "segmentCount": { "type": "integer", "minimum": 0 },
+        "frameCount": { "type": "integer", "minimum": 0 },
+        "transcriptSegmentCount": { "type": "integer", "minimum": 0 },
+        "opticalTextSegmentCount": { "type": "integer", "minimum": 0 },
+        "coverage": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

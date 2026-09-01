@@ -1,0 +1,124 @@
+{
+  "inventoryId": "21000000-0000-4000-8000-000000000002",
+  "ordinal": 0,
+  "entries": [
+    {
+      "storeKind": "audit",
+      "artifactId": "audit:40000000-0000-4000-8000-000000000001"
+    },
+    {
+      "storeKind": "audit",
+      "artifactId": "audit:84000000-0000-4000-8000-000000000001"
+    },
+    {
+      "storeKind": "audit",
+      "artifactId": "audit:84000000-0000-4000-8000-000000000003"
+    },
+    {
+      "storeKind": "cache",
+      "artifactId": "cache:f9e29878557a2e3182b2f6d0ef0c0392adf8143c681c35f374502d18badc91d7:6ca0833426e05823501ce3be137e1571f345578f68ca77def33c1b9a4a0de38e"
+    },
+    {
+      "storeKind": "capability-manifest",
+      "artifactId": "capability:55555555-5555-4555-8555-555555555555"
+    },
+    {
+      "storeKind": "evidence",
+      "artifactId": "12121212-1212-4212-8212-121212121212"
+    },
+    {
+      "storeKind": "evidence",
+      "artifactId": "13131313-1313-4313-8313-131313131313"
+    },
+    {
+      "storeKind": "evidence",
+      "artifactId": "22222222-2222-4222-8222-222222222222"
+    },
+    {
+      "storeKind": "evidence",
+      "artifactId": "66666666-6666-4666-8666-666666666666"
+    },
+    {
+      "storeKind": "evidence",
+      "artifactId": "77777777-7777-4777-8777-777777777777"
+    },
+    {
+      "storeKind": "evidence",
+      "artifactId": "88888888-8888-4888-8888-888888888888"
+    },
+    {
+      "storeKind": "evidence",
+      "artifactId": "99999999-9999-4999-8999-999999999999"
+    },
+    {
+      "storeKind": "evidence",
+      "artifactId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    },
+    {
+      "storeKind": "faceted-index",
+      "artifactId": "faceted:18181818-1818-4818-8818-181818181818"
+    },
+    {
+      "storeKind": "graph-index",
+      "artifactId": "graph:16161616-1616-4616-8616-161616161616"
+    },
+    {
+      "storeKind": "lexical-index",
+      "artifactId": "lexical:14141414-1414-4414-8414-141414141414"
+    },
+    {
+      "storeKind": "model-output",
+      "artifactId": "model:50000000-0000-4000-8000-000000000001"
+    },
+    {
+      "storeKind": "parser-output",
+      "artifactId": "parser:60000000-0000-4000-8000-000000000001"
+    },
+    {
+      "storeKind": "profile-manifest",
+      "artifactId": "profile:44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "storeKind": "samples",
+      "artifactId": "sample:12121212-1212-4212-8212-121212121212"
+    },
+    {
+      "storeKind": "samples",
+      "artifactId": "sample:13131313-1313-4313-8313-131313131313"
+    },
+    {
+      "storeKind": "samples",
+      "artifactId": "sample:22222222-2222-4222-8222-222222222222"
+    },
+    {
+      "storeKind": "samples",
+      "artifactId": "sample:66666666-6666-4666-8666-666666666666"
+    },
+    {
+      "storeKind": "samples",
+      "artifactId": "sample:77777777-7777-4777-8777-777777777777"
+    },
+    {
+      "storeKind": "samples",
+      "artifactId": "sample:88888888-8888-4888-8888-888888888888"
+    },
+    {
+      "storeKind": "samples",
+      "artifactId": "sample:aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    },
+    {
+      "storeKind": "semantic-index",
+      "artifactId": "semantic:15151515-1515-4515-8515-151515151515"
+    },
+    {
+      "storeKind": "source-registration",
+      "artifactId": "source:11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "storeKind": "temporal-index",
+      "artifactId": "temporal:17171717-1717-4717-8717-171717171717"
+    }
+  ],
+  "hashAlgorithm": "sha256-jcs",
+  "contentHash": "c2b7f64870808c4a0fa8aba1d426f260c747b90327a78ee8582e1e1e8e4f176a"
+}

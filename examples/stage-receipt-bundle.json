@@ -1,0 +1,1042 @@
+{
+  "contractVersion": "1.0.0",
+  "runId": "33333333-3333-4333-8333-333333333333",
+  "receipts": [
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000001",
+      "receiptType": "source-registration-and-effective-capabilities",
+      "stageId": "register-negotiate",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:00:05Z",
+      "work": {
+        "expected": 1,
+        "attempted": 1,
+        "completed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "candidate",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [],
+      "outputs": [
+        {
+          "artifactType": "source-descriptor",
+          "artifactId": "11111111-1111-4111-8111-111111111111",
+          "artifactUri": "package://examples/source-descriptor.json",
+          "contentHash": "3653bd47c69469e3702da1598a339c9a361c99b6ef359fc22c24230b2b1ec8a4",
+          "itemCount": 1,
+          "countSelector": {
+            "kind": "document",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": null,
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000002",
+      "receiptType": "authorization-scope-and-policy-hash",
+      "stageId": "authorize-pre-read",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:00:10Z",
+      "work": {
+        "expected": 1,
+        "attempted": 1,
+        "completed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "candidate",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000001"
+      ],
+      "outputs": [
+        {
+          "artifactType": "policy",
+          "artifactId": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "artifactUri": "package://config/reference-policy.yaml",
+          "contentHash": "4b8fd27b52b28943c1f6c331851594bae81a329f5de3103eb478e3b4223ff7cd",
+          "itemCount": 1,
+          "countSelector": {
+            "kind": "document",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": null,
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000005",
+      "receiptType": "source-boundary-opened",
+      "stageId": "open-source-boundary",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:00:12Z",
+      "work": {
+        "expected": 1,
+        "attempted": 1,
+        "completed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "candidate",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000002"
+      ],
+      "outputs": [
+        {
+          "artifactType": "source-boundary",
+          "artifactId": "19000000-0000-4000-8000-000000000001-opening",
+          "artifactUri": "package://examples/source-boundary-opening.json",
+          "contentHash": "fc3b90ca70e50805e3a94a751ffc4002ee195fea9bf8816b14878fe8f746c876",
+          "itemCount": 1,
+          "countSelector": {
+            "kind": "document",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": null,
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000003",
+      "receiptType": "asset-and-field-inventory",
+      "stageId": "discover-structure",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:00:20Z",
+      "work": {
+        "expected": 2,
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000005"
+      ],
+      "outputs": [
+        {
+          "artifactType": "source-structure",
+          "artifactId": "19000000-0000-4000-8000-000000000002",
+          "artifactUri": "package://examples/source-structure.json",
+          "contentHash": "123a6e63fe8faa0d113f9e6fc712322fc7f4349515dcaf278fa539417862a382",
+          "itemCount": 2,
+          "countSelector": {
+            "kind": "structure-assets",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000004",
+      "receiptType": "field-handling-and-redaction-plan",
+      "stageId": "classify-redact",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:00:30Z",
+      "work": {
+        "expected": 9,
+        "attempted": 9,
+        "completed": 9,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000003"
+      ],
+      "outputs": [
+        {
+          "artifactType": "evidence-bundle",
+          "artifactId": "redacted-evidence",
+          "artifactUri": "package://examples/evidence-bundle.json",
+          "contentHash": "0183a724cfada389765d6413aaa5c72718f19a79facb9d07ed202c50868388f0",
+          "itemCount": 9,
+          "countSelector": {
+            "kind": "evidence-fields",
+            "evidenceKinds": [
+              "field-profile"
+            ]
+          }
+        },
+        {
+          "artifactType": "source-value-fingerprint-set",
+          "artifactId": "86000000-0000-4000-8000-000000000001",
+          "artifactUri": "package://examples/source-value-fingerprint-set.json",
+          "itemCount": 0,
+          "countSelector": {
+            "kind": "control-document",
+            "evidenceKinds": []
+          },
+          "contentHash": "0c602c722e1a1c05761c05dba7b827f94b9ca24ec83f8c92cf943519c814f9e3"
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000006",
+      "receiptType": "statistical-evidence-and-sample-receipts",
+      "stageId": "profile-statistics",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:01:00Z",
+      "work": {
+        "expected": 9,
+        "attempted": 9,
+        "completed": 9,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000004"
+      ],
+      "outputs": [
+        {
+          "artifactType": "evidence-bundle",
+          "artifactId": "statistical-evidence",
+          "artifactUri": "package://examples/evidence-bundle.json",
+          "contentHash": "0183a724cfada389765d6413aaa5c72718f19a79facb9d07ed202c50868388f0",
+          "itemCount": 9,
+          "countSelector": {
+            "kind": "evidence-fields",
+            "evidenceKinds": [
+              "field-profile"
+            ]
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000007",
+      "receiptType": "semantic-hypotheses-and-model-call-receipts",
+      "stageId": "extract-semantics",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:02:00Z",
+      "work": {
+        "expected": 2,
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000004"
+      ],
+      "outputs": [
+        {
+          "artifactType": "stage-output-inventory",
+          "artifactId": "extract-semantics-details",
+          "artifactUri": "package://examples/stage-output-details.json",
+          "contentHash": "cfc758b6634e1e8277f2696e260137fa63742dce110df2427c7660a31c9ffc40",
+          "countSelector": {
+            "kind": "stage-items",
+            "evidenceKinds": []
+          },
+          "itemCount": 2
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000008",
+      "receiptType": "identity-and-grain-outcomes",
+      "stageId": "validate-identities",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:03:00Z",
+      "work": {
+        "expected": 2,
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000006",
+        "90000000-0000-4000-8000-000000000007"
+      ],
+      "outputs": [
+        {
+          "artifactType": "evidence-bundle",
+          "artifactId": "identity-evidence",
+          "artifactUri": "package://examples/evidence-bundle.json",
+          "contentHash": "0183a724cfada389765d6413aaa5c72718f19a79facb9d07ed202c50868388f0",
+          "itemCount": 2,
+          "countSelector": {
+            "kind": "evidence-assets",
+            "evidenceKinds": [
+              "identity",
+              "grain"
+            ]
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000009",
+      "receiptType": "deduplicated-ranked-candidates",
+      "stageId": "generate-relationship-hypotheses",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:03:10Z",
+      "work": {
+        "expected": 1,
+        "attempted": 1,
+        "completed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000007"
+      ],
+      "outputs": [
+        {
+          "artifactType": "stage-output-inventory",
+          "artifactId": "generate-relationship-hypotheses-details",
+          "artifactUri": "package://examples/stage-output-details.json",
+          "contentHash": "cfc758b6634e1e8277f2696e260137fa63742dce110df2427c7660a31c9ffc40",
+          "countSelector": {
+            "kind": "stage-items",
+            "evidenceKinds": []
+          },
+          "itemCount": 1
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000010",
+      "receiptType": "relationship-validation-outcomes",
+      "stageId": "validate-relationships",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:04:00Z",
+      "work": {
+        "expected": 1,
+        "attempted": 1,
+        "completed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000009"
+      ],
+      "outputs": [
+        {
+          "artifactType": "evidence-bundle",
+          "artifactId": "relationship-validation",
+          "artifactUri": "package://examples/evidence-bundle.json",
+          "contentHash": "0183a724cfada389765d6413aaa5c72718f19a79facb9d07ed202c50868388f0",
+          "itemCount": 1,
+          "countSelector": {
+            "kind": "evidence-records",
+            "evidenceKinds": [
+              "relationship-validation"
+            ]
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000011",
+      "receiptType": "quality-freshness-and-failure-coverage",
+      "stageId": "quality-freshness",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed-partial",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:05:00Z",
+      "work": {
+        "expected": 2,
+        "attempted": 1,
+        "completed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 1,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000006"
+      ],
+      "outputs": [
+        {
+          "artifactType": "stage-output-inventory",
+          "artifactId": "quality-freshness-details",
+          "artifactUri": "package://examples/stage-output-details.json",
+          "contentHash": "cfc758b6634e1e8277f2696e260137fa63742dce110df2427c7660a31c9ffc40",
+          "countSelector": {
+            "kind": "stage-items",
+            "evidenceKinds": []
+          },
+          "itemCount": 1
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000012",
+      "receiptType": "lineage-and-privacy-filtered-usage-evidence",
+      "stageId": "lineage-usage",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "skipped",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:05:30Z",
+      "work": {
+        "expected": 2,
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 2,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000003"
+      ],
+      "outputs": [
+        {
+          "artifactType": "stage-output-inventory",
+          "artifactId": "lineage-usage-details",
+          "artifactUri": "package://examples/stage-output-details.json",
+          "contentHash": "cfc758b6634e1e8277f2696e260137fa63742dce110df2427c7660a31c9ffc40",
+          "countSelector": {
+            "kind": "stage-items",
+            "evidenceKinds": []
+          },
+          "itemCount": 0
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000013",
+      "receiptType": "asset-role-storage-hierarchy-and-model-patterns",
+      "stageId": "detect-model-patterns",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:06:00Z",
+      "work": {
+        "expected": 5,
+        "attempted": 5,
+        "completed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000008",
+        "90000000-0000-4000-8000-000000000010",
+        "90000000-0000-4000-8000-000000000011"
+      ],
+      "outputs": [
+        {
+          "artifactType": "profile-manifest",
+          "artifactId": "model-patterns",
+          "artifactUri": "package://examples/profile-manifest.json",
+          "contentHash": "1aeb70073a766a4d660ba8e0423c2a2c304cf0b15922accb6437a2a6bcd87124",
+          "itemCount": 5,
+          "countSelector": {
+            "kind": "profile-model-patterns",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000014",
+      "receiptType": "business-concept-and-scenario-hypotheses",
+      "stageId": "derive-business-model",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:07:00Z",
+      "work": {
+        "expected": 10,
+        "attempted": 10,
+        "completed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000007",
+        "90000000-0000-4000-8000-000000000013"
+      ],
+      "outputs": [
+        {
+          "artifactType": "profile-manifest",
+          "artifactId": "business-model",
+          "artifactUri": "package://examples/profile-manifest.json",
+          "contentHash": "1aeb70073a766a4d660ba8e0423c2a2c304cf0b15922accb6437a2a6bcd87124",
+          "itemCount": 10,
+          "countSelector": {
+            "kind": "profile-business-concepts",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000019",
+      "receiptType": "source-version-and-consistency-boundary",
+      "stageId": "verify-source-boundary",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:07:05Z",
+      "work": {
+        "expected": 1,
+        "attempted": 1,
+        "completed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000001",
+        "90000000-0000-4000-8000-000000000002",
+        "90000000-0000-4000-8000-000000000005",
+        "90000000-0000-4000-8000-000000000003",
+        "90000000-0000-4000-8000-000000000004",
+        "90000000-0000-4000-8000-000000000006",
+        "90000000-0000-4000-8000-000000000007",
+        "90000000-0000-4000-8000-000000000008",
+        "90000000-0000-4000-8000-000000000009",
+        "90000000-0000-4000-8000-000000000010",
+        "90000000-0000-4000-8000-000000000011",
+        "90000000-0000-4000-8000-000000000012",
+        "90000000-0000-4000-8000-000000000013",
+        "90000000-0000-4000-8000-000000000014"
+      ],
+      "outputs": [
+        {
+          "artifactType": "source-boundary",
+          "artifactId": "19000000-0000-4000-8000-000000000001-verification",
+          "artifactUri": "package://examples/source-boundary-verification.json",
+          "contentHash": "8a4aa2912b773efbf93de53acb2a14571ede83bd04d98440ed1474f7ff01f096",
+          "itemCount": 1,
+          "countSelector": {
+            "kind": "document",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000015",
+      "receiptType": "projection-scoped-index-manifests",
+      "stageId": "build-indexes",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:09:05Z",
+      "work": {
+        "expected": 5,
+        "attempted": 5,
+        "completed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000019"
+      ],
+      "outputs": [
+        {
+          "artifactType": "index-manifest-bundle",
+          "artifactId": "sealed-indexes",
+          "artifactUri": "package://examples/profile-manifest.json",
+          "contentHash": "1aeb70073a766a4d660ba8e0423c2a2c304cf0b15922accb6437a2a6bcd87124",
+          "itemCount": 5,
+          "countSelector": {
+            "kind": "profile-indexes",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000016",
+      "receiptType": "sealed-contract-valid-profile-and-capability-manifests",
+      "stageId": "build-manifests",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:10:00Z",
+      "work": {
+        "expected": 2,
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000015"
+      ],
+      "outputs": [
+        {
+          "artifactType": "profile-manifest",
+          "artifactId": "44444444-4444-4444-8444-444444444444",
+          "artifactUri": "package://examples/profile-manifest.json",
+          "contentHash": "1aeb70073a766a4d660ba8e0423c2a2c304cf0b15922accb6437a2a6bcd87124",
+          "itemCount": 1,
+          "countSelector": {
+            "kind": "document",
+            "evidenceKinds": []
+          }
+        },
+        {
+          "artifactType": "capability-manifest",
+          "artifactId": "55555555-5555-4555-8555-555555555555",
+          "artifactUri": "package://examples/capability-manifest.json",
+          "contentHash": "fe26e70d18404420ee4fd6e12e46c672406326df298f25a564c747c284632b7c",
+          "itemCount": 1,
+          "countSelector": {
+            "kind": "document",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000017",
+      "receiptType": "nonzero-retrieval-and-agent-readiness-results",
+      "stageId": "consumption-probes",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:10:15Z",
+      "work": {
+        "expected": 2,
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000015",
+        "90000000-0000-4000-8000-000000000016"
+      ],
+      "outputs": [
+        {
+          "artifactType": "retrieval-bundle",
+          "artifactId": "retrieval-conformance",
+          "artifactUri": "package://examples/retrieval-bundle.json",
+          "contentHash": "74e35f0b835bb245b54639a87f2d0f2b5b1f0ca81a75f1363a403f57a36ee625",
+          "itemCount": 2,
+          "countSelector": {
+            "kind": "retrieval-products",
+            "evidenceKinds": []
+          }
+        },
+        {
+          "artifactType": "projection-safety-receipt",
+          "artifactId": "87000000-0000-4000-8000-000000000001",
+          "artifactUri": "package://examples/projection-safety-receipt.json",
+          "itemCount": 0,
+          "countSelector": {
+            "kind": "control-document",
+            "evidenceKinds": []
+          },
+          "contentHash": "e5ce40af1d064fa647c203b7332b7bd55c7a682ab585372691853416d42be970"
+        },
+        {
+          "artifactType": "evidence-response",
+          "artifactId": "88000000-0000-4000-8000-000000000001",
+          "artifactUri": "package://examples/evidence-response.json",
+          "contentHash": "4a35d6a4cd8cb68d485c51fe90e54e2b9f96e5a5da2700aff87fc3bf5c28ca02",
+          "itemCount": 0,
+          "countSelector": {
+            "kind": "control-document",
+            "evidenceKinds": []
+          }
+        },
+        {
+          "artifactType": "execution-budget-bundle",
+          "artifactId": "89000000-0000-4000-8000-000000000001",
+          "artifactUri": "package://examples/execution-budget-bundle.json",
+          "contentHash": "ca960794c329c80daf33d4f7ca409674f16ebf6626288e5513872620962caa33",
+          "itemCount": 0,
+          "countSelector": {
+            "kind": "control-document",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    },
+    {
+      "receiptId": "90000000-0000-4000-8000-000000000018",
+      "receiptType": "atomic-current-pointer-and-publication-event",
+      "stageId": "publish",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "attempt": 1,
+      "outcome": "completed",
+      "methodVersion": "1.0.0",
+      "producedAt": "2026-01-01T00:10:20Z",
+      "work": {
+        "expected": 1,
+        "attempted": 1,
+        "completed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "unavailable": 0,
+        "notRun": 0,
+        "deferred": 0
+      },
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersionCandidate": "registration-generation-v1",
+      "sourceVersionStatus": "final",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade",
+      "dependencyReceiptIds": [
+        "90000000-0000-4000-8000-000000000017"
+      ],
+      "outputs": [
+        {
+          "artifactType": "publication-receipt",
+          "artifactId": "81000000-0000-4000-8000-000000000001",
+          "artifactUri": "package://examples/publication-receipt.json",
+          "contentHash": "c88e202a5920acfa53702cc771c781e20e105a3d1a9cbb2791abd9db25e36761",
+          "itemCount": 1,
+          "countSelector": {
+            "kind": "document",
+            "evidenceKinds": []
+          }
+        }
+      ],
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "authorizationScopeId": "authorized-assets",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "taxonomyVersion": "1.0.0",
+      "pipelineVersion": "1.0.0",
+      "methodSetHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "revocationEpoch": 0,
+      "fencingToken": 1
+    }
+  ],
+  "hashAlgorithm": "sha256-jcs",
+  "bundleHash": "48f2491ba2452fe17a23b73a03edc2b3c1a0a3e3c5ddc2232e7dce826b11a53d",
+  "sealedAt": "2026-01-01T00:10:21Z",
+  "issuerKeyId": "conformance-stage-receipt-v1",
+  "signatureAlgorithm": "ed25519",
+  "signature": "7yaXOczL3LzGjJLvmGhYKJOQiv3u1hJlGuGGl4K2yDyrkP//I9GCUGRdwK+1lYOmNZzT3rjKEHPnPWnfpUAzBQ=="
+}

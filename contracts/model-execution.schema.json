@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/model-execution.schema.json",
+  "title": "Semantic Model Execution and Cache Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "executionId",
+    "sourceId",
+    "sourceVersion",
+    "connectorId",
+    "connectorVersion",
+    "connectorCapabilityHash",
+    "authorizationScopeId",
+    "policyHash",
+    "revocationEpoch",
+    "inputEvidenceIds",
+    "evidenceSetHash",
+    "providerId",
+    "modelId",
+    "modelVersion",
+    "admission",
+    "promptId",
+    "promptVersion",
+    "inputContractRef",
+    "outputContractRef",
+    "promptRef",
+    "promptSha256",
+    "parameterSetRef",
+    "parameterHash",
+    "redactedInputRef",
+    "redactedInputSha256",
+    "cache",
+    "outcome",
+    "startedAt",
+    "completedAt",
+    "usage"
+  ],
+  "properties": {
+    "executionId": { "type": "string", "format": "uuid" },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "revocationEpoch": { "type": "integer", "minimum": 0 },
+    "inputEvidenceIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "format": "uuid" } },
+    "evidenceSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical sorted array of { evidenceId, recordHash } for inputEvidenceIds." },
+    "providerId": { "type": "string", "minLength": 1 },
+    "modelId": { "type": "string", "minLength": 1 },
+    "modelVersion": { "type": "string", "minLength": 1 },
+    "modelDeploymentHash": { "type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$" },
+    "admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "modelPolicyHash", "deploymentRegistrationId", "admittedProviderId", "admittedModelId", "admittedModelVersion", "admittedModelDeploymentHash", "deploymentRegion", "sourceResidencyClass", "inputClassification", "providerRetention", "trainingUse", "abuseMonitoringContract", "decidedAt"],
+      "properties": {
+        "decision": { "const": "allowed" },
+        "modelPolicyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "deploymentRegistrationId": { "type": "string", "format": "uuid" },
+        "admittedProviderId": { "type": "string", "minLength": 1 },
+        "admittedModelId": { "type": "string", "minLength": 1 },
+        "admittedModelVersion": { "type": "string", "minLength": 1 },
+        "admittedModelDeploymentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "deploymentRegion": { "type": "string", "minLength": 1 },
+        "sourceResidencyClass": { "type": "string", "minLength": 1 },
+        "inputClassification": { "enum": ["public", "internal", "restricted"] },
+        "providerRetention": { "const": "none" },
+        "trainingUse": { "const": false },
+        "abuseMonitoringContract": { "type": "string", "minLength": 1 },
+        "decidedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "promptId": { "type": "string", "minLength": 1 },
+    "promptVersion": { "type": "string", "minLength": 1 },
+    "inputContractRef": { "type": "string", "minLength": 1 },
+    "outputContractRef": { "type": "string", "minLength": 1 },
+    "promptRef": { "type": "string", "pattern": "^package://prompts/[A-Za-z0-9._/-]+\\.prompt\\.md$" },
+    "promptSha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "parameterSetRef": { "type": "string", "pattern": "^package://examples/[A-Za-z0-9._/-]+\\.json$" },
+    "parameterHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical parameter-set fixture." },
+    "redactedInputRef": { "type": "string", "pattern": "^package://examples/[A-Za-z0-9._/-]+\\.json$" },
+    "redactedInputSha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "Raw byte SHA-256 of the exact redacted model input fixture." },
+    "cache": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "keySha256", "namespace", "entryVersion", "expiresAt", "revocationEpoch", "admissionPolicyHash", "admissionDeploymentRegistrationId"],
+      "properties": {
+        "decision": { "enum": ["bypass", "miss", "hit", "write", "invalidate", "quarantine"] },
+        "keySha256": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{64}$",
+          "description": "SHA-256 over the RFC 8785 canonical form of [sourceId, sourceVersion, connectorId, connectorVersion, connectorCapabilityHash, authorizationScopeId, revocationEpoch, policyHash, evidenceSetHash, admission.modelPolicyHash, admission.deploymentRegistrationId, providerId, modelId, modelVersion, modelDeploymentHash, promptId, promptVersion, inputContractRef, outputContractRef, parameterHash, redactedInputSha256]."
+        },
+        "namespace": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical array [sourceId, sourceVersion, connectorId, connectorVersion, connectorCapabilityHash, authorizationScopeId, revocationEpoch, policyHash, admission.modelPolicyHash, admission.deploymentRegistrationId, providerId, modelId, modelVersion, modelDeploymentHash]." },
+        "entryVersion": { "type": "string", "minLength": 1 },
+        "expiresAt": { "type": "string", "format": "date-time", "description": "Mandatory ceiling; a cache entry never outlives its policy-bound lifetime." },
+        "revocationEpoch": { "type": "integer", "minimum": 0 },
+        "admissionPolicyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "admissionDeploymentRegistrationId": { "type": "string", "format": "uuid" },
+        "invalidationReason": { "type": ["string", "null"] },
+        "cachedExecutionId": { "type": ["string", "null"], "format": "uuid" }
+      }
+    },
+    "outcome": { "enum": ["succeeded", "parse-rejected", "policy-rejected", "provider-failed", "timed-out", "cancelled"] },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "completedAt": { "type": "string", "format": "date-time" },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inputUnits", "outputUnits", "latencyMs", "estimatedCost"],
+      "properties": {
+        "inputUnits": { "type": "integer", "minimum": 0 },
+        "outputUnits": { "type": "integer", "minimum": 0 },
+        "latencyMs": { "type": "integer", "minimum": 0 },
+        "estimatedCost": { "type": "number", "minimum": 0 }
+      }
+    },
+    "outputSha256": { "type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$" },
+    "failureCode": { "type": ["string", "null"] },
+    "retryOfExecutionId": { "type": ["string", "null"], "format": "uuid" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "cache": { "properties": { "decision": { "const": "hit" } } } } },
+      "then": { "properties": { "cache": { "required": ["cachedExecutionId"], "properties": { "cachedExecutionId": { "type": "string", "format": "uuid" } } } } }
+    },
+    {
+      "if": { "properties": { "outcome": { "const": "succeeded" } } },
+      "then": { "required": ["outputSha256"], "properties": { "outputSha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }, "failureCode": { "type": "null" } } }
+    }
+  ]
+}

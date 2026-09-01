@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/source-boundary.schema.json",
+  "title": "Immutable Source Boundary Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractVersion",
+    "boundaryId",
+    "recordType",
+    "runId",
+    "sourceId",
+    "sourceVersionCandidate",
+    "sourceVersion",
+    "connectorId",
+    "connectorVersion",
+    "connectorCapabilityHash",
+    "authorizationScopeId",
+    "policyHash",
+    "mode",
+    "openedAt",
+    "openingTokens",
+    "verifiedAt",
+    "verificationTokens",
+    "consistencyStatus",
+    "structureHash"
+  ],
+  "properties": {
+    "contractVersion": { "const": "1.0.0" },
+    "boundaryId": { "type": "string", "format": "uuid" },
+    "recordType": { "enum": ["opening", "verification"] },
+    "runId": { "type": "string", "format": "uuid" },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersionCandidate": { "type": "string", "minLength": 1 },
+    "sourceVersion": { "type": ["string", "null"], "minLength": 1 },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "mode": { "enum": ["snapshot", "transaction", "watermark-range", "offset-range", "etag-set", "before-after-check", "none"] },
+    "openedAt": { "type": "string", "format": "date-time" },
+    "openingTokens": { "type": "array", "maxItems": 100, "items": { "type": "string", "minLength": 1, "maxLength": 500 } },
+    "verifiedAt": { "type": ["string", "null"], "format": "date-time" },
+    "verificationTokens": { "type": "array", "maxItems": 100, "items": { "type": "string", "minLength": 1, "maxLength": 500 } },
+    "consistencyStatus": { "enum": ["pending", "consistent", "changed-during-run", "expired", "unavailable"] },
+    "structureHash": { "type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "recordType": { "const": "opening" } } },
+      "then": {
+        "properties": {
+          "sourceVersion": { "type": "null" },
+          "verifiedAt": { "type": "null" },
+          "verificationTokens": { "maxItems": 0 },
+          "consistencyStatus": { "const": "pending" },
+          "structureHash": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "recordType": { "const": "verification" } } },
+      "then": {
+        "properties": {
+          "sourceVersion": { "type": "string", "minLength": 1 },
+          "verifiedAt": { "type": "string", "format": "date-time" },
+          "consistencyStatus": { "enum": ["consistent", "changed-during-run", "expired", "unavailable"] },
+          "structureHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "mode": { "const": "none" } } },
+      "then": { "properties": { "openingTokens": { "maxItems": 0 } } },
+      "else": { "properties": { "openingTokens": { "minItems": 1 } } }
+    }
+  ]
+}

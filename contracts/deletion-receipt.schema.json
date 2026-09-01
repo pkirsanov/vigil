@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/deletion-receipt.schema.json",
+  "title": "Deletion or Revocation Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["requestId", "sourceId", "authorizationScopeId", "action", "servingState", "deletionState", "inventoryVersion", "inventoryManifestId", "inventoryManifestUri", "inventoryManifestContentHash", "inventoryHash", "revocationEpoch", "requestedAt", "stores", "servingBlockedAt", "deletionStartedAt", "hashAlgorithm", "receiptHash", "sealedAt", "issuerKeyId", "signatureAlgorithm", "signature"],
+  "properties": {
+    "requestId": { "type": "string", "format": "uuid" },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "action": { "enum": ["revoke-serving", "delete-derived-data", "delete-source-registration"] },
+    "servingState": { "enum": ["blocked", "failed"] },
+    "deletionState": { "enum": ["not-requested", "pending", "running", "completed", "completed-partial", "failed"] },
+    "inventoryVersion": { "type": "string", "minLength": 1 },
+    "inventoryManifestId": { "type": "string", "format": "uuid" },
+    "inventoryManifestUri": { "type": "string", "pattern": "^package://[A-Za-z0-9._/-]+$" },
+    "inventoryManifestContentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "inventoryHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical object { inventoryVersion, inventoryManifestId, inventoryManifestContentHash, storeCounts }." },
+    "revocationEpoch": { "type": "integer", "minimum": 1 },
+    "requestedAt": { "type": "string", "format": "date-time" },
+    "servingBlockedAt": { "type": "string", "format": "date-time" },
+    "deletionStartedAt": { "type": "string", "format": "date-time" },
+    "completedAt": { "type": ["string", "null"], "format": "date-time" },
+    "stores": {
+      "type": "array", "uniqueItems": true,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["storeKind", "enumerationMethodVersion", "enumeratedAt", "artifactSetHash", "expected", "deleted", "failed", "notFound", "remaining", "retainedByPolicy", "state"],
+        "properties": {
+          "storeKind": { "enum": ["samples", "evidence", "lexical-index", "semantic-index", "graph-index", "temporal-index", "faceted-index", "cache", "parser-output", "model-output", "profile-manifest", "capability-manifest", "usage-patterns", "source-registration", "audit", "backup"] },
+          "enumerationMethodVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+          "enumeratedAt": { "type": "string", "format": "date-time" },
+          "artifactSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical ordinally sorted artifact IDs for this store, derived from all inventory pages." },
+          "expected": { "type": "integer", "minimum": 0 },
+          "deleted": { "type": "integer", "minimum": 0 },
+          "failed": { "type": "integer", "minimum": 0 },
+          "notFound": { "type": "integer", "minimum": 0 },
+          "remaining": { "type": "integer", "minimum": 0, "description": "Items still retained after this attempt. Exact accounting requires expected = deleted + failed + notFound + remaining." },
+          "retainedByPolicy": { "type": "integer", "minimum": 0, "description": "Enumerated artifacts deliberately retained under an independently governed policy. These are not failed cleanup and must use retained-by-policy state." },
+          "state": { "enum": ["pending", "running", "completed", "failed", "not-applicable", "retained-by-policy"] },
+          "reason": { "type": ["string", "null"], "maxLength": 1000 }
+        }
+      }
+    },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "receiptHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical receipt with receiptHash and signature removed." },
+    "sealedAt": { "type": "string", "format": "date-time" },
+    "issuerKeyId": { "type": "string", "minLength": 1, "maxLength": 255 },
+    "signatureAlgorithm": { "const": "ed25519" },
+    "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$", "minLength": 80, "maxLength": 100 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "action": { "const": "revoke-serving" } } },
+      "then": { "properties": { "deletionState": { "const": "not-requested" }, "stores": { "maxItems": 0 } } }
+    },
+    {
+      "if": { "properties": { "action": { "enum": ["delete-derived-data", "delete-source-registration"] } } },
+      "then": {
+        "properties": {
+          "stores": {
+            "minItems": 16,
+            "allOf": [
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "samples" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "evidence" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "lexical-index" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "semantic-index" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "graph-index" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "temporal-index" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "faceted-index" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "cache" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "parser-output" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "model-output" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "profile-manifest" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "capability-manifest" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "usage-patterns" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "source-registration" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "audit" } } }, "maxContains": 1 },
+              { "contains": { "required": ["storeKind"], "properties": { "storeKind": { "const": "backup" } } }, "maxContains": 1 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "deletionState": { "const": "completed" } } },
+      "then": {
+        "required": ["completedAt"],
+        "properties": {
+          "servingState": { "const": "blocked" },
+          "completedAt": { "type": "string", "format": "date-time" },
+          "stores": { "items": { "properties": { "state": { "enum": ["completed", "not-applicable", "retained-by-policy"] }, "failed": { "const": 0 }, "remaining": { "const": 0 } } } }
+        }
+      }
+    }
+  ]
+}

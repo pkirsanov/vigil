@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/source-registration-request.schema.json",
+  "title": "Source Registration Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractVersion", "displayName", "kind", "connectorId", "locator", "credentialRef", "requestedCapabilities", "policyRef", "clientRequestId"],
+  "properties": {
+    "contractVersion": { "const": "1.0.0" },
+    "displayName": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "kind": { "enum": ["relational", "tabular-file", "semi-structured", "document-corpus", "api", "stream", "graph", "multimodal", "custom"] },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registeredEndpointId", "resource"],
+      "properties": {
+        "registeredEndpointId": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._-]{2,127}$", "description": "Opaque endpoint-registry key; not a path and never composed into one." },
+        "resource": { "type": "string", "minLength": 1, "maxLength": 500, "pattern": "^(?!.*(?:^|/)\\.\\.?(?:/|$))[A-Za-z][A-Za-z0-9._~-]*(?:/[A-Za-z][A-Za-z0-9._~-]*)*$" },
+        "subresource": { "type": ["string", "null"], "maxLength": 500, "pattern": "^(?!.*(?:^|/)\\.\\.?(?:/|$))[A-Za-z][A-Za-z0-9._~-]*(?:/[A-Za-z][A-Za-z0-9._~-]*)*$" }
+      }
+    },
+    "credentialRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["providerId", "referenceId"],
+      "properties": {
+        "providerId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+        "referenceId": { "type": "string", "format": "uuid", "description": "Opaque identifier issued by a trusted credential-reference registry; never credential material or a caller-defined path." }
+      }
+    },
+    "requestedCapabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "maxItems": 20,
+      "items": { "enum": ["enumerate-assets", "read-structure", "estimate-size", "deterministic-sample", "aggregate-statistics", "read-constraints", "read-lineage", "read-usage-history", "read-change-feed", "fetch-content", "execute-safe-probe", "resolve-reference"] }
+    },
+    "policyRef": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,255}$" },
+    "clientRequestId": { "type": "string", "format": "uuid" },
+    "tags": { "type": "object", "maxProperties": 20, "additionalProperties": { "type": "string", "maxLength": 200 } }
+  }
+}

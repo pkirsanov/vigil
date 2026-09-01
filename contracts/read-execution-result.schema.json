@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/read-execution-result.schema.json",
+  "title": "Bounded Read Execution Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["executionId", "validationReceiptId", "planId", "operationId", "operation", "operationHash", "resultShape", "targetId", "planHash", "parameterValuesHash", "traceId", "executedAt", "coordinate", "responsePolicy", "columns", "rows", "receipt", "hashAlgorithm", "resultHash"],
+  "properties": {
+    "executionId": { "type": "string", "format": "uuid" },
+    "validationReceiptId": { "type": "string", "format": "uuid" },
+    "planId": { "type": "string", "format": "uuid" },
+    "operationId": { "type": "string", "format": "uuid" },
+    "operation": { "enum": ["tabular-query", "api-read", "stream-window", "document-read", "graph-traversal", "media-segment-read", "lineage-read", "reference-read"] },
+    "operationHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical single operation object." },
+    "resultShape": { "const": "bounded-tabular-normalization", "description": "Connector normalizes the single operation result into bounded scalar rows while preserving operation identity and hash." },
+    "targetId": { "type": "string", "minLength": 1, "maxLength": 500, "description": "Normalized target identity derived from assetId, sourceOperationId, or eventTypeId according to operation kind." },
+    "planHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "parameterValuesHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "traceId": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "executedAt": { "type": "string", "format": "date-time", "description": "Immutable execution start time used to prove that the validation receipt was valid when consumed." },
+    "coordinate": { "$ref": "projection-coordinate.schema.json" },
+    "responsePolicy": { "$ref": "agent-response-policy.schema.json" },
+    "columns": {
+      "type": "array",
+      "maxItems": 500,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "physicalType", "contentProvenance"],
+        "properties": {
+          "name": { "type": "string", "maxLength": 500 },
+          "physicalType": { "type": "string", "maxLength": 200 },
+          "contentProvenance": { "enum": ["service-generated", "source-derived"] }
+        }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "propertyNames": { "type": "string", "maxLength": 500 },
+        "additionalProperties": {
+          "oneOf": [
+            { "type": "string", "maxLength": 4000 },
+            { "type": "number" },
+            { "type": "boolean" },
+            { "type": "null" }
+          ]
+        },
+        "maxProperties": 500
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rowsReturned", "bytesReturned", "durationMilliseconds", "truncated"],
+      "properties": {
+        "rowsReturned": { "type": "integer", "minimum": 0 },
+        "bytesReturned": { "type": "integer", "minimum": 0, "description": "UTF-8 byte length of the RFC 8785 canonical { columns, rows } payload." },
+        "durationMilliseconds": { "type": "integer", "minimum": 0 },
+        "truncated": { "type": "boolean" }
+      }
+    },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "resultHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical result with resultHash removed." }
+  }
+}

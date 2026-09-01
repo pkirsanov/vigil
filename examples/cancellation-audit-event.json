@@ -1,0 +1,39 @@
+{
+  "eventId": "84000000-0000-4000-8000-000000000001",
+  "sequenceNumber": 1,
+  "occurredAt": "2026-01-01T00:06:00Z",
+  "action": "run.cancel",
+  "outcome": "succeeded",
+  "actor": {
+    "subjectId": "7960befad07fdd60ae0edea6f19a4f629f5e714526db35421602c9ffcfb10b4e",
+    "subjectHashSaltId": "conformance-deployment-v1",
+    "actorType": "agent",
+    "authenticationMethod": "signed-token",
+    "delegatedBySubjectId": null
+  },
+  "authorization": {
+    "scopeId": "authorized-assets",
+    "decision": "allowed",
+    "requiredPermissions": ["profile.write"],
+    "grantedPermissions": ["profile.write"],
+    "reasonCode": null
+  },
+  "correlationId": "84000000-0000-4000-8000-000000000002",
+  "traceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "runId": "33333333-3333-4333-8333-333333333333",
+  "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "target": {
+    "resourceType": "run",
+    "resourceId": "33333333-3333-4333-8333-333333333333",
+    "sourceId": "11111111-1111-4111-8111-111111111111",
+    "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+  },
+  "requestSummary": { "cancellationId": "82000000-0000-4000-8000-000000000001" },
+  "resultSummary": { "state": "requested" },
+  "errorCode": null,
+  "integrity": {
+    "hashAlgorithm": "sha256-jcs",
+    "payloadSha256": "5c1e1ce4611b79d9fb95699d8867bf1a324a502e4da862b457b7a5c278da924a",
+    "previousEventSha256": "b825743b844873a88d37ceeecfb84ba514335f0d351c1ca32c7c3a097a67a286"
+  }
+}

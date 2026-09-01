@@ -1,0 +1,17 @@
+{
+  "subjectHashing": {
+    "saltId": "conformance-deployment-v1",
+    "deploymentSalt": "conformance-only-subject-salt-v1"
+  },
+  "validatedCaller": {
+    "issuer": "https://identity.invalid",
+    "tenantId": "example-tenant",
+    "subjectId": "example-agent",
+    "delegationChainHash": null,
+    "authorizationScopeId": "authorized-assets"
+  },
+  "parameters": {
+    "scopeId": "scope-a",
+    "fromTime": "2026-01-01T00:00:00Z"
+  }
+}

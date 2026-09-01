@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/capability-manifest.schema.json",
+  "title": "Agent Analysis Capability Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractVersion",
+    "manifestId",
+    "manifestVersion",
+    "hashAlgorithm",
+    "contentHash",
+    "projectionId",
+    "revocationEpoch",
+    "profileManifestId",
+    "sourceId",
+    "connectorId",
+    "connectorVersion",
+    "connectorCapabilityHash",
+    "sourceVersion",
+    "policyHash",
+    "authorizationScopeId",
+    "taxonomyVersion",
+    "pipelineVersion",
+    "methodSetHash",
+    "evidenceCutoff",
+    "generatedAt",
+    "responsePolicy",
+    "capabilities",
+    "retrievalHints",
+    "warnings",
+    "coverage"
+  ],
+  "properties": {
+    "contractVersion": { "const": "1.0.0" },
+    "manifestId": { "type": "string", "format": "uuid" },
+    "manifestVersion": { "type": "string", "minLength": 1 },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical manifest with contentHash removed." },
+    "projectionId": { "type": "string", "format": "uuid" },
+    "revocationEpoch": { "type": "integer", "minimum": 0 },
+    "profileManifestId": { "type": "string", "format": "uuid" },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "taxonomyVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "pipelineVersion": { "const": "1.0.0" },
+    "methodSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "evidenceCutoff": { "type": "string", "format": "date-time" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "responsePolicy": { "$ref": "agent-response-policy.schema.json" },
+    "capabilities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/capability" }
+    },
+    "retrievalHints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lexicalTerms", "semanticQueries", "facets", "graphEntryPoints"],
+      "properties": {
+        "lexicalTerms": { "type": "array", "items": { "type": "string" } },
+        "semanticQueries": { "type": "array", "items": { "type": "string" } },
+        "facets": { "type": "array", "items": { "type": "string" } },
+        "graphEntryPoints": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "scope", "message", "impact", "evidenceRefs"],
+        "properties": {
+          "kind": { "type": "string" },
+          "scope": { "type": "string" },
+          "message": { "type": "string" },
+          "impact": { "type": "string" },
+          "evidenceRefs": { "type": "array", "items": { "type": "string", "format": "uuid" } }
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["score", "missingCapabilities"],
+      "properties": {
+        "score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "missingCapabilities": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "$defs": {
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "name", "description", "questionPatterns", "requiredAssets", "requiredRelationships", "resultShape", "confidence", "validationStatus", "evidenceRefs"],
+      "properties": {
+        "capabilityId": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "questionPatterns": { "type": "array", "minItems": 1, "maxItems": 100, "items": { "type": "string", "maxLength": 1000 } },
+        "requiredAssets": { "type": "array", "items": { "type": "string" } },
+        "requiredRelationships": { "type": "array", "items": { "type": "string" } },
+        "metricRefs": { "type": "array", "items": { "type": "string" } },
+        "resultShape": { "type": "string", "minLength": 1 },
+        "constraints": { "type": "array", "items": { "type": "string" } },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "validationStatus": { "enum": ["hypothesis", "validated", "usage-proven", "unavailable"] },
+        "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } }
+      }
+    }
+  }
+}

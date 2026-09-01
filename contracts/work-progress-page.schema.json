@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/work-progress-page.schema.json",
+  "title": "Durable Work Progress Page",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifestId", "ordinal", "checkpointUnit", "completedItemIds", "failedItemIds", "pendingItemIds"],
+  "properties": {
+    "manifestId": { "type": "string", "format": "uuid" },
+    "ordinal": { "type": "integer", "minimum": 0 },
+    "checkpointUnit": { "enum": ["asset", "partition", "document", "segment", "relationship-candidate", "work-item"] },
+    "completedItemIds": { "type": "array", "maxItems": 100000, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 500 } },
+    "failedItemIds": { "type": "array", "maxItems": 100000, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 500 } },
+    "pendingItemIds": { "type": "array", "maxItems": 100000, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 500 } }
+  }
+}

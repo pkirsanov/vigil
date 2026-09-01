@@ -1,0 +1,79 @@
+{
+  "registryVersion": "1.0.0",
+  "registryUse": "conformance-only",
+  "notice": "Reference public keys verify example consistency only. Production verification requires an out-of-package registry and an independently supplied SHA-256 pin.",
+  "issuers": [
+    {
+      "issuerKeyId": "conformance-validation-control-v1",
+      "algorithm": "ed25519",
+      "publicKeyBase64": "N5Vj40u6mshgTZOQeAdxCEsGrCDWs735GeXEOpDgvCo=",
+      "purposes": ["validation-control"],
+      "validFrom": "2026-01-01T00:00:00Z",
+      "validUntil": "2027-01-01T00:00:00Z"
+    },
+    {
+      "issuerKeyId": "conformance-redaction-v1",
+      "algorithm": "ed25519",
+      "publicKeyBase64": "ZWnXMx6BdWg/vE5GUwUp2P86YrIXYDQkhPwE1vZtT1Q=",
+      "purposes": ["redaction"],
+      "validFrom": "2026-01-01T00:00:00Z",
+      "validUntil": "2027-01-01T00:00:00Z"
+    },
+    {
+      "issuerKeyId": "conformance-publication-v1",
+      "algorithm": "ed25519",
+      "publicKeyBase64": "Wey6vksJa4nnpwVA0WSJKtIpVCvuDdDVTCD5ItZBnaA=",
+      "purposes": ["publication"],
+      "validFrom": "2026-01-01T00:00:00Z",
+      "validUntil": "2027-01-01T00:00:00Z"
+    },
+    {
+      "issuerKeyId": "conformance-stage-receipt-v1",
+      "algorithm": "ed25519",
+      "publicKeyBase64": "4+ZhnWP7omltrX7pOEpODoe2Ae0e2HlgXVBlRUi+5VE=",
+      "purposes": ["stage-receipt"],
+      "validFrom": "2026-01-01T00:00:00Z",
+      "validUntil": "2027-01-01T00:00:00Z"
+    },
+    {
+      "issuerKeyId": "conformance-cross-scope-v1",
+      "algorithm": "ed25519",
+      "publicKeyBase64": "L+AIrG3OPhcEzphPBeL4Z/EbTeGGeWup6vCttLhEzKc=",
+      "purposes": ["cross-scope-authorization"],
+      "validFrom": "2026-01-01T00:00:00Z",
+      "validUntil": "2027-01-01T00:00:00Z"
+    },
+    {
+      "issuerKeyId": "conformance-read-plan-v1",
+      "algorithm": "ed25519",
+      "publicKeyBase64": "xLQ13ne0G/CI8Iku/Sgjera37jIhmIJcU+eQ0q6xobw=",
+      "purposes": ["read-plan-validation"],
+      "validFrom": "2026-01-01T00:00:00Z",
+      "validUntil": "2027-01-01T00:00:00Z"
+    },
+    {
+      "issuerKeyId": "conformance-resume-checkpoint-v1",
+      "algorithm": "ed25519",
+      "publicKeyBase64": "mjnESdm5ctwLaNf71qwldG+pnBzQNZM0p/vXfXXJ7QI=",
+      "purposes": ["resume-checkpoint"],
+      "validFrom": "2026-01-01T00:00:00Z",
+      "validUntil": "2027-01-01T00:00:00Z"
+    },
+    {
+      "issuerKeyId": "conformance-projection-safety-v1",
+      "algorithm": "ed25519",
+      "publicKeyBase64": "Q7RnqWBGh2Bf3jWGd2NO1lEpgIjmmJP0RHPHg4YoFI4=",
+      "purposes": ["projection-safety"],
+      "validFrom": "2026-01-01T00:00:00Z",
+      "validUntil": "2027-01-01T00:00:00Z"
+    },
+    {
+      "issuerKeyId": "conformance-lifecycle-deletion-v1",
+      "algorithm": "ed25519",
+      "publicKeyBase64": "mwSvw72LaMpmLgR7Dh3VITM7aJ+PIXVUmZI9cMt5DBg=",
+      "purposes": ["lifecycle-deletion"],
+      "validFrom": "2026-01-01T00:00:00Z",
+      "validUntil": "2027-01-01T00:00:00Z"
+    }
+  ]
+}

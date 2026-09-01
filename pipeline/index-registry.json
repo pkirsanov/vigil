@@ -1,0 +1,53 @@
+{
+  "registryVersion": "1.0.0",
+  "indexKinds": [
+    {
+      "id": "lexical",
+      "bestFor": "Exact asset, field, enum, glossary, and error terms",
+      "requiredMetadata": ["sourceVersion", "projectionId", "policyHash", "authorizationScopeId", "evidenceRefs"],
+      "requiresModelRef": false,
+      "storeKind": "lexical-index"
+    },
+    {
+      "id": "semantic",
+      "bestFor": "Business questions, aliases, similar concepts, and document chunks",
+      "requiredMetadata": ["sourceVersion", "projectionId", "policyHash", "authorizationScopeId", "evidenceRefs", "modelRef", "dimensions"],
+      "requiresModelRef": true,
+      "storeKind": "semantic-index"
+    },
+    {
+      "id": "graph",
+      "bestFor": "Join paths, lineage, citations, entities, and process flows",
+      "requiredMetadata": ["sourceVersion", "projectionId", "policyHash", "authorizationScopeId", "evidenceRefs"],
+      "requiresModelRef": false,
+      "storeKind": "graph-index"
+    },
+    {
+      "id": "temporal",
+      "bestFor": "Freshness, schema drift, time coverage, and event transitions",
+      "requiredMetadata": ["sourceVersion", "projectionId", "policyHash", "authorizationScopeId", "evidenceRefs"],
+      "requiresModelRef": false,
+      "storeKind": "temporal-index"
+    },
+    {
+      "id": "faceted",
+      "bestFor": "Source kind, domain, role, quality, policy, and maturity",
+      "requiredMetadata": ["sourceVersion", "projectionId", "policyHash", "authorizationScopeId", "evidenceRefs"],
+      "requiresModelRef": false,
+      "storeKind": "faceted-index"
+    }
+  ],
+  "nonIndexGovernedStores": [
+    "samples",
+    "evidence",
+    "cache",
+    "parser-output",
+    "model-output",
+    "profile-manifest",
+    "capability-manifest",
+    "usage-patterns",
+    "source-registration",
+    "audit",
+    "backup"
+  ]
+}

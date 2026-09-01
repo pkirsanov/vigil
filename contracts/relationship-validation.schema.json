@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/relationship-validation.schema.json",
+  "title": "Relationship Validation Evidence Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["relationshipValidationId", "relationshipKind", "left", "right", "crossScope", "crossScopeAuthorizationReceipt", "predicates", "normalization", "validator", "sampleReceipt", "validationOutcome", "cardinality", "coverage", "recommendedOperation", "confidence", "createdAt"],
+  "properties": {
+    "relationshipValidationId": { "type": "string", "format": "uuid" },
+    "relationshipKind": { "type": "string", "minLength": 1 },
+    "left": { "$ref": "#/$defs/endpoint" },
+    "right": { "$ref": "#/$defs/endpoint" },
+    "crossScope": { "type": "boolean", "description": "Derived, not asserted: must equal left.authorizationScopeId != right.authorizationScopeId. A receiver recomputes it and rejects a mismatch." },
+    "crossScopeAuthorizationReceipt": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "cross-scope-authorization-receipt.schema.json" }
+      ]
+    },
+    "predicates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["leftPath", "rightPath", "operator"],
+        "properties": {
+          "leftPath": { "type": "string", "minLength": 1 },
+          "rightPath": { "type": "string", "minLength": 1 },
+          "operator": { "enum": ["equals", "temporal-overlap", "contains", "resolves-to", "native-edge"] }
+        }
+      }
+    },
+    "normalization": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["predicateIndex", "family", "leftExpression", "rightExpression"],
+        "properties": {
+          "predicateIndex": { "type": "integer", "minimum": 0 },
+          "family": { "enum": ["exact", "case-folded-text", "canonical-number", "canonical-identifier", "normalized-path", "normalized-uri", "normalized-time", "connector-native"] },
+          "leftExpression": { "type": "string", "minLength": 1 },
+          "rightExpression": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "validator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "methodVersion", "basis", "exact", "planHash"],
+      "properties": {
+        "method": { "type": "string", "minLength": 1 },
+        "methodVersion": { "type": "string", "minLength": 1 },
+        "basis": { "enum": ["empirical", "authoritative-constraint"] },
+        "exact": { "type": "boolean" },
+        "planHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "authoritativeConstraintRef": { "type": ["string", "null"], "minLength": 1 }
+      }
+    },
+    "sampleReceipt": { "$ref": "#/$defs/sampleReceipt" },
+    "validationOutcome": { "enum": ["supported", "rejected", "insufficient-support", "unavailable"] },
+    "cardinality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["leftDistinct", "rightDistinct", "relationshipType"],
+      "properties": {
+        "leftDistinct": { "type": ["integer", "null"], "minimum": 0 },
+        "rightDistinct": { "type": ["integer", "null"], "minimum": 0 },
+        "relationshipType": { "enum": ["one-to-one", "one-to-many", "many-to-one", "many-to-many", "unknown"] }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["matchingKeys", "leftCoverage", "rightCoverage", "confidenceBound"],
+      "properties": {
+        "matchingKeys": { "type": ["integer", "null"], "minimum": 0 },
+        "leftCoverage": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "rightCoverage": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "confidenceBound": { "type": ["number", "null"], "minimum": 0, "maximum": 1 }
+      }
+    },
+    "recommendedOperation": { "enum": ["inner", "left-preserving", "right-preserving", "lookup", "path-only", "none"] },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "warnings": { "type": "array", "items": { "type": "string", "maxLength": 500 } },
+    "createdAt": { "type": "string", "format": "date-time" }
+  },
+  "allOf": [
+    {
+      "if": { "required": ["crossScope"], "properties": { "crossScope": { "const": true } } },
+      "then": { "properties": { "crossScopeAuthorizationReceipt": { "$ref": "cross-scope-authorization-receipt.schema.json" } } }
+    },
+    {
+      "if": { "required": ["crossScope"], "properties": { "crossScope": { "const": false } } },
+      "then": { "properties": { "crossScopeAuthorizationReceipt": { "type": "null" } } }
+    },
+    {
+      "if": {
+        "properties": {
+          "validationOutcome": { "const": "supported" },
+          "validator": { "properties": { "basis": { "const": "empirical" } } }
+        }
+      },
+      "then": {
+        "properties": {
+          "sampleReceipt": { "properties": { "unitsInspected": { "type": "integer", "minimum": 1 } } },
+          "coverage": {
+            "properties": {
+              "matchingKeys": { "type": "integer", "minimum": 1 },
+              "leftCoverage": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+              "rightCoverage": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "validationOutcome": { "const": "supported" },
+          "validator": { "properties": { "basis": { "const": "authoritative-constraint" } } }
+        }
+      },
+      "then": {
+        "properties": {
+          "validator": {
+            "properties": { "authoritativeConstraintRef": { "type": "string", "minLength": 1 } },
+            "required": ["authoritativeConstraintRef"]
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "validationOutcome": { "enum": ["rejected", "insufficient-support"] } } },
+      "then": { "properties": { "sampleReceipt": { "properties": { "unitsInspected": { "type": "integer", "minimum": 1 } } } } }
+    },
+    {
+      "if": { "properties": { "validationOutcome": { "const": "unavailable" } } },
+      "then": {
+        "properties": {
+          "sampleReceipt": { "properties": { "unitsInspected": { "const": 0 } } },
+          "coverage": {
+            "properties": {
+              "matchingKeys": { "type": "null" },
+              "leftCoverage": { "type": "null" },
+              "rightCoverage": { "type": "null" },
+              "confidenceBound": { "type": "null" }
+            }
+          },
+          "confidence": { "const": 0 }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "sourceVersion", "authorizationScopeId", "revocationEpoch", "assetId", "paths"],
+      "properties": {
+        "sourceId": { "type": "string", "format": "uuid" },
+        "sourceVersion": { "type": "string", "minLength": 1 },
+        "authorizationScopeId": { "type": "string", "minLength": 1 },
+        "revocationEpoch": { "type": "integer", "minimum": 0 },
+        "assetId": { "type": "string", "minLength": 1 },
+        "paths": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "sampleReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "requestedUnits", "populationEstimate", "unitsInspected", "exact", "strata", "excludedStrata", "failedStrata"],
+      "properties": {
+        "method": { "type": "string", "minLength": 1 },
+        "requestedUnits": { "type": "integer", "minimum": 0 },
+        "populationEstimate": { "type": "integer", "minimum": 0 },
+        "unitsInspected": { "type": "integer", "minimum": 0 },
+        "exact": { "type": "boolean" },
+        "seed": { "type": ["integer", "null"] },
+        "bucketRule": { "type": ["string", "null"] },
+        "errorBound": { "type": ["number", "null"], "minimum": 0 },
+        "strata": { "type": "array", "items": { "type": "object" } },
+        "excludedStrata": { "type": "array", "items": { "type": "string" } },
+        "failedStrata": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

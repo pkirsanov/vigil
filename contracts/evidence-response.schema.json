@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/evidence-response.schema.json",
+  "title": "Bounded Authorized Evidence Response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "responseMode",
+    "sourceId",
+    "sourceVersion",
+    "authorizationScopeId",
+    "policyHash",
+    "revocationEpoch",
+    "responsePolicy",
+    "items",
+    "continuationToken"
+  ],
+  "properties": {
+    "responseMode": { "enum": ["single", "page"] },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersion": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "authorizationScopeId": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "revocationEpoch": { "type": "integer", "minimum": 0 },
+    "responsePolicy": { "$ref": "agent-response-policy.schema.json" },
+    "items": { "type": "array", "maxItems": 500, "items": { "$ref": "evidence-record.schema.json" } },
+    "continuationToken": { "type": ["string", "null"], "maxLength": 2000 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "responseMode": { "const": "single" } } },
+      "then": { "properties": { "items": { "minItems": 1, "maxItems": 1 }, "continuationToken": { "type": "null" } } }
+    }
+  ]
+}

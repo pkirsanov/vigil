@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/feedback-receipt.schema.json",
+  "title": "Append-Only Evidence Feedback Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["receiptId", "reviewedEvidenceId", "feedbackEvidenceId", "decision", "actorSubjectHash", "subjectHashSaltId", "requestHash", "idempotencyKeyHash", "createdAt", "location", "traceId", "auditEventId", "hashAlgorithm", "receiptHash"],
+  "properties": {
+    "receiptId": { "type": "string", "format": "uuid" },
+    "reviewedEvidenceId": { "type": "string", "format": "uuid" },
+    "feedbackEvidenceId": { "type": "string", "format": "uuid" },
+    "decision": { "enum": ["confirm", "reject", "supersede", "request-revalidation"] },
+    "actorSubjectHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical array ['caller-subject-v1', deploymentSalt, tenantId, subjectId]." },
+    "subjectHashSaltId": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "requestHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical request envelope containing path evidence ID, idempotencyKey, and body." },
+    "idempotencyKeyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical idempotency-key string." },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "location": { "type": "string", "format": "uri-reference" },
+    "traceId": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "auditEventId": { "type": "string", "format": "uuid" },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "receiptHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical receipt with receiptHash removed." }
+  }
+}

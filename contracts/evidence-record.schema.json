@@ -1,0 +1,353 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/evidence-record.schema.json",
+  "title": "Evidence Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractVersion",
+    "evidenceId",
+    "runId",
+    "sourceId",
+    "sourceVersion",
+    "connectorId",
+    "connectorVersion",
+    "connectorCapabilityHash",
+    "policyHash",
+    "authorizationScopeId",
+    "taxonomyVersion",
+    "logicalKey",
+    "dependencyHash",
+    "recordHash",
+    "fencingToken",
+    "revocationEpoch",
+    "subject",
+    "claim",
+    "kind",
+    "maturity",
+    "outcome",
+    "confidence",
+    "provenance",
+    "validity",
+    "dataHandling",
+    "redactionReceipt",
+    "hashAlgorithm",
+    "payloadHash",
+    "createdAt"
+  ],
+  "$defs": {
+    "safeScalar": {
+      "oneOf": [
+        { "type": "string", "maxLength": 4000 },
+        { "type": "number" },
+        { "type": "boolean" },
+        { "type": "null" }
+      ]
+    },
+    "safeArray": {
+      "type": "array",
+      "maxItems": 1000,
+      "items": { "$ref": "#/$defs/safeValue" }
+    },
+    "safeObject": {
+      "type": "object",
+      "propertyNames": { "type": "string", "maxLength": 500 },
+      "maxProperties": 1000,
+      "additionalProperties": { "$ref": "#/$defs/safeValue" }
+    },
+    "safeValue": {
+      "oneOf": [
+        { "$ref": "#/$defs/safeScalar" },
+        { "$ref": "#/$defs/safeArray" },
+        { "$ref": "#/$defs/safeObject" }
+      ]
+    }
+  },
+  "properties": {
+    "contractVersion": { "const": "1.0.0" },
+    "evidenceId": { "type": "string", "format": "uuid" },
+    "runId": { "type": "string", "format": "uuid" },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "taxonomyVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "logicalKey": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorizationScopeId", "sourceId", "sourceVersion", "subjectKind", "subjectId", "predicate", "methodVersion", "policyHash"],
+      "properties": {
+        "authorizationScopeId": { "type": "string", "minLength": 1 },
+        "sourceId": { "type": "string", "format": "uuid" },
+        "sourceVersion": { "type": "string", "minLength": 1 },
+        "subjectKind": { "type": "string", "minLength": 1 },
+        "subjectId": { "type": "string", "minLength": 1 },
+        "predicate": { "type": "string", "minLength": 1 },
+        "methodVersion": { "type": "string", "minLength": 1 },
+        "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "assetId": { "type": "string", "minLength": 1 },
+        "fieldPath": { "type": ["string", "null"], "minLength": 1 },
+        "statisticFamily": { "type": "string", "minLength": 1 },
+        "samplePlanHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "identityCoordinate": {
+          "type": "object", "additionalProperties": false,
+          "required": ["scopePaths", "localKeyPaths", "versionPaths"],
+          "properties": {
+            "scopePaths": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+            "localKeyPaths": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+            "versionPaths": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+          }
+        },
+        "relationshipCoordinate": {
+          "type": "object", "additionalProperties": false,
+          "required": ["kind", "left", "right", "validatorVersion"],
+          "properties": {
+            "kind": { "type": "string", "minLength": 1 },
+            "left": { "$ref": "relationship-validation.schema.json#/$defs/endpoint" },
+            "right": { "$ref": "relationship-validation.schema.json#/$defs/endpoint" },
+            "validatorVersion": { "type": "string", "minLength": 1 }
+          }
+        },
+        "businessConceptCoordinate": {
+          "type": "object", "additionalProperties": false,
+          "required": ["conceptKind", "normalizedName", "supportingEvidenceSetHash"],
+          "properties": {
+            "conceptKind": { "type": "string", "minLength": 1 },
+            "normalizedName": { "type": "string", "minLength": 1 },
+            "supportingEvidenceSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+          }
+        },
+        "semanticCoordinate": {
+          "type": "object", "additionalProperties": false,
+          "required": ["assetId", "fieldPath", "semanticKind"],
+          "properties": {
+            "assetId": { "type": "string", "minLength": 1 },
+            "fieldPath": { "type": ["string", "null"], "minLength": 1 },
+            "semanticKind": { "enum": ["asset-purpose", "semantic-label"] }
+          }
+        }
+      }
+    },
+    "dependencyHash": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$",
+      "description": "SHA-256 over the RFC 8785 canonical sorted array of { evidenceId, recordHash } for provenance.inputEvidenceIds."
+    },
+    "recordHash": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$",
+      "description": "SHA-256 over the RFC 8785 canonical evidence record with recordHash removed."
+    },
+    "fencingToken": { "type": "integer", "minimum": 1, "description": "The writing run's lease token; a stale token cannot write current evidence." },
+    "revocationEpoch": { "type": "integer", "minimum": 0 },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subjectKind", "subjectId"],
+      "properties": {
+        "subjectKind": { "enum": ["source", "run", "stage", "asset", "field", "relationship", "business-concept", "projection", "index", "deletion"] },
+        "subjectId": { "type": "string", "minLength": 1 },
+        "assetId": { "type": ["string", "null"] },
+        "assetKind": { "type": ["string", "null"] },
+        "fieldPath": { "type": ["string", "null"] },
+        "versionId": { "type": ["string", "null"], "description": "When present, the source-version coordinate of the subject; semantic validation requires equality with the record sourceVersion." }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["predicate", "object"],
+      "properties": {
+        "predicate": { "type": "string", "minLength": 1 },
+        "object": { "$ref": "#/$defs/safeValue" },
+        "unit": { "type": ["string", "null"] }
+      }
+    },
+    "kind": { "enum": ["source-capability", "structural-schema", "field-profile", "type-variant", "value-format", "value-distribution", "temporal-coverage", "freshness", "semantic-label", "asset-purpose", "business-entity", "business-event", "business-measure", "glossary-term", "identity", "grain", "relationship-hypothesis", "relationship-validation", "functional-dependency", "hierarchy", "storage-pattern", "quality-score", "anomaly", "schema-change", "lineage", "usage-pattern", "business-scenario", "analysis-capability", "policy-classification", "embedding", "index-entry", "manifest-coverage"] },
+    "maturity": {
+      "enum": ["observed", "inferred", "validated", "curated", "usage-proven", "rejected", "unavailable"]
+    },
+    "outcome": {
+      "enum": ["passed", "failed", "evaluated-empty", "not-applicable", "not-run", "unavailable", "blocked", "cancelled"]
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producer", "method", "methodVersion", "inputEvidenceIds"],
+      "properties": {
+        "producer": { "type": "string", "minLength": 1 },
+        "method": { "type": "string", "minLength": 1 },
+        "methodVersion": { "type": "string", "minLength": 1 },
+        "modelRef": { "type": ["string", "null"] },
+        "promptHash": { "type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$" },
+        "inputEvidenceIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "format": "uuid" }
+        }
+      }
+    },
+    "sample": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["method", "requestedUnits", "populationEstimate", "rowsInspected", "seed", "bucketRule", "errorBound", "exact", "strata", "excludedStrata", "failedStrata"],
+      "properties": {
+        "method": { "type": "string", "minLength": 1 },
+        "requestedUnits": { "type": "integer", "minimum": 0 },
+        "populationEstimate": { "type": "integer", "minimum": 0 },
+        "rowsInspected": { "type": "integer", "minimum": 0 },
+        "seed": { "type": ["integer", "null"] },
+        "bucketRule": { "type": ["string", "null"] },
+        "errorBound": { "type": ["number", "null"], "minimum": 0 },
+        "exact": { "type": "boolean" },
+        "strata": { "type": "array", "items": { "type": "object" } },
+        "excludedStrata": { "type": "array", "items": { "type": "string" } },
+        "failedStrata": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validFrom", "validUntil", "schemaVersion"],
+      "properties": {
+        "validFrom": { "type": "string", "format": "date-time" },
+        "validUntil": { "type": ["string", "null"], "format": "date-time" },
+        "schemaVersion": { "type": "string", "minLength": 1, "description": "Structural source version governing this evidence validity interval; semantic validation requires equality with the record sourceVersion." }
+      }
+    },
+    "dataHandling": {
+      "type": "object", "additionalProperties": false,
+      "required": ["classification", "containsRawSourceValues", "redactionMethod", "minimumGroupSizeApplied"],
+      "properties": {
+        "classification": { "enum": ["public", "internal", "restricted", "highly-restricted", "unknown"] },
+        "containsRawSourceValues": { "const": false },
+        "redactionMethod": { "type": ["string", "null"] },
+        "minimumGroupSizeApplied": { "type": ["integer", "null"], "minimum": 1 }
+      }
+    },
+    "redactionReceipt": { "$ref": "redaction-receipt.schema.json" },
+    "payload": { "oneOf": [{ "$ref": "#/$defs/safeObject" }, { "type": "null" }] },
+    "hashAlgorithm": { "const": "sha256-jcs", "description": "Applies to payloadHash, dependencyHash, and recordHash." },
+    "payloadHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "supersedesEvidenceIds": {
+      "type": "array", "uniqueItems": true,
+      "items": { "type": "string", "format": "uuid" }
+    },
+    "review": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["policyId", "policyVersion", "reviewedSourceVersion", "authorityRef", "reviewedAt"],
+      "properties": {
+        "policyId": { "type": "string", "minLength": 1 },
+        "policyVersion": { "type": "string", "minLength": 1 },
+        "reviewedSourceVersion": { "type": "string", "minLength": 1 },
+        "authorityRef": { "type": "string", "minLength": 1 },
+        "reviewedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "validationReceipt": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["validationMode", "checksRun", "unitsInspected", "planHash", "validatedAt"],
+      "properties": {
+        "validationMode": { "enum": ["exact", "bounded-approximation", "authoritative-constraint", "review"] },
+        "checksRun": { "type": "integer", "minimum": 1 },
+        "unitsInspected": { "type": "integer", "minimum": 0 },
+        "planHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "validatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "usageProof": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["proofArtifactRef", "proofArtifactSha256", "issuerRegistrySha256"],
+      "properties": {
+        "proofArtifactRef": { "type": "string", "pattern": "^artifact://[A-Za-z0-9._/-]+$" },
+        "proofArtifactSha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "issuerRegistrySha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+      }
+    },
+    "counterEvidenceIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "format": "uuid" }
+    },
+    "policyTags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "createdAt": { "type": "string", "format": "date-time" }
+  },
+  "allOf": [
+    {
+      "if": { "required": ["kind"], "properties": { "kind": { "enum": ["field-profile", "value-format", "value-distribution", "temporal-coverage", "freshness", "quality-score", "anomaly"] } } },
+      "then": { "properties": { "logicalKey": { "required": ["assetId", "statisticFamily", "samplePlanHash"] } } }
+    },
+    {
+      "if": { "required": ["kind"], "properties": { "kind": { "enum": ["identity", "grain"] } } },
+      "then": { "properties": { "logicalKey": { "required": ["assetId", "identityCoordinate", "samplePlanHash"] } } }
+    },
+    {
+      "if": { "required": ["kind"], "properties": { "kind": { "enum": ["relationship-hypothesis", "relationship-validation", "functional-dependency"] } } },
+      "then": { "properties": { "logicalKey": { "required": ["relationshipCoordinate", "samplePlanHash"] } } }
+    },
+    {
+      "if": { "required": ["kind"], "properties": { "kind": { "enum": ["business-entity", "business-event", "business-measure", "glossary-term", "business-scenario"] } } },
+      "then": { "properties": { "logicalKey": { "required": ["businessConceptCoordinate"] } } }
+    },
+    {
+      "if": { "required": ["kind"], "properties": { "kind": { "enum": ["asset-purpose", "semantic-label"] } } },
+      "then": { "properties": { "logicalKey": { "required": ["semanticCoordinate"] } } }
+    },
+    {
+      "if": { "properties": { "outcome": { "const": "not-run" } } },
+      "then": { "properties": { "maturity": { "enum": ["unavailable", "inferred"] } } }
+    },
+    {
+      "if": { "properties": { "maturity": { "const": "validated" } } },
+      "then": {
+        "required": ["validationReceipt", "payload"],
+        "properties": {
+          "validationReceipt": { "type": "object" },
+          "payload": { "type": "object", "minProperties": 1 },
+          "outcome": { "enum": ["passed", "failed", "evaluated-empty"] }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "maturity": { "const": "curated" } } },
+      "then": { "required": ["review"], "properties": { "review": { "type": "object" }, "outcome": { "const": "passed" } } }
+    },
+    {
+      "if": { "properties": { "maturity": { "const": "usage-proven" } } },
+      "then": { "required": ["usageProof"], "properties": { "usageProof": { "type": "object" }, "outcome": { "const": "passed" } } }
+    },
+    {
+      "if": { "properties": { "maturity": { "const": "rejected" } } },
+      "then": { "properties": { "outcome": { "enum": ["failed", "evaluated-empty"] } } }
+    },
+    {
+      "if": { "properties": { "maturity": { "const": "unavailable" } } },
+      "then": { "properties": { "outcome": { "enum": ["unavailable", "not-run", "blocked", "cancelled"] } } }
+    },
+    {
+      "if": { "properties": { "outcome": { "const": "passed" } } },
+      "then": { "required": ["payload"], "properties": { "payload": { "type": "object", "minProperties": 1 } } }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "relationship-validation" } } },
+      "then": {
+        "required": ["payload", "sample"],
+        "properties": {
+          "payload": { "$ref": "relationship-validation.schema.json" },
+          "sample": { "type": "object" }
+        }
+      }
+    }
+  ]
+}

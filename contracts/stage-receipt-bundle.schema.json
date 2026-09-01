@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/stage-receipt-bundle.schema.json",
+  "title": "Profiling Stage Receipt Bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractVersion", "runId", "receipts", "hashAlgorithm", "bundleHash", "sealedAt", "issuerKeyId", "signatureAlgorithm", "signature"],
+  "$defs": {
+    "stageId": {
+      "enum": ["register-negotiate", "authorize-pre-read", "open-source-boundary", "discover-structure", "classify-redact", "profile-statistics", "extract-semantics", "validate-identities", "generate-relationship-hypotheses", "validate-relationships", "quality-freshness", "lineage-usage", "detect-model-patterns", "derive-business-model", "verify-source-boundary", "build-indexes", "build-manifests", "consumption-probes", "publish"]
+    },
+    "receiptType": {
+      "enum": ["source-registration-and-effective-capabilities", "authorization-scope-and-policy-hash", "source-boundary-opened", "asset-and-field-inventory", "field-handling-and-redaction-plan", "statistical-evidence-and-sample-receipts", "semantic-hypotheses-and-model-call-receipts", "identity-and-grain-outcomes", "deduplicated-ranked-candidates", "relationship-validation-outcomes", "quality-freshness-and-failure-coverage", "lineage-and-privacy-filtered-usage-evidence", "asset-role-storage-hierarchy-and-model-patterns", "business-concept-and-scenario-hypotheses", "source-version-and-consistency-boundary", "projection-scoped-index-manifests", "sealed-contract-valid-profile-and-capability-manifests", "nonzero-retrieval-and-agent-readiness-results", "atomic-current-pointer-and-publication-event"]
+    },
+    "artifactBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactType", "artifactId", "artifactUri", "contentHash", "countSelector", "itemCount"],
+      "properties": {
+        "artifactType": { "enum": ["source-descriptor", "source-boundary", "source-structure", "source-value-fingerprint-set", "projection-safety-receipt", "evidence-response", "execution-budget-bundle", "policy", "run-record", "authorization-decision", "evidence-bundle", "stage-output-inventory", "profile-manifest", "capability-manifest", "retrieval-bundle", "publication-receipt", "index-manifest-bundle", "stage-receipt"] },
+        "artifactId": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "artifactUri": { "type": "string", "pattern": "^package://[A-Za-z0-9._/-]+$" },
+        "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "countSelector": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "evidenceKinds"],
+          "properties": {
+            "kind": { "enum": ["document", "control-document", "structure-assets", "evidence-records", "evidence-assets", "evidence-fields", "stage-items", "profile-model-patterns", "profile-business-concepts", "profile-indexes", "retrieval-products"] },
+            "evidenceKinds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+          }
+        },
+        "itemCount": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expected", "attempted", "completed", "failed", "skipped", "unavailable", "notRun", "deferred"],
+      "properties": {
+        "expected": { "type": "integer", "minimum": 0 },
+        "attempted": { "type": "integer", "minimum": 0 },
+        "completed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "skipped": { "type": "integer", "minimum": 0 },
+        "unavailable": { "type": "integer", "minimum": 0 },
+        "notRun": { "type": "integer", "minimum": 0 },
+        "deferred": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receiptId", "receiptType", "stageId", "runId", "sourceId", "sourceVersionCandidate", "sourceVersionStatus", "sourceVersion", "connectorId", "connectorVersion", "connectorCapabilityHash", "authorizationScopeId", "policyHash", "taxonomyVersion", "pipelineVersion", "methodSetHash", "revocationEpoch", "fencingToken", "attempt", "outcome", "methodVersion", "producedAt", "dependencyReceiptIds", "outputs", "work"],
+      "properties": {
+        "receiptId": { "type": "string", "format": "uuid" },
+        "receiptType": { "$ref": "#/$defs/receiptType" },
+        "stageId": { "$ref": "#/$defs/stageId" },
+        "runId": { "type": "string", "format": "uuid" },
+        "sourceId": { "type": "string", "format": "uuid" },
+        "sourceVersionCandidate": { "type": "string", "minLength": 1, "description": "Stable registration-generation coordinate known before source reads." },
+        "sourceVersionStatus": { "enum": ["candidate", "final"] },
+        "sourceVersion": { "type": ["string", "null"], "minLength": 1 },
+        "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+        "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "authorizationScopeId": { "type": "string", "minLength": 1 },
+        "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "taxonomyVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+        "pipelineVersion": { "type": "string", "minLength": 1 },
+        "methodSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "revocationEpoch": { "type": "integer", "minimum": 0 },
+        "fencingToken": { "type": "integer", "minimum": 1 },
+        "attempt": { "type": "integer", "minimum": 1 },
+        "outcome": { "enum": ["completed", "completed-partial", "failed", "skipped", "cancelled"] },
+        "methodVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "producedAt": { "type": "string", "format": "date-time" },
+        "dependencyReceiptIds": { "type": "array", "uniqueItems": true, "maxItems": 19, "items": { "type": "string", "format": "uuid" } },
+        "outputs": { "type": "array", "minItems": 1, "maxItems": 20, "items": { "$ref": "#/$defs/artifactBinding" } },
+        "work": { "$ref": "#/$defs/work" }
+      },
+      "allOf": [
+        { "if": { "properties": { "stageId": { "const": "register-negotiate" } } }, "then": { "properties": { "receiptType": { "const": "source-registration-and-effective-capabilities" } } } },
+        { "if": { "properties": { "stageId": { "const": "authorize-pre-read" } } }, "then": { "properties": { "receiptType": { "const": "authorization-scope-and-policy-hash" } } } },
+        { "if": { "properties": { "stageId": { "const": "open-source-boundary" } } }, "then": { "properties": { "receiptType": { "const": "source-boundary-opened" } } } },
+        { "if": { "properties": { "stageId": { "const": "discover-structure" } } }, "then": { "properties": { "receiptType": { "const": "asset-and-field-inventory" } } } },
+        { "if": { "properties": { "stageId": { "const": "classify-redact" } } }, "then": { "properties": { "receiptType": { "const": "field-handling-and-redaction-plan" } } } },
+        { "if": { "properties": { "stageId": { "const": "profile-statistics" } } }, "then": { "properties": { "receiptType": { "const": "statistical-evidence-and-sample-receipts" } } } },
+        { "if": { "properties": { "stageId": { "const": "extract-semantics" } } }, "then": { "properties": { "receiptType": { "const": "semantic-hypotheses-and-model-call-receipts" } } } },
+        { "if": { "properties": { "stageId": { "const": "validate-identities" } } }, "then": { "properties": { "receiptType": { "const": "identity-and-grain-outcomes" } } } },
+        { "if": { "properties": { "stageId": { "const": "generate-relationship-hypotheses" } } }, "then": { "properties": { "receiptType": { "const": "deduplicated-ranked-candidates" } } } },
+        { "if": { "properties": { "stageId": { "const": "validate-relationships" } } }, "then": { "properties": { "receiptType": { "const": "relationship-validation-outcomes" } } } },
+        { "if": { "properties": { "stageId": { "const": "quality-freshness" } } }, "then": { "properties": { "receiptType": { "const": "quality-freshness-and-failure-coverage" } } } },
+        { "if": { "properties": { "stageId": { "const": "lineage-usage" } } }, "then": { "properties": { "receiptType": { "const": "lineage-and-privacy-filtered-usage-evidence" } } } },
+        { "if": { "properties": { "stageId": { "const": "detect-model-patterns" } } }, "then": { "properties": { "receiptType": { "const": "asset-role-storage-hierarchy-and-model-patterns" } } } },
+        { "if": { "properties": { "stageId": { "const": "derive-business-model" } } }, "then": { "properties": { "receiptType": { "const": "business-concept-and-scenario-hypotheses" } } } },
+        { "if": { "properties": { "stageId": { "const": "verify-source-boundary" } } }, "then": { "properties": { "receiptType": { "const": "source-version-and-consistency-boundary" } } } },
+        { "if": { "properties": { "stageId": { "const": "build-indexes" } } }, "then": { "properties": { "receiptType": { "const": "projection-scoped-index-manifests" } } } },
+        { "if": { "properties": { "stageId": { "const": "build-manifests" } } }, "then": { "properties": { "receiptType": { "const": "sealed-contract-valid-profile-and-capability-manifests" } } } },
+        { "if": { "properties": { "stageId": { "const": "consumption-probes" } } }, "then": { "properties": { "receiptType": { "const": "nonzero-retrieval-and-agent-readiness-results" } } } },
+        { "if": { "properties": { "stageId": { "const": "publish" } } }, "then": { "properties": { "receiptType": { "const": "atomic-current-pointer-and-publication-event" } } } },
+        {
+          "if": { "properties": { "stageId": { "enum": ["register-negotiate", "authorize-pre-read", "open-source-boundary"] } } },
+          "then": { "properties": { "sourceVersionStatus": { "const": "candidate" }, "sourceVersion": { "type": "null" } } }
+        },
+        {
+          "if": { "properties": { "stageId": { "enum": ["discover-structure", "classify-redact", "profile-statistics", "extract-semantics", "validate-identities", "generate-relationship-hypotheses", "validate-relationships", "quality-freshness", "lineage-usage", "detect-model-patterns", "derive-business-model", "verify-source-boundary", "build-indexes", "build-manifests", "consumption-probes", "publish"] } } },
+          "then": { "properties": { "sourceVersionStatus": { "const": "final" }, "sourceVersion": { "type": "string", "minLength": 1 } } }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "contractVersion": { "const": "1.0.0" },
+    "runId": { "type": "string", "format": "uuid" },
+    "receipts": { "type": "array", "minItems": 1, "maxItems": 19, "items": { "$ref": "#/$defs/receipt" } },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "bundleHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical bundle with bundleHash and signature removed." },
+    "sealedAt": { "type": "string", "format": "date-time" },
+    "issuerKeyId": { "type": "string", "minLength": 1, "maxLength": 255 },
+    "signatureAlgorithm": { "const": "ed25519" },
+    "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$", "minLength": 80, "maxLength": 100, "description": "Ed25519 signature over the raw 32-byte bundleHash." }
+  }
+}

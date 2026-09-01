@@ -1,0 +1,166 @@
+{
+  "responseMode": "page",
+  "sourceId": "11111111-1111-4111-8111-111111111111",
+  "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+  "authorizationScopeId": "authorized-assets",
+  "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "revocationEpoch": 0,
+  "responsePolicy": {
+    "maximumSerializedBytes": 10485760,
+    "maximumTextCharacters": 4000,
+    "defaultContentProvenance": "source-derived",
+    "serviceGeneratedPathPatterns": [
+      "/responseMode",
+      "/sourceId",
+      "/sourceVersion",
+      "/authorizationScopeId",
+      "/policyHash",
+      "/revocationEpoch",
+      "/responsePolicy",
+      "/continuationToken"
+    ],
+    "sourceDerivedPathPatterns": [
+      "/items/*/subject",
+      "/items/*/claim",
+      "/items/*/payload"
+    ]
+  },
+  "items": [
+    {
+      "contractVersion": "1.0.0",
+      "evidenceId": "22222222-2222-4222-8222-222222222222",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "authorizationScopeId": "authorized-assets",
+      "taxonomyVersion": "1.0.0",
+      "logicalKey": {
+        "authorizationScopeId": "authorized-assets",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "subjectKind": "asset",
+        "subjectId": "work-records",
+        "predicate": "field-profiles",
+        "methodVersion": "1.0.0",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "assetId": "work-records",
+        "fieldPath": null,
+        "statisticFamily": "field-profile",
+        "samplePlanHash": "747e0ecc59d6bc7704d8c970e7aaad5d9723fae6c0972ae71ab0138ac9476755"
+      },
+      "dependencyHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "fencingToken": 1,
+      "revocationEpoch": 0,
+      "subject": {
+        "subjectKind": "asset",
+        "subjectId": "work-records",
+        "assetId": "work-records",
+        "assetKind": "table",
+        "fieldPath": null,
+        "versionId": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "claim": {
+        "predicate": "field-profiles",
+        "object": "bounded statistical profile",
+        "unit": null
+      },
+      "kind": "field-profile",
+      "maturity": "observed",
+      "outcome": "passed",
+      "confidence": 0.98,
+      "provenance": {
+        "producer": "tabular-statistical-profiler",
+        "method": "deterministic-hash-sample",
+        "methodVersion": "1.0.0",
+        "modelRef": null,
+        "promptHash": null,
+        "inputEvidenceIds": []
+      },
+      "sample": {
+        "method": "deterministic-hash",
+        "requestedUnits": 10000,
+        "populationEstimate": 100000,
+        "rowsInspected": 10000,
+        "seed": 17,
+        "bucketRule": null,
+        "errorBound": 0.02,
+        "exact": false,
+        "strata": [
+          {
+            "name": "default",
+            "populationEstimate": 100000,
+            "unitsInspected": 10000
+          }
+        ],
+        "excludedStrata": [],
+        "failedStrata": []
+      },
+      "validity": {
+        "validFrom": "2026-01-01T00:00:00Z",
+        "validUntil": null,
+        "schemaVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "dataHandling": {
+        "classification": "restricted",
+        "containsRawSourceValues": false,
+        "redactionMethod": "aggregate-only",
+        "minimumGroupSizeApplied": 10
+      },
+      "payload": {
+        "approximation": "mergeable-distinct-sketch",
+        "fields": {
+          "ScopeId": {
+            "distinctCount": 25,
+            "nullRatio": 0.0
+          },
+          "RecordId": {
+            "distinctCount": 9850,
+            "nullRatio": 0.0
+          },
+          "VersionNumber": {
+            "distinctCount": 12,
+            "nullRatio": 0.0
+          }
+        }
+      },
+      "hashAlgorithm": "sha256-jcs",
+      "payloadHash": "546d8ba89a8f434ab58ec3b01b3b84327c891efb338a6dd2e1b2f7e40ded1752",
+      "supersedesEvidenceIds": [],
+      "review": null,
+      "validationReceipt": null,
+      "usageProof": null,
+      "counterEvidenceIds": [],
+      "policyTags": [
+        "aggregate-only",
+        "restricted"
+      ],
+      "createdAt": "2026-01-01T00:01:00Z",
+      "redactionReceipt": {
+        "receiptId": "555d53c3-ae0c-596b-839f-48f49f7f7eed",
+        "payloadHash": "546d8ba89a8f434ab58ec3b01b3b84327c891efb338a6dd2e1b2f7e40ded1752",
+        "contentHash": "c3ddaf8ee3d936ec970732befac526c6db7b507609eab33e7ff8f3f4652e5484",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "authorizationScopeId": "authorized-assets",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "scannerVersion": "1.0.0",
+        "classification": "restricted",
+        "actions": [
+          "aggregate-only"
+        ],
+        "containsRawSourceValues": false,
+        "minimumGroupSizeApplied": 10,
+        "scannedAt": "2026-01-01T00:01:00Z",
+        "issuerKeyId": "conformance-redaction-v1",
+        "signatureAlgorithm": "ed25519",
+        "signature": "cHWxICceFvv1S6SS940S6VxXItUwaxwz0lYRqnug3zcoFq+Yb4bUqb+GAYYABig38d77MJwOkfAOuGYp3bmfDg=="
+      },
+      "recordHash": "937408b4e3d70e54da08a33ae4b9a0d624a76f8c931a34299717b9624cd1da23",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade"
+    }
+  ],
+  "continuationToken": null
+}

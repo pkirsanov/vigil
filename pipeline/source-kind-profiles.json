@@ -1,0 +1,323 @@
+{
+  "profileVersion": "1.0.0",
+  "commonStages": [
+    "register-negotiate",
+    "authorize-pre-read",
+    "open-source-boundary",
+    "discover-structure",
+    "classify-redact",
+    "verify-source-boundary",
+    "build-indexes",
+    "build-manifests",
+    "consumption-probes",
+    "publish"
+  ],
+  "sourceKinds": [
+    {
+      "id": "relational",
+      "requiredConnectorCapabilities": [
+        "enumerate-assets",
+        "read-structure"
+      ],
+      "supportedStages": [
+        "extract-semantics",
+        "generate-relationship-hypotheses",
+        "detect-model-patterns",
+        "derive-business-model"
+      ],
+      "conditionalStages": [
+        "profile-statistics",
+        "validate-identities",
+        "validate-relationships",
+        "quality-freshness",
+        "lineage-usage"
+      ],
+      "unavailableStages": [],
+      "consistencyBoundaryModes": [
+        "snapshot",
+        "transaction",
+        "watermark-range",
+        "before-after-check"
+      ],
+      "validators": [
+        "key-overlap",
+        "constraint-check",
+        "query-history"
+      ],
+      "positiveScenario": "structural-and-statistical-profiling:profile a small asset exactly",
+      "failureScenario": "identity-and-relationships:preserve validator unavailability"
+    },
+    {
+      "id": "tabular-file",
+      "requiredConnectorCapabilities": [
+        "enumerate-assets",
+        "read-structure"
+      ],
+      "supportedStages": [
+        "extract-semantics",
+        "generate-relationship-hypotheses",
+        "detect-model-patterns",
+        "derive-business-model"
+      ],
+      "conditionalStages": [
+        "profile-statistics",
+        "validate-identities",
+        "validate-relationships",
+        "quality-freshness",
+        "lineage-usage"
+      ],
+      "unavailableStages": [],
+      "consistencyBoundaryModes": [
+        "snapshot",
+        "etag-set",
+        "before-after-check"
+      ],
+      "validators": [
+        "key-overlap",
+        "partition-correlation"
+      ],
+      "positiveScenario": "universal-source-types:profile a tabular file collection",
+      "failureScenario": "universal-source-types:reject a malformed or expanding file"
+    },
+    {
+      "id": "semi-structured",
+      "requiredConnectorCapabilities": [
+        "enumerate-assets",
+        "read-structure"
+      ],
+      "supportedStages": [
+        "extract-semantics",
+        "generate-relationship-hypotheses",
+        "detect-model-patterns",
+        "derive-business-model"
+      ],
+      "conditionalStages": [
+        "profile-statistics",
+        "validate-identities",
+        "validate-relationships",
+        "quality-freshness",
+        "lineage-usage"
+      ],
+      "unavailableStages": [],
+      "consistencyBoundaryModes": [
+        "snapshot",
+        "etag-set",
+        "watermark-range",
+        "before-after-check"
+      ],
+      "validators": [
+        "path-value-overlap",
+        "reference-resolution"
+      ],
+      "positiveScenario": "universal-source-types:profile a polymorphic nested field",
+      "failureScenario": "structural-and-statistical-profiling:detect a type variant in nested records"
+    },
+    {
+      "id": "document-corpus",
+      "requiredConnectorCapabilities": [
+        "enumerate-assets",
+        "read-structure",
+        "fetch-content"
+      ],
+      "supportedStages": [
+        "extract-semantics",
+        "generate-relationship-hypotheses",
+        "detect-model-patterns",
+        "derive-business-model"
+      ],
+      "conditionalStages": [
+        "profile-statistics",
+        "validate-identities",
+        "validate-relationships",
+        "quality-freshness",
+        "lineage-usage"
+      ],
+      "unavailableStages": [],
+      "consistencyBoundaryModes": [
+        "snapshot",
+        "etag-set",
+        "watermark-range",
+        "before-after-check"
+      ],
+      "validators": [
+        "explicit-reference",
+        "entity-resolution",
+        "citation-check"
+      ],
+      "positiveScenario": "universal-source-types:profile a document corpus",
+      "failureScenario": "universal-source-types:preserve unavailable document parsing"
+    },
+    {
+      "id": "api",
+      "requiredConnectorCapabilities": [
+        "enumerate-assets",
+        "read-structure"
+      ],
+      "supportedStages": [
+        "extract-semantics",
+        "generate-relationship-hypotheses",
+        "detect-model-patterns",
+        "derive-business-model"
+      ],
+      "conditionalStages": [
+        "profile-statistics",
+        "validate-identities",
+        "validate-relationships",
+        "quality-freshness",
+        "lineage-usage"
+      ],
+      "unavailableStages": [],
+      "consistencyBoundaryModes": [
+        "snapshot",
+        "etag-set",
+        "watermark-range",
+        "before-after-check"
+      ],
+      "validators": [
+        "contract-reference",
+        "sampled-response-check"
+      ],
+      "positiveScenario": "universal-source-types:profile an api contract",
+      "failureScenario": "universal-source-types:preserve partial api pagination"
+    },
+    {
+      "id": "stream",
+      "requiredConnectorCapabilities": [
+        "enumerate-assets",
+        "read-structure",
+        "read-change-feed"
+      ],
+      "supportedStages": [
+        "extract-semantics",
+        "generate-relationship-hypotheses",
+        "detect-model-patterns",
+        "derive-business-model"
+      ],
+      "conditionalStages": [
+        "profile-statistics",
+        "validate-identities",
+        "validate-relationships",
+        "quality-freshness",
+        "lineage-usage"
+      ],
+      "unavailableStages": [],
+      "consistencyBoundaryModes": [
+        "watermark-range",
+        "offset-range"
+      ],
+      "validators": [
+        "correlation-key-overlap",
+        "sequence-check",
+        "temporal-alignment"
+      ],
+      "positiveScenario": "universal-source-types:profile an event stream",
+      "failureScenario": "universal-source-types:handle an expired stream offset"
+    },
+    {
+      "id": "graph",
+      "requiredConnectorCapabilities": [
+        "enumerate-assets",
+        "read-structure",
+        "resolve-reference"
+      ],
+      "supportedStages": [
+        "extract-semantics",
+        "generate-relationship-hypotheses",
+        "validate-relationships",
+        "detect-model-patterns",
+        "derive-business-model"
+      ],
+      "conditionalStages": [
+        "profile-statistics",
+        "validate-identities",
+        "quality-freshness",
+        "lineage-usage"
+      ],
+      "unavailableStages": [],
+      "consistencyBoundaryModes": [
+        "snapshot",
+        "transaction",
+        "watermark-range",
+        "before-after-check"
+      ],
+      "validators": [
+        "edge-existence",
+        "endpoint-type-check",
+        "path-support"
+      ],
+      "positiveScenario": "universal-source-types:profile a graph",
+      "failureScenario": "universal-source-types:isolate an unauthorized graph neighbor"
+    },
+    {
+      "id": "multimodal",
+      "requiredConnectorCapabilities": [
+        "enumerate-assets",
+        "read-structure",
+        "fetch-content"
+      ],
+      "supportedStages": [
+        "extract-semantics",
+        "generate-relationship-hypotheses",
+        "detect-model-patterns",
+        "derive-business-model"
+      ],
+      "conditionalStages": [
+        "profile-statistics",
+        "validate-identities",
+        "validate-relationships",
+        "quality-freshness",
+        "lineage-usage"
+      ],
+      "unavailableStages": [],
+      "consistencyBoundaryModes": [
+        "snapshot",
+        "etag-set",
+        "watermark-range",
+        "before-after-check"
+      ],
+      "validators": [
+        "shared-identifier",
+        "temporal-alignment",
+        "cross-modal-similarity"
+      ],
+      "positiveScenario": "universal-source-types:profile multimodal assets",
+      "failureScenario": "universal-source-types:bound hostile media processing"
+    },
+    {
+      "id": "custom",
+      "requiredConnectorCapabilities": [
+        "enumerate-assets",
+        "read-structure"
+      ],
+      "supportedStages": [
+        "extract-semantics",
+        "generate-relationship-hypotheses",
+        "detect-model-patterns",
+        "derive-business-model"
+      ],
+      "conditionalStages": [
+        "profile-statistics",
+        "validate-identities",
+        "validate-relationships",
+        "quality-freshness",
+        "lineage-usage"
+      ],
+      "unavailableStages": [],
+      "consistencyBoundaryModes": [
+        "snapshot",
+        "transaction",
+        "watermark-range",
+        "offset-range",
+        "etag-set",
+        "before-after-check",
+        "none"
+      ],
+      "validators": [
+        "connector-defined"
+      ],
+      "positiveScenario": "universal-source-types:unsupported source semantics remain unavailable",
+      "failureScenario": "source-onboarding:negotiate an unsupported capability"
+    }
+  ],
+  "bucketSemantics": "supportedStages are executable using only requiredConnectorCapabilities. conditionalStages need at least one further negotiated capability and terminate as unavailable without it. unavailableStages never apply to the kind. The three buckets are disjoint and exclude commonStages."
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/cancellation-receipt.schema.json",
+  "title": "Run Cancellation Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["cancellationId", "runId", "state", "actorSubjectHash", "subjectHashSaltId", "requestHash", "idempotencyKeyHash", "requestedAt", "statusUrl", "traceId", "auditEventId", "hashAlgorithm", "receiptHash"],
+  "properties": {
+    "cancellationId": { "type": "string", "format": "uuid" },
+    "runId": { "type": "string", "format": "uuid" },
+    "state": { "const": "requested" },
+    "actorSubjectHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical array ['caller-subject-v1', deploymentSalt, tenantId, subjectId]." },
+    "subjectHashSaltId": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "requestHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical request envelope containing path runId, idempotencyKey, and body." },
+    "idempotencyKeyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical idempotency-key string." },
+    "requestedAt": { "type": "string", "format": "date-time" },
+    "statusUrl": { "type": "string", "format": "uri-reference" },
+    "traceId": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "auditEventId": { "type": "string", "format": "uuid" },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "receiptHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical receipt with receiptHash removed." }
+  }
+}

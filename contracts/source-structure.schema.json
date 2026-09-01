@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/source-structure.schema.json",
+  "title": "Bounded Source Structure Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractVersion",
+    "snapshotId",
+    "runId",
+    "sourceId",
+    "sourceVersionCandidate",
+    "boundaryId",
+    "connectorId",
+    "connectorVersion",
+    "connectorCapabilityHash",
+    "authorizationScopeId",
+    "capturedAt",
+    "assets",
+    "hashAlgorithm",
+    "structureHash",
+    "sourceVersion"
+  ],
+  "properties": {
+    "contractVersion": { "const": "1.0.0" },
+    "snapshotId": { "type": "string", "format": "uuid" },
+    "runId": { "type": "string", "format": "uuid" },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersionCandidate": { "type": "string", "minLength": 1 },
+    "boundaryId": { "type": "string", "format": "uuid" },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "capturedAt": { "type": "string", "format": "date-time" },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assetId", "nativeName", "kind", "fields", "constraints"],
+        "properties": {
+          "assetId": { "type": "string", "minLength": 1 },
+          "nativeName": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "kind": { "type": "string", "minLength": 1, "maxLength": 100 },
+          "fields": {
+            "type": "array",
+            "maxItems": 5000,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "physicalType", "typeVariants", "nullable"],
+              "properties": {
+                "path": { "type": "string", "minLength": 1, "maxLength": 1000 },
+                "physicalType": { "type": "string", "minLength": 1, "maxLength": 200 },
+                "typeVariants": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 200 } },
+                "nullable": { "type": ["boolean", "null"] }
+              }
+            }
+          },
+          "constraints": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 1000 } }
+        }
+      }
+    },
+    "hashAlgorithm": { "const": "sha256-jcs-structure-v1" },
+    "structureHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "sourceVersion": { "type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$" }
+  }
+}

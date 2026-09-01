@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/audit-event.schema.json",
+  "title": "Profiler Audit Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "sequenceNumber",
+    "occurredAt",
+    "action",
+    "outcome",
+    "actor",
+    "authorization",
+    "correlationId",
+    "policyHash",
+    "target",
+    "integrity"
+  ],
+  "properties": {
+    "eventId": { "type": "string", "format": "uuid" },
+    "sequenceNumber": { "type": "integer", "minimum": 0 },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "action": {
+      "enum": [
+        "source.register",
+        "source.inspect",
+        "run.start",
+        "run.cancel",
+        "run.resume",
+        "connector.read",
+        "plan.validate",
+        "plan.execute",
+        "semantic.invoke",
+        "cache.read",
+        "cache.write",
+        "cache.invalidate",
+        "evidence.append",
+        "manifest.publish",
+        "index.publish",
+        "retrieve",
+        "feedback.submit",
+        "serving.revoke",
+        "derived-data.delete"
+      ]
+    },
+    "outcome": { "enum": ["allowed", "denied", "succeeded", "failed", "partial", "cancelled"] },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subjectId", "subjectHashSaltId", "actorType", "authenticationMethod"],
+      "properties": {
+        "subjectId": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "Deployment-salted actor hash using the caller-subject-v1 preimage." },
+        "subjectHashSaltId": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "actorType": { "enum": ["person", "service", "agent", "system"] },
+        "authenticationMethod": { "type": "string", "minLength": 1 },
+        "delegatedBySubjectId": { "type": ["string", "null"] }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scopeId", "decision", "requiredPermissions", "grantedPermissions"],
+      "properties": {
+        "scopeId": { "type": "string", "minLength": 1 },
+        "decision": { "enum": ["allowed", "denied"] },
+        "requiredPermissions": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "grantedPermissions": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "reasonCode": { "type": ["string", "null"] }
+      }
+    },
+    "correlationId": { "type": "string", "format": "uuid" },
+    "traceId": { "type": ["string", "null"], "pattern": "^[a-fA-F0-9]{32}$" },
+    "runId": { "type": ["string", "null"], "format": "uuid" },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resourceType", "resourceId"],
+      "properties": {
+        "resourceType": { "enum": ["source", "run", "plan", "evidence", "manifest", "index", "cache-entry", "feedback", "lifecycle-request"] },
+        "resourceId": { "type": "string", "minLength": 1 },
+        "sourceId": { "type": ["string", "null"], "format": "uuid" },
+        "sourceVersion": { "type": ["string", "null"] }
+      }
+    },
+    "requestSummary": {
+      "type": "object",
+      "description": "Redacted metadata only; credentials, raw source values, and prompt content are forbidden.",
+      "additionalProperties": { "type": ["string", "number", "integer", "boolean", "null"] },
+      "maxProperties": 20
+    },
+    "resultSummary": {
+      "type": "object",
+      "additionalProperties": { "type": ["string", "number", "integer", "boolean", "null"] },
+      "maxProperties": 20
+    },
+    "errorCode": { "type": ["string", "null"] },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hashAlgorithm", "payloadSha256", "previousEventSha256"],
+      "properties": {
+        "hashAlgorithm": { "const": "sha256-jcs" },
+        "payloadSha256": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{64}$",
+          "description": "SHA-256 over the RFC 8785 canonical form of this event with integrity replaced by { previousEventSha256 }, so the chain link is inside the digest."
+        },
+        "previousEventSha256": {
+          "type": ["string", "null"],
+          "pattern": "^[a-fA-F0-9]{64}$",
+          "description": "The predecessor event's payloadSha256; null only for sequenceNumber 0."
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "authorization": { "required": ["decision"], "properties": { "decision": { "const": "denied" } } } } },
+      "then": {
+        "properties": {
+          "outcome": { "const": "denied" },
+          "authorization": {
+            "properties": {
+              "grantedPermissions": { "maxItems": 0 },
+              "reasonCode": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "authorization": { "required": ["decision"], "properties": { "decision": { "const": "allowed" } } } } },
+      "then": { "properties": { "outcome": { "enum": ["allowed", "succeeded", "failed", "partial", "cancelled"] } } }
+    },
+    {
+      "if": { "required": ["sequenceNumber"], "properties": { "sequenceNumber": { "const": 0 } } },
+      "then": { "properties": { "integrity": { "properties": { "previousEventSha256": { "type": "null" } } } } }
+    },
+    {
+      "if": { "required": ["sequenceNumber"], "properties": { "sequenceNumber": { "minimum": 1 } } },
+      "then": { "properties": { "integrity": { "properties": { "previousEventSha256": { "type": "string" } } } } }
+    }
+  ]
+}

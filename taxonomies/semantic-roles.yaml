@@ -1,0 +1,79 @@
+taxonomyVersion: 1.0.0
+fieldRoles:
+  - identity
+  - scope-identity
+  - version-identity
+  - foreign-reference
+  - temporal-instant
+  - temporal-interval
+  - measure-additive
+  - measure-semi-additive
+  - measure-non-additive
+  - categorical
+  - ordinal
+  - boolean
+  - descriptive-text
+  - display-label
+  - path
+  - location
+  - contact
+  - code
+  - status
+  - policy-tag
+  - embedding
+  - nested-object
+  - media-reference
+  - unknown
+
+assetRoles:
+  - current-state
+  - event-log
+  - transaction
+  - periodic-snapshot
+  - accumulating-snapshot
+  - entity-history
+  - reference
+  - dimension
+  - fact
+  - bridge
+  - hierarchy
+  - edge-list
+  - aggregate
+  - materialized-projection
+  - configuration
+  - audit
+  - document-collection
+  - media-collection
+  - unknown
+
+relationshipKinds:
+  - key-reference
+  - scoped-key-reference
+  - version-reference
+  - parent-child
+  - containment
+  - derivation
+  - lineage
+  - temporal-alignment
+  - state-transition
+  - citation
+  - entity-mention
+  - semantic-similarity
+  - co-usage
+  - bridge-resolution
+  - aggregate-to-detail
+  - inferred-path
+
+businessConceptKinds:
+  - entity
+  - event
+  - process
+  - state
+  - actor-role
+  - measure
+  - metric
+  - dimension
+  - policy
+  - outcome
+  - scenario
+  - glossary-term

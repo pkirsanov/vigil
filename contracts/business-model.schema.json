@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/business-model.schema.json",
+  "title": "Evidence-Backed Business Model",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["domains", "entities", "events", "states", "processes", "measures", "dimensions", "metrics", "scenarios", "glossary"],
+  "properties": {
+    "domains": { "type": "array", "items": { "$ref": "#/$defs/concept" } },
+    "entities": { "type": "array", "items": { "$ref": "#/$defs/entity" } },
+    "events": { "type": "array", "items": { "$ref": "#/$defs/event" } },
+    "states": { "type": "array", "items": { "$ref": "#/$defs/state" } },
+    "processes": { "type": "array", "items": { "$ref": "#/$defs/process" } },
+    "measures": { "type": "array", "items": { "$ref": "#/$defs/measure" } },
+    "dimensions": { "type": "array", "items": { "$ref": "#/$defs/dimension" } },
+    "metrics": { "type": "array", "items": { "$ref": "#/$defs/metric" } },
+    "scenarios": { "type": "array", "items": { "$ref": "#/$defs/scenario" } },
+    "glossary": { "type": "array", "items": { "$ref": "#/$defs/glossary" } }
+  },
+  "$defs": {
+    "maturity": { "enum": ["inferred", "validated", "curated", "usage-proven", "unavailable"] },
+    "base": {
+      "type": "object",
+      "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs"],
+      "properties": {
+        "conceptId": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "maturity": { "$ref": "#/$defs/maturity" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } }
+      }
+    },
+    "expression": {
+      "type": "object", "additionalProperties": false,
+      "required": ["operator", "arguments"],
+      "properties": {
+        "operator": { "enum": ["field", "literal", "count", "distinct-count", "sum", "average", "minimum", "maximum", "add", "subtract", "multiply", "divide", "coalesce"] },
+        "arguments": {
+          "type": "array", "minItems": 1, "maxItems": 20,
+          "items": {
+            "oneOf": [
+              { "type": "string", "minLength": 1 },
+              { "type": "number" },
+              { "type": "boolean" },
+              { "type": "null" },
+              { "$ref": "#/$defs/expression" }
+            ]
+          }
+        }
+      }
+    },
+    "filter": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "operator", "value"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "operator": { "enum": ["equals", "not-equals", "less-than", "less-than-or-equal", "greater-than", "greater-than-or-equal", "in", "is-null", "is-not-null"] },
+        "value": { "type": ["string", "number", "boolean", "array", "null"], "maxItems": 100 }
+      }
+    },
+    "concept": {
+      "allOf": [
+        { "$ref": "#/$defs/base" },
+        { "type": "object", "additionalProperties": false, "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs", "assetIds", "alternatives"], "properties": {
+          "conceptId": { "type": "string" }, "name": { "type": "string" }, "description": { "type": "string" }, "maturity": { "$ref": "#/$defs/maturity" }, "confidence": { "type": "number" }, "evidenceRefs": { "type": "array" },
+          "assetIds": { "type": "array", "items": { "type": "string" } },
+          "alternatives": { "type": "array", "items": { "type": "string" } }
+        } }
+      ]
+    },
+    "entity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs", "counterEvidenceRefs", "assetIds", "identityEvidenceRefs", "alternateIdentityEvidenceRefs", "aliases", "scope", "ownership", "currentStateAssetIds", "historyAssetIds", "qualityPosture", "freshnessPosture"],
+      "properties": {
+        "conceptId": { "type": "string" }, "name": { "type": "string" }, "description": { "type": "string" }, "maturity": { "$ref": "#/$defs/maturity" }, "confidence": { "type": "number", "minimum": 0, "maximum": 1 }, "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } },
+        "assetIds": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "identityEvidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } },
+        "alternateIdentityEvidenceRefs": { "type": "array", "items": { "type": "string", "format": "uuid" } },
+        "counterEvidenceRefs": { "type": "array", "items": { "type": "string", "format": "uuid" } },
+        "aliases": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "scope": { "type": ["string", "null"] },
+        "ownership": { "type": ["string", "null"] },
+        "currentStateAssetIds": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "historyAssetIds": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "qualityPosture": { "enum": ["acceptable", "degraded", "unavailable"] },
+        "freshnessPosture": { "enum": ["fresh", "stale", "expired", "unavailable"] }
+      }
+    },
+    "event": {
+      "type": "object", "additionalProperties": false,
+      "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs", "assetIds", "timestampPaths", "subjectEntityIds", "identityPaths", "actorPaths", "stateTransitionPaths", "lateArrivalPolicy", "orderingPolicy", "grain"],
+      "properties": {
+        "conceptId": { "type": "string" }, "name": { "type": "string" }, "description": { "type": "string" }, "maturity": { "$ref": "#/$defs/maturity" }, "confidence": { "type": "number", "minimum": 0, "maximum": 1 }, "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } },
+        "assetIds": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "timestampPaths": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "subjectEntityIds": { "type": "array", "items": { "type": "string" } },
+        "identityPaths": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "actorPaths": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "stateTransitionPaths": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "lateArrivalPolicy": { "type": "string", "minLength": 1 },
+        "orderingPolicy": { "type": "string", "minLength": 1 },
+        "grain": { "type": "string", "minLength": 1 }
+      }
+    },
+    "state": {
+      "type": "object", "additionalProperties": false,
+      "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs", "valuePaths", "valuesComplete"],
+      "properties": {
+        "conceptId": { "type": "string" }, "name": { "type": "string" }, "description": { "type": "string" }, "maturity": { "$ref": "#/$defs/maturity" }, "confidence": { "type": "number", "minimum": 0, "maximum": 1 }, "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } },
+        "valuePaths": { "type": "array", "items": { "type": "string" } },
+        "valuesComplete": { "type": "boolean" }
+      }
+    },
+    "process": {
+      "type": "object", "additionalProperties": false,
+      "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs", "startEventIds", "terminalEventIds", "transitionEvidenceRefs", "participantConceptIds", "expectedOrder", "optionalBranches", "durationMeasureIds", "censoringConditions"],
+      "properties": {
+        "conceptId": { "type": "string" }, "name": { "type": "string" }, "description": { "type": "string" }, "maturity": { "$ref": "#/$defs/maturity" }, "confidence": { "type": "number", "minimum": 0, "maximum": 1 }, "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } },
+        "startEventIds": { "type": "array", "items": { "type": "string" } },
+        "terminalEventIds": { "type": "array", "items": { "type": "string" } },
+        "transitionEvidenceRefs": { "type": "array", "items": { "type": "string", "format": "uuid" } },
+        "participantConceptIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "expectedOrder": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "optionalBranches": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "durationMeasureIds": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "censoringConditions": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "measure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs", "sourcePaths", "sourceExpression", "unit", "additivity", "grain", "validAggregations", "filters", "exclusions", "nullSemantics", "errorSemantics", "timeSemantics"],
+      "properties": {
+        "conceptId": { "type": "string" }, "name": { "type": "string" }, "description": { "type": "string" }, "maturity": { "$ref": "#/$defs/maturity" }, "confidence": { "type": "number", "minimum": 0, "maximum": 1 }, "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } },
+        "sourcePaths": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "sourceExpression": { "$ref": "#/$defs/expression" },
+        "unit": { "type": ["string", "null"] },
+        "additivity": { "enum": ["additive", "semi-additive", "non-additive", "unknown"] },
+        "grain": { "type": "string" },
+        "validAggregations": { "type": "array", "items": { "enum": ["count", "distinct-count", "sum", "average", "minimum", "maximum"] } },
+        "filters": { "type": "array", "items": { "$ref": "#/$defs/filter" } },
+        "exclusions": { "type": "array", "items": { "$ref": "#/$defs/filter" } },
+        "nullSemantics": { "type": "string", "minLength": 1 },
+        "errorSemantics": { "type": "string", "minLength": 1 },
+        "timeSemantics": { "type": "string", "minLength": 1 }
+      }
+    },
+    "dimension": {
+      "type": "object", "additionalProperties": false,
+      "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs", "sourcePaths", "cardinality", "hierarchy", "slowlyChangingBehavior", "aliases", "validValues", "catalogComplete"],
+      "properties": {
+        "conceptId": { "type": "string" }, "name": { "type": "string" }, "description": { "type": "string" }, "maturity": { "$ref": "#/$defs/maturity" }, "confidence": { "type": "number", "minimum": 0, "maximum": 1 }, "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } },
+        "sourcePaths": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "cardinality": { "type": ["integer", "null"], "minimum": 0 },
+        "hierarchy": { "type": "array", "items": { "type": "string" } },
+        "slowlyChangingBehavior": { "enum": ["none", "overwrite", "history-preserving", "unknown"] },
+        "aliases": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "validValues": { "type": "array", "maxItems": 1000, "items": { "type": ["string", "number", "boolean", "null"] } },
+        "catalogComplete": { "type": "boolean" }
+      }
+    },
+    "metric": {
+      "type": "object", "additionalProperties": false,
+      "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs", "businessQuestion", "expression", "numerator", "denominator", "unit", "scale", "grainBeforeAggregation", "grainAfterAggregation", "timeSemantics", "filters", "exclusions", "population", "missingDataSemantics", "freshnessConstraints", "qualityConstraints", "requiredAssetIds", "requiredRelationshipIds", "validationStatus"],
+      "properties": {
+        "conceptId": { "type": "string" }, "name": { "type": "string" }, "description": { "type": "string" }, "maturity": { "$ref": "#/$defs/maturity" }, "confidence": { "type": "number", "minimum": 0, "maximum": 1 }, "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } },
+        "businessQuestion": { "type": "string" },
+        "expression": { "$ref": "#/$defs/expression" },
+        "numerator": { "oneOf": [{ "$ref": "#/$defs/expression" }, { "type": "null" }] },
+        "denominator": { "oneOf": [{ "$ref": "#/$defs/expression" }, { "type": "null" }] },
+        "unit": { "type": ["string", "null"] },
+        "scale": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+        "grainBeforeAggregation": { "type": "string", "minLength": 1 },
+        "grainAfterAggregation": { "type": "string", "minLength": 1 },
+        "timeSemantics": {
+          "type": "object", "additionalProperties": false,
+          "required": ["timePath", "window", "timezone"],
+          "properties": {
+            "timePath": { "type": "string", "minLength": 1 },
+            "window": { "type": "string", "minLength": 1 },
+            "timezone": { "type": "string", "minLength": 1 }
+          }
+        },
+        "filters": { "type": "array", "items": { "$ref": "#/$defs/filter" } },
+        "exclusions": { "type": "array", "items": { "$ref": "#/$defs/filter" } },
+        "population": { "type": "string", "minLength": 1 },
+        "missingDataSemantics": { "type": "string" },
+        "freshnessConstraints": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "qualityConstraints": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "requiredAssetIds": { "type": "array", "items": { "type": "string" } },
+        "requiredRelationshipIds": { "type": "array", "items": { "type": "string" } },
+        "validationStatus": { "enum": ["hypothesis", "parsed", "type-checked", "dry-run", "fixture-validated", "curated", "usage-proven", "unavailable"] }
+      }
+    },
+    "scenario": {
+      "type": "object", "additionalProperties": false,
+      "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs", "decision", "actorRoles", "questions", "requiredConceptIds", "requiredMeasureIds", "requiredDimensionIds", "requiredAssetIds", "requiredRelationshipIds", "candidateMetricIds", "coverageConstraints", "freshnessConstraints"],
+      "properties": {
+        "conceptId": { "type": "string" }, "name": { "type": "string" }, "description": { "type": "string" }, "maturity": { "$ref": "#/$defs/maturity" }, "confidence": { "type": "number", "minimum": 0, "maximum": 1 }, "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } },
+        "decision": { "type": "string" },
+        "actorRoles": { "type": "array", "items": { "type": "string" } },
+        "questions": { "type": "array", "items": { "type": "string" } },
+        "requiredConceptIds": { "type": "array", "items": { "type": "string" } },
+        "requiredMeasureIds": { "type": "array", "items": { "type": "string" } },
+        "requiredDimensionIds": { "type": "array", "items": { "type": "string" } },
+        "requiredAssetIds": { "type": "array", "items": { "type": "string" } },
+        "requiredRelationshipIds": { "type": "array", "items": { "type": "string" } },
+        "candidateMetricIds": { "type": "array", "items": { "type": "string" } },
+        "coverageConstraints": { "type": "array", "items": { "type": "string" } },
+        "freshnessConstraints": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "glossary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["conceptId", "name", "description", "maturity", "confidence", "evidenceRefs", "term", "mappedConceptIds", "mappedFieldPaths", "mappedValues", "mappedMetricIds", "synonyms", "ambiguities", "scope", "examples", "sourceRefs"],
+      "properties": {
+        "conceptId": { "type": "string" }, "name": { "type": "string" }, "description": { "type": "string" }, "maturity": { "$ref": "#/$defs/maturity" }, "confidence": { "type": "number", "minimum": 0, "maximum": 1 }, "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uuid" } },
+        "term": { "type": "string" },
+        "mappedConceptIds": { "type": "array", "items": { "type": "string" } },
+        "mappedFieldPaths": { "type": "array", "items": { "type": "string" } },
+        "mappedValues": { "type": "array", "items": { "type": ["string", "number", "boolean", "null"] } },
+        "mappedMetricIds": { "type": "array", "items": { "type": "string" } },
+        "synonyms": { "type": "array", "items": { "type": "string" } },
+        "ambiguities": { "type": "array", "items": { "type": "string" } },
+        "scope": { "type": ["string", "null"] },
+        "examples": { "type": "array", "items": { "type": "string" } },
+        "sourceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

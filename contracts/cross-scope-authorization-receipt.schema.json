@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/cross-scope-authorization-receipt.schema.json",
+  "title": "Cross-Scope Relationship Authorization Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receiptId",
+    "relationshipValidationId",
+    "actorSubjectHash",
+    "delegationChainHash",
+    "left",
+    "right",
+    "policyHash",
+    "allowedOperation",
+    "issuedAt",
+    "expiresAt",
+    "issuerKeyId",
+    "signatureAlgorithm",
+    "signature"
+  ],
+  "properties": {
+    "receiptId": { "type": "string", "format": "uuid" },
+    "relationshipValidationId": { "type": "string", "format": "uuid" },
+    "actorSubjectHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "delegationChainHash": { "type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$" },
+    "left": { "$ref": "#/$defs/endpointBinding" },
+    "right": { "$ref": "#/$defs/endpointBinding" },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "allowedOperation": { "const": "validate-relationship" },
+    "issuedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" },
+    "issuerKeyId": { "type": "string", "minLength": 1, "maxLength": 255 },
+    "signatureAlgorithm": { "const": "ed25519" },
+    "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$", "minLength": 80, "maxLength": 100, "description": "Ed25519 signature over the RFC 8785 canonical receipt with signature removed." }
+  },
+  "$defs": {
+    "endpointBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "sourceVersion", "authorizationScopeId", "revocationEpoch"],
+      "properties": {
+        "sourceId": { "type": "string", "format": "uuid" },
+        "sourceVersion": { "type": "string", "minLength": 1 },
+        "authorizationScopeId": { "type": "string", "minLength": 1 },
+        "revocationEpoch": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

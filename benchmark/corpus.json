@@ -1,0 +1,214 @@
+{
+  "corpusVersion": "1.0.0",
+  "fixtureUse": "conformance-example-not-runtime-evidence",
+  "requiredSlices": [
+    "positive",
+    "negative",
+    "sparse",
+    "skewed",
+    "high-cardinality",
+    "scoped",
+    "versioned",
+    "adversarial",
+    "no-evidence"
+  ],
+  "cases": [
+    {
+      "caseId": "positive-structure",
+      "fixtureRef": "package://examples/source-structure.json",
+      "slices": [
+        "positive"
+      ],
+      "expectedOutcome": "accepted",
+      "expectedEvidenceKinds": [
+        "field-profile"
+      ],
+      "expectedManifestSections": [
+        "assets"
+      ],
+      "expectedRedactions": [],
+      "unsupportedConclusions": [],
+      "fixtureSha256": "123a6e63fe8faa0d113f9e6fc712322fc7f4349515dcaf278fa539417862a382",
+      "probe": {
+        "kind": "json-pointer-nonempty",
+        "pointer": "/assets"
+      }
+    },
+    {
+      "caseId": "negative-registration",
+      "fixtureRef": "package://security/registration-negative-cases.json",
+      "slices": [
+        "negative"
+      ],
+      "expectedOutcome": "rejected",
+      "expectedEvidenceKinds": [],
+      "expectedManifestSections": [],
+      "expectedRedactions": [
+        "secret"
+      ],
+      "unsupportedConclusions": [],
+      "fixtureSha256": "a0bba78827e720e2a03e0cea208f0b654a7cc0b0851218c4eef8199a13198f51",
+      "probe": {
+        "kind": "json-pointer-nonempty",
+        "pointer": "/cases"
+      }
+    },
+    {
+      "caseId": "sparse-relationship",
+      "fixtureRef": "package://examples/evidence-bundle.json",
+      "slices": [
+        "sparse"
+      ],
+      "expectedOutcome": "completed-partial",
+      "expectedEvidenceKinds": [
+        "relationship-validation"
+      ],
+      "expectedManifestSections": [
+        "relationships"
+      ],
+      "expectedRedactions": [],
+      "unsupportedConclusions": [
+        "zero-overlap-from-source-error"
+      ],
+      "fixtureSha256": "0183a724cfada389765d6413aaa5c72718f19a79facb9d07ed202c50868388f0",
+      "probe": {
+        "kind": "json-pointer-nonempty",
+        "pointer": "/records"
+      }
+    },
+    {
+      "caseId": "skewed-statistics",
+      "fixtureRef": "package://examples/evidence-bundle.json",
+      "slices": [
+        "skewed"
+      ],
+      "expectedOutcome": "accepted",
+      "expectedEvidenceKinds": [
+        "field-profile"
+      ],
+      "expectedManifestSections": [
+        "assets",
+        "quality"
+      ],
+      "expectedRedactions": [],
+      "unsupportedConclusions": [],
+      "fixtureSha256": "0183a724cfada389765d6413aaa5c72718f19a79facb9d07ed202c50868388f0",
+      "probe": {
+        "kind": "json-pointer-nonempty",
+        "pointer": "/records"
+      }
+    },
+    {
+      "caseId": "high-cardinality-identity",
+      "fixtureRef": "package://examples/evidence-bundle.json",
+      "slices": [
+        "high-cardinality"
+      ],
+      "expectedOutcome": "accepted",
+      "expectedEvidenceKinds": [
+        "identity",
+        "grain"
+      ],
+      "expectedManifestSections": [
+        "assets"
+      ],
+      "expectedRedactions": [],
+      "unsupportedConclusions": [],
+      "fixtureSha256": "0183a724cfada389765d6413aaa5c72718f19a79facb9d07ed202c50868388f0",
+      "probe": {
+        "kind": "json-pointer-nonempty",
+        "pointer": "/records"
+      }
+    },
+    {
+      "caseId": "scoped-collision",
+      "fixtureRef": "package://examples/profile-manifest.json",
+      "slices": [
+        "scoped"
+      ],
+      "expectedOutcome": "accepted",
+      "expectedEvidenceKinds": [
+        "identity"
+      ],
+      "expectedManifestSections": [
+        "assets"
+      ],
+      "expectedRedactions": [],
+      "unsupportedConclusions": [
+        "cross-scope-identity-collapse"
+      ],
+      "fixtureSha256": "1aeb70073a766a4d660ba8e0423c2a2c304cf0b15922accb6437a2a6bcd87124",
+      "probe": {
+        "kind": "json-pointer-nonempty",
+        "pointer": "/assets"
+      }
+    },
+    {
+      "caseId": "versioned-grain",
+      "fixtureRef": "package://examples/profile-manifest.json",
+      "slices": [
+        "versioned"
+      ],
+      "expectedOutcome": "accepted",
+      "expectedEvidenceKinds": [
+        "grain"
+      ],
+      "expectedManifestSections": [
+        "assets",
+        "modelPatterns"
+      ],
+      "expectedRedactions": [],
+      "unsupportedConclusions": [
+        "current-row-without-version"
+      ],
+      "fixtureSha256": "1aeb70073a766a4d660ba8e0423c2a2c304cf0b15922accb6437a2a6bcd87124",
+      "probe": {
+        "kind": "json-pointer-nonempty",
+        "pointer": "/modelPatterns"
+      }
+    },
+    {
+      "caseId": "adversarial-content",
+      "fixtureRef": "package://security/registration-negative-cases.json",
+      "slices": [
+        "adversarial"
+      ],
+      "expectedOutcome": "rejected",
+      "expectedEvidenceKinds": [],
+      "expectedManifestSections": [],
+      "expectedRedactions": [
+        "credential",
+        "direct-identifier"
+      ],
+      "unsupportedConclusions": [
+        "source-instruction-as-policy"
+      ],
+      "fixtureSha256": "a0bba78827e720e2a03e0cea208f0b654a7cc0b0851218c4eef8199a13198f51",
+      "probe": {
+        "kind": "json-pointer-nonempty",
+        "pointer": "/cases"
+      }
+    },
+    {
+      "caseId": "no-evidence-refusal",
+      "fixtureRef": "package://examples/retrieval-bundle.json",
+      "slices": [
+        "no-evidence"
+      ],
+      "expectedOutcome": "unavailable",
+      "expectedEvidenceKinds": [],
+      "expectedManifestSections": [
+        "coverage"
+      ],
+      "expectedRedactions": [],
+      "unsupportedConclusions": [
+        "fabricated-capability"
+      ],
+      "fixtureSha256": "74e35f0b835bb245b54639a87f2d0f2b5b1f0ca81a75f1363a403f57a36ee625",
+      "probe": {
+        "kind": "json-pointer-nonempty",
+        "pointer": "/coverageReceipt"
+      }
+    }
+  ]
+}

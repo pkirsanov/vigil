@@ -1,0 +1,26 @@
+{
+  "contractVersion": "1.0.0",
+  "displayName": "Operational Records",
+  "kind": "relational",
+  "connectorId": "connectors/tabular-reader-v1",
+  "locator": {
+    "registeredEndpointId": "endpoints-example-reader",
+    "resource": "operations",
+    "subresource": null
+  },
+  "credentialRef": {
+    "providerId": "secure-reference-store",
+    "referenceId": "abababab-abab-4bab-8bab-abababababab"
+  },
+  "requestedCapabilities": [
+    "enumerate-assets",
+    "read-structure",
+    "deterministic-sample",
+    "aggregate-statistics"
+  ],
+  "policyRef": "policies/default-readonly-v1",
+  "clientRequestId": "70000000-0000-4000-8000-000000000001",
+  "tags": {
+    "classification": "restricted"
+  }
+}

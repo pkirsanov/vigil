@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/parser-execution.schema.json",
+  "title": "Isolated Parser Execution Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "executionId",
+    "runId",
+    "sourceId",
+    "sourceVersion",
+    "connectorId",
+    "connectorVersion",
+    "connectorCapabilityHash",
+    "authorizationScopeId",
+    "policyHash",
+    "fencingToken",
+    "revocationEpoch",
+    "assetId",
+    "inputSha256",
+    "declaredMediaType",
+    "detectedMediaType",
+    "parserId",
+    "parserVersion",
+    "parserPolicyVersion",
+    "limitsSource",
+    "isolation",
+    "limits",
+    "usage",
+    "outcome",
+    "cleanup",
+    "startedAt",
+    "completedAt"
+  ],
+  "properties": {
+    "executionId": { "type": "string", "format": "uuid" },
+    "runId": { "type": "string", "format": "uuid" },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "fencingToken": { "type": "integer", "minimum": 1 },
+    "revocationEpoch": { "type": "integer", "minimum": 0 },
+    "assetId": { "type": "string", "minLength": 1 },
+    "inputSha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "declaredMediaType": { "type": ["string", "null"], "maxLength": 200 },
+    "detectedMediaType": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "parserId": { "type": "string", "minLength": 1 },
+    "parserVersion": { "type": "string", "minLength": 1 },
+    "parserPolicyVersion": { "type": "string", "minLength": 1 },
+    "limitsSource": { "const": "policy", "description": "Limits are copied from the governing parser-isolation policy and may never exceed it." },
+    "isolation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["credentialAccess", "outboundNetwork", "externalReferenceResolution", "readOnlyInput", "disposableOutput", "workerIdentity"],
+      "properties": {
+        "credentialAccess": { "const": false },
+        "outboundNetwork": { "const": false },
+        "externalReferenceResolution": { "const": false },
+        "readOnlyInput": { "const": true },
+        "disposableOutput": { "const": true },
+        "workerIdentity": { "enum": ["credential-free-isolated-worker"] }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cpuMilliseconds", "memoryBytes", "inputBytes", "expandedBytes", "fileCount", "recursionDepth", "durationMilliseconds", "frames", "outputBytes"],
+      "properties": {
+        "cpuMilliseconds": { "type": "integer", "minimum": 1 },
+        "memoryBytes": { "type": "integer", "minimum": 1 },
+        "inputBytes": { "type": "integer", "minimum": 1 },
+        "expandedBytes": { "type": "integer", "minimum": 1 },
+        "fileCount": { "type": "integer", "minimum": 1 },
+        "recursionDepth": { "type": "integer", "minimum": 0 },
+        "durationMilliseconds": { "type": "integer", "minimum": 1 },
+        "frames": { "type": "integer", "minimum": 0 },
+        "outputBytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Every value must be within its limits counterpart; peakMemoryBytes maps to limits.memoryBytes. An outcome of completed requires every value to be within limit.",
+      "required": ["cpuMilliseconds", "peakMemoryBytes", "inputBytes", "expandedBytes", "fileCount", "recursionDepth", "durationMilliseconds", "frames", "outputBytes"],
+      "properties": {
+        "cpuMilliseconds": { "type": "integer", "minimum": 0 },
+        "peakMemoryBytes": { "type": "integer", "minimum": 0 },
+        "inputBytes": { "type": "integer", "minimum": 0 },
+        "expandedBytes": { "type": "integer", "minimum": 0 },
+        "fileCount": { "type": "integer", "minimum": 0 },
+        "recursionDepth": { "type": "integer", "minimum": 0 },
+        "durationMilliseconds": { "type": "integer", "minimum": 0 },
+        "frames": { "type": "integer", "minimum": 0 },
+        "outputBytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "outcome": { "enum": ["completed", "partial", "blocked", "failed", "cancelled"] },
+    "reasonCode": { "type": ["string", "null"], "pattern": "^[A-Z0-9_-]{2,64}$" },
+    "coverage": { "type": "number", "minimum": 0, "maximum": 1 },
+    "cleanup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["completed", "completedAt", "residualArtifactCount", "cleanupFailureReasonCode", "retainedOutputRefs"],
+      "properties": {
+        "completed": { "type": "boolean" },
+        "completedAt": { "type": "string", "format": "date-time" },
+        "residualArtifactCount": { "type": "integer", "minimum": 0 },
+        "cleanupFailureReasonCode": { "type": ["string", "null"], "pattern": "^[A-Z0-9_-]{2,64}$" },
+        "retainedOutputRefs": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["completed"], "properties": { "completed": { "const": false } } },
+          "then": {
+            "properties": {
+              "cleanupFailureReasonCode": { "type": "string", "minLength": 2 },
+              "residualArtifactCount": { "minimum": 1 }
+            }
+          }
+        },
+        {
+          "if": { "required": ["completed"], "properties": { "completed": { "const": true } } },
+          "then": { "properties": { "cleanupFailureReasonCode": { "type": "null" } } }
+        }
+      ]
+    },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "completedAt": { "type": "string", "format": "date-time" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "outcome": { "const": "completed" } } },
+      "then": { "required": ["coverage"], "properties": { "coverage": { "const": 1 }, "reasonCode": { "type": "null" } } }
+    },
+    {
+      "if": { "properties": { "outcome": { "enum": ["partial", "blocked", "failed", "cancelled"] } } },
+      "then": { "required": ["coverage", "reasonCode"], "properties": { "reasonCode": { "type": "string", "minLength": 2 } } }
+    }
+  ]
+}

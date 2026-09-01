@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/deletion-inventory-manifest.schema.json",
+  "title": "Sharded Deletion Inventory Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["inventoryId", "sourceId", "authorizationScopeId", "revocationEpoch", "enumerationMethodVersion", "enumeratedAt", "pages", "artifactCount", "storeCounts", "artifactSetHash", "hashAlgorithm", "contentHash"],
+  "properties": {
+    "inventoryId": { "type": "string", "format": "uuid" },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "authorizationScopeId": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "revocationEpoch": { "type": "integer", "minimum": 1 },
+    "enumerationMethodVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "enumeratedAt": { "type": "string", "format": "date-time" },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ordinal", "pageUri", "pageContentHash", "entryCount"],
+        "properties": {
+          "ordinal": { "type": "integer", "minimum": 0 },
+          "pageUri": { "type": "string", "pattern": "^(?:package|artifact)://[A-Za-z0-9._/-]+$" },
+          "pageContentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+          "entryCount": { "type": "integer", "minimum": 0, "maximum": 100000 }
+        }
+      }
+    },
+    "artifactCount": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+    "storeCounts": { "type": "object", "additionalProperties": false, "required": ["samples", "evidence", "lexical-index", "semantic-index", "graph-index", "temporal-index", "faceted-index", "cache", "parser-output", "model-output", "profile-manifest", "capability-manifest", "usage-patterns", "source-registration", "audit", "backup"], "properties": {
+      "samples": { "type": "integer", "minimum": 0 }, "evidence": { "type": "integer", "minimum": 0 }, "lexical-index": { "type": "integer", "minimum": 0 }, "semantic-index": { "type": "integer", "minimum": 0 }, "graph-index": { "type": "integer", "minimum": 0 }, "temporal-index": { "type": "integer", "minimum": 0 }, "faceted-index": { "type": "integer", "minimum": 0 }, "cache": { "type": "integer", "minimum": 0 }, "parser-output": { "type": "integer", "minimum": 0 }, "model-output": { "type": "integer", "minimum": 0 }, "profile-manifest": { "type": "integer", "minimum": 0 }, "capability-manifest": { "type": "integer", "minimum": 0 }, "usage-patterns": { "type": "integer", "minimum": 0 }, "source-registration": { "type": "integer", "minimum": 0 }, "audit": { "type": "integer", "minimum": 0 }, "backup": { "type": "integer", "minimum": 0 }
+    }},
+    "artifactSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical ordinally sorted array of every {storeKind, artifactId} entry across all pages." },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical manifest with contentHash removed." }
+  }
+}

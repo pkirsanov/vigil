@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/read-plan-validation-receipt.schema.json",
+  "title": "Validated Read Plan Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receiptId",
+    "planId",
+    "hashAlgorithm",
+    "planHash",
+    "parameterSchemaHash",
+    "parameterValuesHash",
+    "callerSubjectHash",
+    "subjectHashSaltId",
+    "authorizationScopeId",
+    "policyHash",
+    "sourceId",
+    "sourceVersion",
+    "connectorId",
+    "connectorVersion",
+    "connectorCapabilityHash",
+    "manifestVersion",
+    "projectionId",
+    "taxonomyVersion",
+    "pipelineVersion",
+    "methodSetHash",
+    "evidenceCutoff",
+    "revocationEpoch",
+    "traceId",
+    "valid",
+    "issuedAt",
+    "expiresAt",
+    "reasonCodes",
+    "estimatedCost",
+    "receiptIntegrityHash",
+    "issuerKeyId",
+    "signatureAlgorithm",
+    "signature"
+  ],
+  "properties": {
+    "receiptId": { "type": "string", "format": "uuid" },
+    "planId": { "type": "string", "format": "uuid" },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "planHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical form of the read-plan document with planId removed." },
+    "parameterSchemaHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical form of the plan's parameters array." },
+    "parameterValuesHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical form of the caller's supplied parameter-values object." },
+    "callerSubjectHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical array ['caller-subject-v1', deploymentSalt, tenantId, subjectId]. The deployment salt is private and selected by subjectHashSaltId." },
+    "subjectHashSaltId": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "delegationChainHash": { "type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$" },
+    "authorizationScopeId": { "type": "string", "minLength": 1 },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "sourceId": { "type": "string", "format": "uuid" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "connectorId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]{2,127}$" },
+    "connectorVersion": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "connectorCapabilityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "manifestVersion": { "type": "string", "minLength": 1 },
+    "projectionId": { "type": "string", "format": "uuid" },
+    "taxonomyVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "pipelineVersion": { "type": "string", "minLength": 1 },
+    "methodSetHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "evidenceCutoff": { "type": "string", "format": "date-time" },
+    "revocationEpoch": { "type": "integer", "minimum": 0 },
+    "traceId": { "type": "string", "minLength": 1 },
+    "valid": { "type": "boolean" },
+    "issuedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" },
+    "reasonCodes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z0-9_-]{2,64}$" }
+    },
+    "estimatedCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximumRows", "maximumBytes", "maximumDurationMilliseconds", "sourceUnits"],
+      "properties": {
+        "maximumRows": { "type": "integer", "minimum": 0 },
+        "maximumBytes": { "type": "integer", "minimum": 0 },
+        "maximumDurationMilliseconds": { "type": "integer", "minimum": 0 },
+        "sourceUnits": { "type": "number", "minimum": 0 }
+      }
+    },
+    "receiptIntegrityHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical form of this receipt with receiptIntegrityHash and signature removed." },
+    "issuerKeyId": { "type": "string", "minLength": 1, "maxLength": 255 },
+    "signatureAlgorithm": { "const": "ed25519" },
+    "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$", "minLength": 80, "maxLength": 100, "description": "Ed25519 signature over the raw 32-byte receiptIntegrityHash." }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "valid": { "const": true } } },
+      "then": {
+        "properties": {
+          "reasonCodes": { "maxItems": 0 },
+          "estimatedCost": {
+            "properties": {
+              "maximumRows": { "minimum": 1 },
+              "maximumBytes": { "minimum": 1 },
+              "maximumDurationMilliseconds": { "minimum": 1 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "valid": { "const": false } } },
+      "then": { "properties": { "reasonCodes": { "minItems": 1 } } }
+    }
+  ]
+}

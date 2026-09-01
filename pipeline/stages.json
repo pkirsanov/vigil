@@ -1,0 +1,182 @@
+{
+  "pipelineVersion": "1.0.0",
+  "dependencySemantics": "A dependency must exist and reach a terminal state. An unavailable or not-applicable optional dependency does not block a dependent stage; the dependent stage must record the resulting reduced coverage.",
+  "capabilitySemantics": "requiredCapabilities is a conjunction and requiredCapabilitiesAny is a disjunction, both evaluated against the source's effectiveCapabilities. A stage whose capability condition is unmet terminates as unavailable.",
+  "projectionSemantics": "A projectionId is assigned before build-indexes and identifies one immutable projection attempt. Indexes are stamped with it, manifests embed those indexes, manifestVersion identifies the immutable assembled projection, and contentHash cryptographically seals each canonical manifest body. No published artifact is mutated after it is written.",
+  "publicationGate": {
+    "requiredSourceConsistencyStatus": "consistent",
+    "requireEveryApplicableStageTerminal": true,
+    "requireEveryRequiredStageCompleted": true,
+    "requireNonzeroRequiredStageWork": true,
+    "requiredIndexKinds": ["lexical", "semantic", "graph", "temporal", "faceted"]
+  },
+  "stages": [
+    {
+      "id": "register-negotiate",
+      "order": 1,
+      "required": true,
+      "dependencies": [],
+      "requiredCapabilities": [],
+      "receipt": "source-registration-and-effective-capabilities"
+    },
+    {
+      "id": "authorize-pre-read",
+      "order": 2,
+      "required": true,
+      "dependencies": ["register-negotiate"],
+      "requiredCapabilities": [],
+      "receipt": "authorization-scope-and-policy-hash"
+    },
+    {
+      "id": "open-source-boundary",
+      "order": 3,
+      "required": true,
+      "dependencies": ["authorize-pre-read"],
+      "requiredCapabilities": [],
+      "receipt": "source-boundary-opened"
+    },
+    {
+      "id": "discover-structure",
+      "order": 4,
+      "required": true,
+      "dependencies": ["open-source-boundary"],
+      "requiredCapabilities": ["enumerate-assets", "read-structure"],
+      "receipt": "asset-and-field-inventory"
+    },
+    {
+      "id": "classify-redact",
+      "order": 5,
+      "required": true,
+      "dependencies": ["discover-structure"],
+      "requiredCapabilities": ["read-structure"],
+      "receipt": "field-handling-and-redaction-plan"
+    },
+    {
+      "id": "profile-statistics",
+      "order": 6,
+      "required": false,
+      "dependencies": ["classify-redact"],
+      "requiredCapabilitiesAny": ["deterministic-sample", "aggregate-statistics"],
+      "receipt": "statistical-evidence-and-sample-receipts"
+    },
+    {
+      "id": "extract-semantics",
+      "order": 7,
+      "required": false,
+      "dependencies": ["classify-redact"],
+      "requiredCapabilitiesAny": ["read-structure", "fetch-content"],
+      "receipt": "semantic-hypotheses-and-model-call-receipts"
+    },
+    {
+      "id": "validate-identities",
+      "order": 8,
+      "required": false,
+      "dependencies": ["profile-statistics", "extract-semantics"],
+      "requiredCapabilitiesAny": ["aggregate-statistics", "execute-safe-probe"],
+      "receipt": "identity-and-grain-outcomes"
+    },
+    {
+      "id": "generate-relationship-hypotheses",
+      "order": 9,
+      "required": false,
+      "dependencies": ["extract-semantics"],
+      "requiredCapabilities": [],
+      "receipt": "deduplicated-ranked-candidates"
+    },
+    {
+      "id": "validate-relationships",
+      "order": 10,
+      "required": false,
+      "dependencies": ["generate-relationship-hypotheses"],
+      "requiredCapabilitiesAny": ["aggregate-statistics", "execute-safe-probe", "resolve-reference"],
+      "receipt": "relationship-validation-outcomes"
+    },
+    {
+      "id": "quality-freshness",
+      "order": 11,
+      "required": false,
+      "dependencies": ["profile-statistics"],
+      "requiredCapabilitiesAny": ["deterministic-sample", "aggregate-statistics"],
+      "receipt": "quality-freshness-and-failure-coverage"
+    },
+    {
+      "id": "lineage-usage",
+      "order": 12,
+      "required": false,
+      "dependencies": ["discover-structure"],
+      "requiredCapabilitiesAny": ["read-lineage", "read-usage-history"],
+      "receipt": "lineage-and-privacy-filtered-usage-evidence"
+    },
+    {
+      "id": "detect-model-patterns",
+      "order": 13,
+      "required": false,
+      "dependencies": ["validate-identities", "validate-relationships", "quality-freshness"],
+      "requiredCapabilities": [],
+      "receipt": "asset-role-storage-hierarchy-and-model-patterns"
+    },
+    {
+      "id": "derive-business-model",
+      "order": 14,
+      "required": false,
+      "dependencies": ["extract-semantics", "detect-model-patterns"],
+      "requiredCapabilities": [],
+      "receipt": "business-concept-and-scenario-hypotheses"
+    },
+    {
+      "id": "verify-source-boundary",
+      "order": 15,
+      "required": true,
+      "dependencies": [
+        "register-negotiate",
+        "authorize-pre-read",
+        "open-source-boundary",
+        "discover-structure",
+        "classify-redact",
+        "profile-statistics",
+        "extract-semantics",
+        "validate-identities",
+        "generate-relationship-hypotheses",
+        "validate-relationships",
+        "quality-freshness",
+        "lineage-usage",
+        "detect-model-patterns",
+        "derive-business-model"
+      ],
+      "requiredCapabilities": [],
+      "receipt": "source-version-and-consistency-boundary"
+    },
+    {
+      "id": "build-indexes",
+      "order": 16,
+      "required": true,
+      "dependencies": ["verify-source-boundary"],
+      "requiredCapabilities": [],
+      "receipt": "projection-scoped-index-manifests"
+    },
+    {
+      "id": "build-manifests",
+      "order": 17,
+      "required": true,
+      "dependencies": ["build-indexes"],
+      "requiredCapabilities": [],
+      "receipt": "sealed-contract-valid-profile-and-capability-manifests"
+    },
+    {
+      "id": "consumption-probes",
+      "order": 18,
+      "required": true,
+      "dependencies": ["build-indexes", "build-manifests"],
+      "requiredCapabilities": [],
+      "receipt": "nonzero-retrieval-and-agent-readiness-results"
+    },
+    {
+      "id": "publish",
+      "order": 19,
+      "required": true,
+      "dependencies": ["consumption-probes"],
+      "requiredCapabilities": [],
+      "receipt": "atomic-current-pointer-and-publication-event"
+    }
+  ]
+}

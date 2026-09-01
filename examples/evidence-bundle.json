@@ -1,0 +1,1163 @@
+{
+  "records": [
+    {
+      "contractVersion": "1.0.0",
+      "evidenceId": "22222222-2222-4222-8222-222222222222",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "authorizationScopeId": "authorized-assets",
+      "taxonomyVersion": "1.0.0",
+      "logicalKey": {
+        "authorizationScopeId": "authorized-assets",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "subjectKind": "asset",
+        "subjectId": "work-records",
+        "predicate": "field-profiles",
+        "methodVersion": "1.0.0",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "assetId": "work-records",
+        "fieldPath": null,
+        "statisticFamily": "field-profile",
+        "samplePlanHash": "747e0ecc59d6bc7704d8c970e7aaad5d9723fae6c0972ae71ab0138ac9476755"
+      },
+      "dependencyHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "fencingToken": 1,
+      "revocationEpoch": 0,
+      "subject": {
+        "subjectKind": "asset",
+        "subjectId": "work-records",
+        "assetId": "work-records",
+        "assetKind": "table",
+        "fieldPath": null,
+        "versionId": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "claim": {
+        "predicate": "field-profiles",
+        "object": "bounded statistical profile",
+        "unit": null
+      },
+      "kind": "field-profile",
+      "maturity": "observed",
+      "outcome": "passed",
+      "confidence": 0.98,
+      "provenance": {
+        "producer": "tabular-statistical-profiler",
+        "method": "deterministic-hash-sample",
+        "methodVersion": "1.0.0",
+        "modelRef": null,
+        "promptHash": null,
+        "inputEvidenceIds": []
+      },
+      "sample": {
+        "method": "deterministic-hash",
+        "requestedUnits": 10000,
+        "populationEstimate": 100000,
+        "rowsInspected": 10000,
+        "seed": 17,
+        "bucketRule": null,
+        "errorBound": 0.02,
+        "exact": false,
+        "strata": [
+          {
+            "name": "default",
+            "populationEstimate": 100000,
+            "unitsInspected": 10000
+          }
+        ],
+        "excludedStrata": [],
+        "failedStrata": []
+      },
+      "validity": {
+        "validFrom": "2026-01-01T00:00:00Z",
+        "validUntil": null,
+        "schemaVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "dataHandling": {
+        "classification": "restricted",
+        "containsRawSourceValues": false,
+        "redactionMethod": "aggregate-only",
+        "minimumGroupSizeApplied": 10
+      },
+      "payload": {
+        "approximation": "mergeable-distinct-sketch",
+        "fields": {
+          "ScopeId": {
+            "distinctCount": 25,
+            "nullRatio": 0.0
+          },
+          "RecordId": {
+            "distinctCount": 9850,
+            "nullRatio": 0.0
+          },
+          "VersionNumber": {
+            "distinctCount": 12,
+            "nullRatio": 0.0
+          }
+        }
+      },
+      "hashAlgorithm": "sha256-jcs",
+      "payloadHash": "546d8ba89a8f434ab58ec3b01b3b84327c891efb338a6dd2e1b2f7e40ded1752",
+      "supersedesEvidenceIds": [],
+      "review": null,
+      "validationReceipt": null,
+      "usageProof": null,
+      "counterEvidenceIds": [],
+      "policyTags": [
+        "aggregate-only",
+        "restricted"
+      ],
+      "createdAt": "2026-01-01T00:01:00Z",
+      "redactionReceipt": {
+        "receiptId": "555d53c3-ae0c-596b-839f-48f49f7f7eed",
+        "payloadHash": "546d8ba89a8f434ab58ec3b01b3b84327c891efb338a6dd2e1b2f7e40ded1752",
+        "contentHash": "c3ddaf8ee3d936ec970732befac526c6db7b507609eab33e7ff8f3f4652e5484",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "authorizationScopeId": "authorized-assets",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "scannerVersion": "1.0.0",
+        "classification": "restricted",
+        "actions": [
+          "aggregate-only"
+        ],
+        "containsRawSourceValues": false,
+        "minimumGroupSizeApplied": 10,
+        "scannedAt": "2026-01-01T00:01:00Z",
+        "issuerKeyId": "conformance-redaction-v1",
+        "signatureAlgorithm": "ed25519",
+        "signature": "cHWxICceFvv1S6SS940S6VxXItUwaxwz0lYRqnug3zcoFq+Yb4bUqb+GAYYABig38d77MJwOkfAOuGYp3bmfDg=="
+      },
+      "recordHash": "937408b4e3d70e54da08a33ae4b9a0d624a76f8c931a34299717b9624cd1da23",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade"
+    },
+    {
+      "contractVersion": "1.0.0",
+      "evidenceId": "66666666-6666-4666-8666-666666666666",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "authorizationScopeId": "authorized-assets",
+      "taxonomyVersion": "1.0.0",
+      "logicalKey": {
+        "authorizationScopeId": "authorized-assets",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "subjectKind": "asset",
+        "subjectId": "work-records",
+        "predicate": "entity-identity",
+        "methodVersion": "1.0.0",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "assetId": "work-records",
+        "identityCoordinate": {
+          "scopePaths": [
+            "ScopeId"
+          ],
+          "localKeyPaths": [
+            "RecordId"
+          ],
+          "versionPaths": []
+        },
+        "samplePlanHash": "27958dbdafe4dade7c6cccccbd4bce05c95dbdbd0181ef742e81dad331b81db7"
+      },
+      "dependencyHash": "e5bbba6fc79bcd1f72c35da15447092be6ab4d64f4f8b890e9a42bdcafbf1efc",
+      "fencingToken": 1,
+      "revocationEpoch": 0,
+      "subject": {
+        "subjectKind": "asset",
+        "subjectId": "work-records",
+        "assetId": "work-records",
+        "assetKind": "table",
+        "fieldPath": null,
+        "versionId": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "claim": {
+        "predicate": "entity-identity",
+        "object": "ScopeId+RecordId",
+        "unit": null
+      },
+      "kind": "identity",
+      "maturity": "validated",
+      "outcome": "passed",
+      "confidence": 0.99,
+      "provenance": {
+        "producer": "identity-validator",
+        "method": "exact-composite-uniqueness",
+        "methodVersion": "1.0.0",
+        "modelRef": null,
+        "promptHash": null,
+        "inputEvidenceIds": [
+          "22222222-2222-4222-8222-222222222222"
+        ]
+      },
+      "sample": {
+        "method": "exact",
+        "requestedUnits": 100000,
+        "populationEstimate": 100000,
+        "rowsInspected": 100000,
+        "seed": null,
+        "bucketRule": null,
+        "errorBound": 0.0,
+        "exact": true,
+        "strata": [],
+        "excludedStrata": [],
+        "failedStrata": []
+      },
+      "validity": {
+        "validFrom": "2026-01-01T00:00:00Z",
+        "validUntil": null,
+        "schemaVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "dataHandling": {
+        "classification": "restricted",
+        "containsRawSourceValues": false,
+        "redactionMethod": "counts-only",
+        "minimumGroupSizeApplied": 10
+      },
+      "payload": {
+        "scopePaths": [
+          "ScopeId"
+        ],
+        "localKeyPaths": [
+          "RecordId"
+        ],
+        "missingKeys": 0,
+        "duplicateKeys": 0
+      },
+      "hashAlgorithm": "sha256-jcs",
+      "payloadHash": "7aa553a2a823053cad8f9bcf9fe8b5e6ee0479925d50f21eabe7043827264a44",
+      "supersedesEvidenceIds": [],
+      "review": null,
+      "validationReceipt": {
+        "validationMode": "exact",
+        "checksRun": 2,
+        "unitsInspected": 100000,
+        "planHash": "6666666666666666666666666666666666666666666666666666666666666666",
+        "validatedAt": "2026-01-01T00:02:00Z"
+      },
+      "usageProof": null,
+      "counterEvidenceIds": [],
+      "policyTags": [
+        "restricted"
+      ],
+      "createdAt": "2026-01-01T00:02:00Z",
+      "redactionReceipt": {
+        "receiptId": "3cfa86e0-0f84-567c-9038-afc101e53fa2",
+        "payloadHash": "7aa553a2a823053cad8f9bcf9fe8b5e6ee0479925d50f21eabe7043827264a44",
+        "contentHash": "243672e94663718d61ca97bb9cfd2614bf4e0ec4e44c0b337d1f7bc5a5a73a42",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "authorizationScopeId": "authorized-assets",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "scannerVersion": "1.0.0",
+        "classification": "restricted",
+        "actions": [
+          "counts-only"
+        ],
+        "containsRawSourceValues": false,
+        "minimumGroupSizeApplied": 10,
+        "scannedAt": "2026-01-01T00:02:00Z",
+        "issuerKeyId": "conformance-redaction-v1",
+        "signatureAlgorithm": "ed25519",
+        "signature": "HVwEFMik/UbK/8E2jeg0zU8PcuHOcz6if82eKIDJRKIEoNP9HUf7FVozoOUcWLID8+UJ1gTD/ad0oFchTOp6Aw=="
+      },
+      "recordHash": "5dfb5a26851f50fe2de42bba63428c59bf8de32ef232390b207a32bb250567f4",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade"
+    },
+    {
+      "contractVersion": "1.0.0",
+      "evidenceId": "77777777-7777-4777-8777-777777777777",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "authorizationScopeId": "authorized-assets",
+      "taxonomyVersion": "1.0.0",
+      "logicalKey": {
+        "authorizationScopeId": "authorized-assets",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "subjectKind": "asset",
+        "subjectId": "work-records",
+        "predicate": "row-grain",
+        "methodVersion": "1.0.0",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "assetId": "work-records",
+        "identityCoordinate": {
+          "scopePaths": [
+            "ScopeId"
+          ],
+          "localKeyPaths": [
+            "RecordId"
+          ],
+          "versionPaths": [
+            "VersionNumber"
+          ]
+        },
+        "samplePlanHash": "27958dbdafe4dade7c6cccccbd4bce05c95dbdbd0181ef742e81dad331b81db7"
+      },
+      "dependencyHash": "b24ea78f78bee4db1dfa796e8a263a2d56fa52fd2f7e223ee451ff8de2282170",
+      "fencingToken": 1,
+      "revocationEpoch": 0,
+      "subject": {
+        "subjectKind": "asset",
+        "subjectId": "work-records",
+        "assetId": "work-records",
+        "assetKind": "table",
+        "fieldPath": null,
+        "versionId": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "claim": {
+        "predicate": "row-grain",
+        "object": "ScopeId+RecordId+VersionNumber",
+        "unit": null
+      },
+      "kind": "grain",
+      "maturity": "validated",
+      "outcome": "passed",
+      "confidence": 0.99,
+      "provenance": {
+        "producer": "grain-validator",
+        "method": "exact-versioned-grain",
+        "methodVersion": "1.0.0",
+        "modelRef": null,
+        "promptHash": null,
+        "inputEvidenceIds": [
+          "22222222-2222-4222-8222-222222222222",
+          "66666666-6666-4666-8666-666666666666"
+        ]
+      },
+      "sample": {
+        "method": "exact",
+        "requestedUnits": 100000,
+        "populationEstimate": 100000,
+        "rowsInspected": 100000,
+        "seed": null,
+        "bucketRule": null,
+        "errorBound": 0.0,
+        "exact": true,
+        "strata": [],
+        "excludedStrata": [],
+        "failedStrata": []
+      },
+      "validity": {
+        "validFrom": "2026-01-01T00:00:00Z",
+        "validUntil": null,
+        "schemaVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "dataHandling": {
+        "classification": "restricted",
+        "containsRawSourceValues": false,
+        "redactionMethod": "counts-only",
+        "minimumGroupSizeApplied": 10
+      },
+      "payload": {
+        "paths": [
+          "ScopeId",
+          "RecordId",
+          "VersionNumber"
+        ],
+        "missingKeys": 0,
+        "duplicateKeys": 0
+      },
+      "hashAlgorithm": "sha256-jcs",
+      "payloadHash": "55bdd21856b22efc0e0a2371558a2fd720e260c0c4271fe3285ac00a8d60b774",
+      "supersedesEvidenceIds": [],
+      "review": null,
+      "validationReceipt": {
+        "validationMode": "exact",
+        "checksRun": 2,
+        "unitsInspected": 100000,
+        "planHash": "7777777777777777777777777777777777777777777777777777777777777777",
+        "validatedAt": "2026-01-01T00:03:00Z"
+      },
+      "usageProof": null,
+      "counterEvidenceIds": [],
+      "policyTags": [
+        "restricted"
+      ],
+      "createdAt": "2026-01-01T00:03:00Z",
+      "redactionReceipt": {
+        "receiptId": "a8a217b2-9c8d-5712-a0c0-fbf7987e9661",
+        "payloadHash": "55bdd21856b22efc0e0a2371558a2fd720e260c0c4271fe3285ac00a8d60b774",
+        "contentHash": "86dcdbc127f8f9d1a828182fffe31bd67768ef8e6e487df39649ce04083893f9",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "authorizationScopeId": "authorized-assets",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "scannerVersion": "1.0.0",
+        "classification": "restricted",
+        "actions": [
+          "counts-only"
+        ],
+        "containsRawSourceValues": false,
+        "minimumGroupSizeApplied": 10,
+        "scannedAt": "2026-01-01T00:03:00Z",
+        "issuerKeyId": "conformance-redaction-v1",
+        "signatureAlgorithm": "ed25519",
+        "signature": "25X5rFNBa6Aa1gCdbloTNRIUkl4882gAOVwgWp+vncMyfPUwj/3IDDF9W+U4J12yfAh8tZGCCaooqArvudw+Cw=="
+      },
+      "recordHash": "c0135c05d62a4468b4937d4eea1fa1fe6e0a8ca1732031732f2ac1e88b6450b0",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade"
+    },
+    {
+      "contractVersion": "1.0.0",
+      "evidenceId": "88888888-8888-4888-8888-888888888888",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "authorizationScopeId": "authorized-assets",
+      "taxonomyVersion": "1.0.0",
+      "logicalKey": {
+        "authorizationScopeId": "authorized-assets",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "subjectKind": "relationship",
+        "subjectId": "work-records-to-work-events",
+        "predicate": "relationship-validation",
+        "methodVersion": "1.0.0",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "relationshipCoordinate": {
+          "kind": "scoped-key-reference",
+          "left": {
+            "sourceId": "11111111-1111-4111-8111-111111111111",
+            "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+            "authorizationScopeId": "authorized-assets",
+            "revocationEpoch": 0,
+            "assetId": "work-records",
+            "paths": [
+              "ScopeId",
+              "RecordId"
+            ]
+          },
+          "right": {
+            "sourceId": "11111111-1111-4111-8111-111111111111",
+            "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+            "authorizationScopeId": "authorized-assets",
+            "revocationEpoch": 0,
+            "assetId": "work-events",
+            "paths": [
+              "ScopeId",
+              "RecordId"
+            ]
+          },
+          "validatorVersion": "1.0.0"
+        },
+        "samplePlanHash": "b426511b4ea2fd613c1de5302202acbf8f62700a1999e5630bb3020421348ee4"
+      },
+      "dependencyHash": "75509434be187618c80d109e80e999717086f601a54b068a4dec61e562b43025",
+      "fencingToken": 1,
+      "revocationEpoch": 0,
+      "subject": {
+        "subjectKind": "relationship",
+        "subjectId": "work-records-to-work-events",
+        "assetId": null,
+        "assetKind": null,
+        "fieldPath": null,
+        "versionId": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "claim": {
+        "predicate": "relationship-validation",
+        "object": "supported",
+        "unit": null
+      },
+      "kind": "relationship-validation",
+      "maturity": "validated",
+      "outcome": "passed",
+      "confidence": 0.97,
+      "provenance": {
+        "producer": "relationship-validator",
+        "method": "composite-direct-probe",
+        "methodVersion": "1.0.0",
+        "modelRef": null,
+        "promptHash": null,
+        "inputEvidenceIds": [
+          "66666666-6666-4666-8666-666666666666",
+          "12121212-1212-4212-8212-121212121212"
+        ]
+      },
+      "sample": {
+        "method": "one-side-exact-probe",
+        "requestedUnits": 10000,
+        "populationEstimate": 10000,
+        "rowsInspected": 10000,
+        "seed": null,
+        "bucketRule": null,
+        "errorBound": 0.0,
+        "exact": true,
+        "strata": [],
+        "excludedStrata": [],
+        "failedStrata": []
+      },
+      "validity": {
+        "validFrom": "2026-01-01T00:00:00Z",
+        "validUntil": null,
+        "schemaVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "dataHandling": {
+        "classification": "restricted",
+        "containsRawSourceValues": false,
+        "redactionMethod": "counts-only",
+        "minimumGroupSizeApplied": 10
+      },
+      "payload": {
+        "relationshipValidationId": "18181818-1818-4818-8818-181818181818",
+        "relationshipKind": "scoped-key-reference",
+        "left": {
+          "sourceId": "11111111-1111-4111-8111-111111111111",
+          "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+          "authorizationScopeId": "authorized-assets",
+          "revocationEpoch": 0,
+          "assetId": "work-records",
+          "paths": [
+            "ScopeId",
+            "RecordId"
+          ]
+        },
+        "right": {
+          "sourceId": "11111111-1111-4111-8111-111111111111",
+          "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+          "authorizationScopeId": "authorized-assets",
+          "revocationEpoch": 0,
+          "assetId": "work-events",
+          "paths": [
+            "ScopeId",
+            "RecordId"
+          ]
+        },
+        "crossScope": false,
+        "crossScopeAuthorizationReceipt": null,
+        "predicates": [
+          {
+            "leftPath": "ScopeId",
+            "rightPath": "ScopeId",
+            "operator": "equals"
+          },
+          {
+            "leftPath": "RecordId",
+            "rightPath": "RecordId",
+            "operator": "equals"
+          }
+        ],
+        "normalization": [
+          {
+            "predicateIndex": 0,
+            "family": "exact",
+            "leftExpression": "ScopeId",
+            "rightExpression": "ScopeId"
+          },
+          {
+            "predicateIndex": 1,
+            "family": "case-folded-text",
+            "leftExpression": "casefold(RecordId)",
+            "rightExpression": "casefold(RecordId)"
+          }
+        ],
+        "validator": {
+          "method": "composite-direct-probe",
+          "methodVersion": "1.0.0",
+          "basis": "empirical",
+          "exact": true,
+          "planHash": "1818181818181818181818181818181818181818181818181818181818181818",
+          "authoritativeConstraintRef": null
+        },
+        "sampleReceipt": {
+          "method": "one-side-exact-probe",
+          "requestedUnits": 10000,
+          "populationEstimate": 10000,
+          "unitsInspected": 10000,
+          "exact": true,
+          "seed": null,
+          "bucketRule": null,
+          "errorBound": 0.0,
+          "strata": [],
+          "excludedStrata": [],
+          "failedStrata": []
+        },
+        "validationOutcome": "supported",
+        "cardinality": {
+          "leftDistinct": 9850,
+          "rightDistinct": 9500,
+          "relationshipType": "one-to-many"
+        },
+        "coverage": {
+          "matchingKeys": 9500,
+          "leftCoverage": 0.88,
+          "rightCoverage": 1.0,
+          "confidenceBound": 0.99
+        },
+        "confidence": 0.97,
+        "warnings": [],
+        "createdAt": "2026-01-01T00:04:00Z",
+        "recommendedOperation": "left-preserving"
+      },
+      "hashAlgorithm": "sha256-jcs",
+      "payloadHash": "ac3794f4460836be0a525735821db997f5c45ce457710aee9b3f2152913ee0e2",
+      "supersedesEvidenceIds": [],
+      "review": null,
+      "validationReceipt": {
+        "validationMode": "exact",
+        "checksRun": 3,
+        "unitsInspected": 10000,
+        "planHash": "1818181818181818181818181818181818181818181818181818181818181818",
+        "validatedAt": "2026-01-01T00:04:00Z"
+      },
+      "usageProof": null,
+      "counterEvidenceIds": [],
+      "policyTags": [
+        "restricted"
+      ],
+      "createdAt": "2026-01-01T00:04:00Z",
+      "redactionReceipt": {
+        "receiptId": "ddaacc60-a8ab-5fd6-8888-d150ede2f00f",
+        "payloadHash": "ac3794f4460836be0a525735821db997f5c45ce457710aee9b3f2152913ee0e2",
+        "contentHash": "babfcbd87d9f34fc8a2339abc854ddeaa42ff469469be9cd90d311bd9b752902",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "authorizationScopeId": "authorized-assets",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "scannerVersion": "1.0.0",
+        "classification": "restricted",
+        "actions": [
+          "counts-only"
+        ],
+        "containsRawSourceValues": false,
+        "minimumGroupSizeApplied": 10,
+        "scannedAt": "2026-01-01T00:04:00Z",
+        "issuerKeyId": "conformance-redaction-v1",
+        "signatureAlgorithm": "ed25519",
+        "signature": "JbWY7/3rVLIKXO8ULG/b93v7cEDmIZdjH2ZXwuO4qbtJjfJWt5EQrkp4UHVHoAu3kDD8weGLpeHSiUIksY5hAQ=="
+      },
+      "recordHash": "6f9232a96e263df6ed21afb68c1cc25c7361de09f3cc2ba5ad4b60de946f59ea",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade"
+    },
+    {
+      "contractVersion": "1.0.0",
+      "evidenceId": "99999999-9999-4999-8999-999999999999",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "authorizationScopeId": "authorized-assets",
+      "taxonomyVersion": "1.0.0",
+      "logicalKey": {
+        "authorizationScopeId": "authorized-assets",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "subjectKind": "business-concept",
+        "subjectId": "domain-work-operations",
+        "predicate": "business-domain-and-concepts",
+        "methodVersion": "1.0.0",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "businessConceptCoordinate": {
+          "conceptKind": "scenario",
+          "normalizedName": "work-operations",
+          "supportingEvidenceSetHash": "be377e08accde3a2a3f961c1ed9d693b67306194b5545a48e7c4a45b1fdb9a9f"
+        }
+      },
+      "dependencyHash": "733fa42611d769da2051538bd27b5970c444db597add63e020e6e3a35b5c8616",
+      "fencingToken": 1,
+      "revocationEpoch": 0,
+      "subject": {
+        "subjectKind": "business-concept",
+        "subjectId": "domain-work-operations",
+        "assetId": null,
+        "assetKind": null,
+        "fieldPath": null,
+        "versionId": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "claim": {
+        "predicate": "business-domain-and-concepts",
+        "object": "Work Operations",
+        "unit": null
+      },
+      "kind": "business-scenario",
+      "maturity": "inferred",
+      "outcome": "passed",
+      "confidence": 0.9,
+      "provenance": {
+        "producer": "business-model-synthesizer",
+        "method": "evidence-grounded-semantic-synthesis",
+        "methodVersion": "1.0.0",
+        "modelRef": "semantic-model-v1",
+        "promptHash": "9999999999999999999999999999999999999999999999999999999999999999",
+        "inputEvidenceIds": [
+          "66666666-6666-4666-8666-666666666666",
+          "77777777-7777-4777-8777-777777777777",
+          "88888888-8888-4888-8888-888888888888"
+        ]
+      },
+      "sample": null,
+      "validity": {
+        "validFrom": "2026-01-01T00:00:00Z",
+        "validUntil": null,
+        "schemaVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "dataHandling": {
+        "classification": "restricted",
+        "containsRawSourceValues": false,
+        "redactionMethod": "evidence-summary-only",
+        "minimumGroupSizeApplied": 10
+      },
+      "payload": {
+        "conceptIds": [
+          "domain-work-operations",
+          "entity-work-record",
+          "event-work-record-changed",
+          "scenario-change-timeline"
+        ]
+      },
+      "hashAlgorithm": "sha256-jcs",
+      "payloadHash": "68eca0776fcfdf23346b4a0ba6766847764aca5c0d50a52bbb9342abad973c0d",
+      "supersedesEvidenceIds": [],
+      "review": null,
+      "validationReceipt": null,
+      "usageProof": null,
+      "counterEvidenceIds": [],
+      "policyTags": [
+        "restricted"
+      ],
+      "createdAt": "2026-01-01T00:05:00Z",
+      "redactionReceipt": {
+        "receiptId": "da545602-38ab-537b-894f-9e8fa4ef44c0",
+        "payloadHash": "68eca0776fcfdf23346b4a0ba6766847764aca5c0d50a52bbb9342abad973c0d",
+        "contentHash": "c4f809b76bf1975a535bca20b7a282a23cd3fdd039e5329f9b3f3d337d8990f9",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "authorizationScopeId": "authorized-assets",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "scannerVersion": "1.0.0",
+        "classification": "restricted",
+        "actions": [
+          "redacted-text"
+        ],
+        "containsRawSourceValues": false,
+        "minimumGroupSizeApplied": 10,
+        "scannedAt": "2026-01-01T00:05:00Z",
+        "issuerKeyId": "conformance-redaction-v1",
+        "signatureAlgorithm": "ed25519",
+        "signature": "clgKTo5kVd3eM6XAIwFTJBtmK1WKqDaa+oyZDWoJySchaHlUle102bC0SdLcR1js0vXLwd17sO9S10uAON5NBw=="
+      },
+      "recordHash": "74caea0b969fada3741a415a8d11882be797d4ef1e2bf6b136315299cfef1f66",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade"
+    },
+    {
+      "contractVersion": "1.0.0",
+      "evidenceId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "authorizationScopeId": "authorized-assets",
+      "taxonomyVersion": "1.0.0",
+      "logicalKey": {
+        "authorizationScopeId": "authorized-assets",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "subjectKind": "asset",
+        "subjectId": "work-records",
+        "predicate": "quality-score",
+        "methodVersion": "1.0.0",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "assetId": "work-records",
+        "fieldPath": null,
+        "statisticFamily": "quality-score",
+        "samplePlanHash": "62d9199f962b25e34fc2a9be473a2ed958ad39748b0d85e2d49eefed0823141e"
+      },
+      "dependencyHash": "ce6d71958d36ac47464a9ca77e50468d920bb79ec3348318e865773b8c04f075",
+      "fencingToken": 1,
+      "revocationEpoch": 0,
+      "subject": {
+        "subjectKind": "asset",
+        "subjectId": "work-records",
+        "assetId": "work-records",
+        "assetKind": "table",
+        "fieldPath": null,
+        "versionId": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "claim": {
+        "predicate": "quality-score",
+        "object": 0.94,
+        "unit": "ratio"
+      },
+      "kind": "quality-score",
+      "maturity": "validated",
+      "outcome": "passed",
+      "confidence": 0.95,
+      "provenance": {
+        "producer": "quality-profiler",
+        "method": "evaluated-dimensions",
+        "methodVersion": "1.0.0",
+        "modelRef": null,
+        "promptHash": null,
+        "inputEvidenceIds": [
+          "22222222-2222-4222-8222-222222222222",
+          "88888888-8888-4888-8888-888888888888"
+        ]
+      },
+      "sample": {
+        "method": "deterministic-hash",
+        "requestedUnits": 10000,
+        "populationEstimate": 100000,
+        "rowsInspected": 10000,
+        "seed": 17,
+        "bucketRule": null,
+        "errorBound": 0.02,
+        "exact": false,
+        "strata": [],
+        "excludedStrata": [],
+        "failedStrata": []
+      },
+      "validity": {
+        "validFrom": "2026-01-01T00:00:00Z",
+        "validUntil": null,
+        "schemaVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "dataHandling": {
+        "classification": "restricted",
+        "containsRawSourceValues": false,
+        "redactionMethod": "aggregate-only",
+        "minimumGroupSizeApplied": 10
+      },
+      "payload": {
+        "overall": 0.94,
+        "evaluatedDimensions": [
+          "completeness",
+          "freshness",
+          "validity",
+          "consistency"
+        ]
+      },
+      "hashAlgorithm": "sha256-jcs",
+      "payloadHash": "b2ee213ea82b665369850f5a32a7b508e43d8a3e27bdbc1cd79db134dfd9fc1a",
+      "supersedesEvidenceIds": [],
+      "review": null,
+      "validationReceipt": {
+        "validationMode": "bounded-approximation",
+        "checksRun": 4,
+        "unitsInspected": 10000,
+        "planHash": "abababababababababababababababababababababababababababababababab",
+        "validatedAt": "2026-01-01T00:06:00Z"
+      },
+      "usageProof": null,
+      "counterEvidenceIds": [],
+      "policyTags": [
+        "restricted"
+      ],
+      "createdAt": "2026-01-01T00:06:00Z",
+      "redactionReceipt": {
+        "receiptId": "e01e9ff3-90b1-58a3-9173-382fb060c70e",
+        "payloadHash": "b2ee213ea82b665369850f5a32a7b508e43d8a3e27bdbc1cd79db134dfd9fc1a",
+        "contentHash": "65b9ac0f69def3cd78cc3d37e57112915c52f1105f4307864a603a46b5a056d4",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "authorizationScopeId": "authorized-assets",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "scannerVersion": "1.0.0",
+        "classification": "restricted",
+        "actions": [
+          "aggregate-only"
+        ],
+        "containsRawSourceValues": false,
+        "minimumGroupSizeApplied": 10,
+        "scannedAt": "2026-01-01T00:06:00Z",
+        "issuerKeyId": "conformance-redaction-v1",
+        "signatureAlgorithm": "ed25519",
+        "signature": "a918kTrooAqCZIzJkFAB0VukT/V+w+wtGsAPHZvylRlvocuPJh4nmb9lS0ZzFdrVIOgPQESQj24bn0Rve8EBAg=="
+      },
+      "recordHash": "cb8e650202faab64d58a3dd41442a86e41e041a14c646b35e77389a6dc18d85c",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade"
+    },
+    {
+      "contractVersion": "1.0.0",
+      "evidenceId": "12121212-1212-4212-8212-121212121212",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "authorizationScopeId": "authorized-assets",
+      "taxonomyVersion": "1.0.0",
+      "logicalKey": {
+        "authorizationScopeId": "authorized-assets",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "subjectKind": "asset",
+        "subjectId": "work-events",
+        "predicate": "field-profiles",
+        "methodVersion": "1.0.0",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "assetId": "work-events",
+        "fieldPath": null,
+        "statisticFamily": "field-profile",
+        "samplePlanHash": "f824b84530b9116a85f116864e9b7b5135fd16c94b3140f957024d8824ce96e0"
+      },
+      "dependencyHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "fencingToken": 1,
+      "revocationEpoch": 0,
+      "subject": {
+        "subjectKind": "asset",
+        "subjectId": "work-events",
+        "assetId": "work-events",
+        "assetKind": "table",
+        "fieldPath": null,
+        "versionId": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "claim": {
+        "predicate": "field-profiles",
+        "object": "bounded statistical profile",
+        "unit": null
+      },
+      "kind": "field-profile",
+      "maturity": "observed",
+      "outcome": "passed",
+      "confidence": 0.98,
+      "provenance": {
+        "producer": "tabular-statistical-profiler",
+        "method": "deterministic-hash-sample",
+        "methodVersion": "1.0.0",
+        "modelRef": null,
+        "promptHash": null,
+        "inputEvidenceIds": []
+      },
+      "sample": {
+        "method": "deterministic-hash",
+        "requestedUnits": 10000,
+        "populationEstimate": 150000,
+        "rowsInspected": 10000,
+        "seed": 17,
+        "bucketRule": null,
+        "errorBound": 0.02,
+        "exact": false,
+        "strata": [],
+        "excludedStrata": [],
+        "failedStrata": []
+      },
+      "validity": {
+        "validFrom": "2026-01-01T00:00:00Z",
+        "validUntil": null,
+        "schemaVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "dataHandling": {
+        "classification": "restricted",
+        "containsRawSourceValues": false,
+        "redactionMethod": "aggregate-only",
+        "minimumGroupSizeApplied": 10
+      },
+      "payload": {
+        "fields": {
+          "ScopeId": {
+            "distinctCount": 25
+          },
+          "RecordId": {
+            "distinctCount": 9500
+          },
+          "EventTime": {
+            "nullRatio": 0.0
+          },
+          "State": {
+            "distinctCount": 5,
+            "nullRatio": 0.01,
+            "entropy": 1.9
+          },
+          "ActorId": {
+            "distinctCount": 320,
+            "nullRatio": 0.02,
+            "entropy": 6.7
+          },
+          "Details": {
+            "nullRatio": 0.2,
+            "maximumDepth": 3,
+            "variantCount": 2
+          }
+        }
+      },
+      "hashAlgorithm": "sha256-jcs",
+      "payloadHash": "e967bfcd67a03b88caa8f4357cf7cc32100db4cfe4b59fdf7d9b72022898560d",
+      "supersedesEvidenceIds": [],
+      "review": null,
+      "validationReceipt": null,
+      "usageProof": null,
+      "counterEvidenceIds": [],
+      "policyTags": [
+        "restricted"
+      ],
+      "createdAt": "2026-01-01T00:02:30Z",
+      "redactionReceipt": {
+        "receiptId": "367d9c80-b693-5f9f-ac87-dd87a44672f7",
+        "payloadHash": "e967bfcd67a03b88caa8f4357cf7cc32100db4cfe4b59fdf7d9b72022898560d",
+        "contentHash": "d893f6e117a99390d82c68aeccd0908d4ba430d23e10b117aad7522843bda27f",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "authorizationScopeId": "authorized-assets",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "scannerVersion": "1.0.0",
+        "classification": "restricted",
+        "actions": [
+          "aggregate-only"
+        ],
+        "containsRawSourceValues": false,
+        "minimumGroupSizeApplied": 10,
+        "scannedAt": "2026-01-01T00:02:30Z",
+        "issuerKeyId": "conformance-redaction-v1",
+        "signatureAlgorithm": "ed25519",
+        "signature": "hYPuuCUZpkHZENswbOh+MQsiFZGzngrFUC6I6j7aFmzmNAZbI1TyRjYccuwfeMGCoikaMB/mIMLuHF/2+U5qCw=="
+      },
+      "recordHash": "54d9809191667c1c03ac2e4bb7ecf5ed73b281dbceca3d49fef510e1f7ada084",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade"
+    },
+    {
+      "contractVersion": "1.0.0",
+      "evidenceId": "13131313-1313-4313-8313-131313131313",
+      "runId": "33333333-3333-4333-8333-333333333333",
+      "sourceId": "11111111-1111-4111-8111-111111111111",
+      "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+      "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "authorizationScopeId": "authorized-assets",
+      "taxonomyVersion": "1.0.0",
+      "logicalKey": {
+        "authorizationScopeId": "authorized-assets",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "subjectKind": "asset",
+        "subjectId": "work-events",
+        "predicate": "row-grain",
+        "methodVersion": "1.0.0",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "assetId": "work-events",
+        "identityCoordinate": {
+          "scopePaths": [
+            "ScopeId"
+          ],
+          "localKeyPaths": [
+            "RecordId"
+          ],
+          "versionPaths": [
+            "EventTime"
+          ]
+        },
+        "samplePlanHash": "a94d91c743f2af1246a885fc26bd488c4eefdb611cdc151aa026a9848eb1cf95"
+      },
+      "dependencyHash": "2d74fe925ae7e58b7be61c1a612a1f2ef4b67c67c7e6428e0a9098c061b4db1d",
+      "fencingToken": 1,
+      "revocationEpoch": 0,
+      "subject": {
+        "subjectKind": "asset",
+        "subjectId": "work-events",
+        "assetId": "work-events",
+        "assetKind": "table",
+        "fieldPath": null,
+        "versionId": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "claim": {
+        "predicate": "row-grain",
+        "object": "ScopeId+RecordId+EventTime",
+        "unit": null
+      },
+      "kind": "grain",
+      "maturity": "validated",
+      "outcome": "passed",
+      "confidence": 0.96,
+      "provenance": {
+        "producer": "grain-validator",
+        "method": "exact-event-grain",
+        "methodVersion": "1.0.0",
+        "modelRef": null,
+        "promptHash": null,
+        "inputEvidenceIds": [
+          "12121212-1212-4212-8212-121212121212"
+        ]
+      },
+      "sample": {
+        "method": "exact",
+        "requestedUnits": 150000,
+        "populationEstimate": 150000,
+        "rowsInspected": 150000,
+        "seed": null,
+        "bucketRule": null,
+        "errorBound": 0.0,
+        "exact": true,
+        "strata": [],
+        "excludedStrata": [],
+        "failedStrata": []
+      },
+      "validity": {
+        "validFrom": "2026-01-01T00:00:00Z",
+        "validUntil": null,
+        "schemaVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13"
+      },
+      "dataHandling": {
+        "classification": "restricted",
+        "containsRawSourceValues": false,
+        "redactionMethod": "counts-only",
+        "minimumGroupSizeApplied": 10
+      },
+      "payload": {
+        "paths": [
+          "ScopeId",
+          "RecordId",
+          "EventTime"
+        ],
+        "duplicateKeys": 0
+      },
+      "hashAlgorithm": "sha256-jcs",
+      "payloadHash": "13753e873e87abca8084a080856dc11a407d05fa5dbad99821fc806778d4d20d",
+      "supersedesEvidenceIds": [],
+      "review": null,
+      "validationReceipt": {
+        "validationMode": "exact",
+        "checksRun": 1,
+        "unitsInspected": 150000,
+        "planHash": "1313131313131313131313131313131313131313131313131313131313131313",
+        "validatedAt": "2026-01-01T00:03:30Z"
+      },
+      "usageProof": null,
+      "counterEvidenceIds": [],
+      "policyTags": [
+        "restricted"
+      ],
+      "createdAt": "2026-01-01T00:03:30Z",
+      "redactionReceipt": {
+        "receiptId": "d4387714-631b-51ae-adf5-a48e836af651",
+        "payloadHash": "13753e873e87abca8084a080856dc11a407d05fa5dbad99821fc806778d4d20d",
+        "contentHash": "cf5aa6980edc756a040f51e7200be7b3b6208ca95868bdb807632123b0a07316",
+        "sourceId": "11111111-1111-4111-8111-111111111111",
+        "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+        "authorizationScopeId": "authorized-assets",
+        "policyHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "scannerVersion": "1.0.0",
+        "classification": "restricted",
+        "actions": [
+          "counts-only"
+        ],
+        "containsRawSourceValues": false,
+        "minimumGroupSizeApplied": 10,
+        "scannedAt": "2026-01-01T00:03:30Z",
+        "issuerKeyId": "conformance-redaction-v1",
+        "signatureAlgorithm": "ed25519",
+        "signature": "QjUFMO+VKMjYWvvJxUY8FW8vhhkrbe2Wxehe3qQrqBMeqNlLK5+ZV9b9uetsvTv/8mVOzB003wE/1L0O6e3HAA=="
+      },
+      "recordHash": "18c4a3d902545e74a45302d9c9bd0d8355619d1fab6fb4c8d150782719070431",
+      "connectorId": "connectors/tabular-reader-v1",
+      "connectorVersion": "1.0.0",
+      "connectorCapabilityHash": "ccca6841c2a5d15058240039228b22351d60e6279bdcef5f1b78f687b7114ade"
+    }
+  ]
+}

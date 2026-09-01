@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.agent-data-profiler.invalid/v1/execution-budget-bundle.schema.json",
+  "title": "Execution Budget and Cancellation Bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contractVersion", "runId", "policyHash", "records", "capturedAt", "hashAlgorithm", "contentHash"],
+  "properties": {
+    "contractVersion": { "const": "1.0.0" },
+    "runId": { "type": "string", "format": "uuid" },
+    "policyHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "records": {
+      "type": "array",
+      "minItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["scope", "operationId", "limit", "usage", "unit", "cancellationCheckInterval", "outcome", "startedAt", "completedAt", "cancelledAt", "reasonCode"],
+        "properties": {
+          "scope": { "enum": ["connector-call", "model-call", "stage", "run", "prompt", "queue", "query", "traversal", "manifest"] },
+          "operationId": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "limit": { "type": "integer", "minimum": 1 },
+          "usage": { "type": "integer", "minimum": 0 },
+          "unit": { "enum": ["bytes", "tokens", "milliseconds", "items", "depth", "characters"] },
+          "cancellationCheckInterval": { "type": "integer", "minimum": 1, "description": "Maximum usage units between cancellation checks." },
+          "outcome": { "enum": ["completed", "completed-partial", "timed-out", "cancelled", "failed"] },
+          "startedAt": { "type": "string", "format": "date-time" },
+          "completedAt": { "type": "string", "format": "date-time" },
+          "cancelledAt": { "type": ["string", "null"], "format": "date-time" },
+          "reasonCode": { "type": ["string", "null"], "pattern": "^[A-Z0-9_-]{2,64}$" }
+        }
+      }
+    },
+    "capturedAt": { "type": "string", "format": "date-time" },
+    "hashAlgorithm": { "const": "sha256-jcs" },
+    "contentHash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$", "description": "SHA-256 over the RFC 8785 canonical bundle with contentHash removed." }
+  }
+}

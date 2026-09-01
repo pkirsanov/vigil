@@ -1,0 +1,16 @@
+{
+  "receiptId": "83000000-0000-4000-8000-000000000001",
+  "reviewedEvidenceId": "22222222-2222-4222-8222-222222222222",
+  "feedbackEvidenceId": "83000000-0000-4000-8000-000000000002",
+  "decision": "request-revalidation",
+  "actorSubjectHash": "7960befad07fdd60ae0edea6f19a4f629f5e714526db35421602c9ffcfb10b4e",
+  "subjectHashSaltId": "conformance-deployment-v1",
+  "requestHash": "fe8f512a3369c2a860472f1752841e41a823b9c1a6f276107fb68a87ca1ca697",
+  "idempotencyKeyHash": "218bdbcd97d1b4d4301894228aa015a3e54174595e61405ad552ddbb0d329c8d",
+  "createdAt": "2026-01-01T00:11:00Z",
+  "location": "/evidence/83000000-0000-4000-8000-000000000002",
+  "traceId": "cccccccccccccccccccccccccccccccc",
+  "auditEventId": "84000000-0000-4000-8000-000000000003",
+  "hashAlgorithm": "sha256-jcs",
+  "receiptHash": "a21f9199650cdf6c108e90c191b9eb348d1637deee65263deb119dde4ed34bb5"
+}

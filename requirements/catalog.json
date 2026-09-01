@@ -1,0 +1,1535 @@
+{
+  "catalogVersion": "1.0.0",
+  "semanticBindingAlgorithm": "sha256-jcs-acceptance-outcomes-v1",
+  "semanticBindingHash": "18f815e7bf1d96cc2fddf2fa5372040c5e34bf62cadaae62907fc7e6584b7dec",
+  "supplementaryScenarios": [
+    {
+      "scenarioRef": "agent-consumption:include counter-evidence",
+      "rationale": "Exercises conflict presentation beyond the minimum caveat and evidence-reference criteria."
+    },
+    {
+      "scenarioRef": "agent-consumption:preserve maturity separately from confidence",
+      "rationale": "Exercises inferred maturity independently from the unavailable-outcome calibration criterion."
+    },
+    {
+      "scenarioRef": "agent-consumption:promote repeated successful usage",
+      "rationale": "Exercises post-validation usage promotion beyond the required identity-removal and revalidation triggers."
+    },
+    {
+      "scenarioRef": "agent-consumption:reconcile retrieval coverage",
+      "rationale": "Exercises detailed coverage arithmetic in addition to the criterion-bound truncation behavior."
+    },
+    {
+      "scenarioRef": "agent-consumption:refuse an unsupported question",
+      "rationale": "Exercises safe refusal when neither capability nor metric evidence supports a question."
+    },
+    {
+      "scenarioRef": "agent-consumption:retrieve by hybrid relevance",
+      "rationale": "Exercises combined ranking mechanics beyond the mandatory authorization and version hard filters."
+    },
+    {
+      "scenarioRef": "identity-and-relationships:treat top-value overlap as supporting evidence",
+      "rationale": "Exercises long-tail overlap behavior beyond the required sparse and high-cardinality plans."
+    },
+    {
+      "scenarioRef": "operations-and-governance:append a tamper-evident audit event",
+      "rationale": "Exercises audit payload contents in addition to canonical digest and predecessor invariants."
+    },
+    {
+      "scenarioRef": "operations-and-governance:create a new source and manifest version after structural mutation",
+      "rationale": "Exercises the combined version transition beyond independently bound source and projection criteria."
+    },
+    {
+      "scenarioRef": "operations-and-governance:reject feedback authority spoofing",
+      "rationale": "Exercises a concrete caller-authority spoof attempt beyond the authenticated lifecycle criterion."
+    },
+    {
+      "scenarioRef": "semantic-and-business-model:generated semantics are unavailable",
+      "rationale": "Exercises provider unavailability beyond malformed-output corrective retry behavior."
+    },
+    {
+      "scenarioRef": "semantic-and-business-model:reconcile domains holistically",
+      "rationale": "Exercises cross-asset domain reconciliation beyond the required typed business concepts."
+    },
+    {
+      "scenarioRef": "source-onboarding:register an authorized source",
+      "rationale": "Exercises the successful registration path alongside the required unsupported and secret-failure paths."
+    },
+    {
+      "scenarioRef": "source-onboarding:reject an unauthorized source",
+      "rationale": "Exercises entitlement refusal before enumeration as a defense-in-depth onboarding case."
+    },
+    {
+      "scenarioRef": "structural-and-statistical-profiling:detect a type variant in nested records",
+      "rationale": "Exercises mixed physical variants beyond the required approximate-count labeling behavior."
+    },
+    {
+      "scenarioRef": "structural-and-statistical-profiling:distinguish requested sample size from actual work",
+      "rationale": "Exercises partial-work accounting beyond zero-work refusal and deterministic selection."
+    },
+    {
+      "scenarioRef": "structural-and-statistical-profiling:preserve a rare value stratum",
+      "rationale": "Exercises stratification quality beyond deterministic repeatability requirements."
+    },
+    {
+      "scenarioRef": "structural-and-statistical-profiling:profile a small asset exactly",
+      "rationale": "Exercises the exact-scan branch alongside approximate and empty-population criteria."
+    },
+    {
+      "scenarioRef": "universal-source-types:handle an expired stream offset",
+      "rationale": "Exercises stream-specific resume failure in addition to the generic expired-boundary criterion."
+    },
+    {
+      "scenarioRef": "universal-source-types:isolate an unauthorized graph neighbor",
+      "rationale": "Exercises graph-native authorization filtering beyond common served-projection scope checks."
+    },
+    {
+      "scenarioRef": "universal-source-types:preserve partial api pagination",
+      "rationale": "Exercises connector pagination coverage beyond common run and retrieval accounting."
+    },
+    {
+      "scenarioRef": "universal-source-types:preserve unavailable document parsing",
+      "rationale": "Exercises encrypted-document partial profiling beyond parser resource-limit criteria."
+    },
+    {
+      "scenarioRef": "universal-source-types:profile a document corpus",
+      "rationale": "Exercises document-native evidence while the acceptance criterion governs common source-kind declarations."
+    },
+    {
+      "scenarioRef": "universal-source-types:profile a graph",
+      "rationale": "Exercises graph-native evidence while the acceptance criterion governs the common extension vector."
+    },
+    {
+      "scenarioRef": "universal-source-types:profile a polymorphic nested field",
+      "rationale": "Exercises nested shape prevalence beyond the criterion-bound source-kind registry behavior."
+    },
+    {
+      "scenarioRef": "universal-source-types:profile a tabular file collection",
+      "rationale": "Exercises tabular-file partitions and schema variants as a reusable source-specific example."
+    },
+    {
+      "scenarioRef": "universal-source-types:profile an api contract",
+      "rationale": "Exercises safe API contract sampling beyond the criterion-bound unsupported-semantics behavior."
+    },
+    {
+      "scenarioRef": "universal-source-types:profile an api without a contract",
+      "rationale": "Exercises inferred API structure when authoritative contract metadata is unavailable."
+    },
+    {
+      "scenarioRef": "universal-source-types:profile an event stream",
+      "rationale": "Exercises stream-native temporal and correlation evidence beyond the common extension criterion."
+    },
+    {
+      "scenarioRef": "universal-source-types:profile multimodal assets",
+      "rationale": "Exercises cross-modal provenance beyond the common extension and parser-boundary criteria."
+    },
+    {
+      "scenarioRef": "universal-source-types:validate a document citation",
+      "rationale": "Exercises citation transport-versus-rejection semantics beyond common relationship validation."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "FR-001",
+      "title": "Connector capability negotiation",
+      "priority": "P0",
+      "statement": "The system shall register each source through a connector-neutral descriptor and shall negotiate supported read capabilities before planning a run.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Unsupported stages are marked not-applicable or unavailable, never silently successful."
+        },
+        {
+          "id": "AC-02",
+          "text": "No secret value is stored in the source descriptor."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "source-onboarding:negotiate an unsupported capability"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "source-onboarding:reject embedded credentials"
+        }
+      ]
+    },
+    {
+      "id": "FR-002",
+      "title": "Read-only enforcement",
+      "priority": "P0",
+      "statement": "The profiling plane shall permit only enumerating, reading, sampling, aggregating, and metadata operations unless a separate write capability is explicitly granted.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Mutating source commands are rejected before connector invocation."
+        },
+        {
+          "id": "AC-02",
+          "text": "Source content cannot alter the operation allowlist."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:reject a mutating probe"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:treat source text as untrusted data"
+        }
+      ]
+    },
+    {
+      "id": "FR-003",
+      "title": "Durable run state machine",
+      "priority": "P0",
+      "statement": "Each profiling run shall persist immutable identity, mode, trigger, policy hash, source version, stage states, checkpoints, coverage, budget use, and terminal outcome.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A resume resolves a purpose-signed immutable predecessor checkpoint, proves every prerequisite stage receipt, preserves compatible source/scope/connector/policy/method/taxonomy/revocation coordinates, requires an unexpired source boundary, and acquires a fresh lease/fencing token."
+        },
+        {
+          "id": "AC-02",
+          "text": "A completed or failed run is terminal; a reprofile creates a new run."
+        },
+        {
+          "id": "AC-03",
+          "text": "A durable pending run exists before lease acquisition with no fencing token; a running run has an unexpired matching lease/token; and terminal state releases the lease while preserving its fencing token."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "source-onboarding:resume an interrupted run"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "source-onboarding:reprofile a terminal source run"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "source-onboarding:resolve typed terminal stage receipts"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "source-onboarding:acquire and release a fenced run lease"
+        }
+      ]
+    },
+    {
+      "id": "FR-004",
+      "title": "Stable source version",
+      "priority": "P0",
+      "statement": "The system shall derive a stable version from structural content and connector identity, excluding volatile statistics and timestamps.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Identical structures produce the same version."
+        },
+        {
+          "id": "AC-02",
+          "text": "A structural addition, removal, rename, or type change produces a new version."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "structural-and-statistical-profiling:derive a stable structural version"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:invalidate projections on source-version change"
+        }
+      ]
+    },
+    {
+      "id": "FR-005",
+      "title": "Deterministic sampling receipt",
+      "priority": "P0",
+      "statement": "Every approximate statistic shall record population estimate, actual items inspected, sampling method, seed or bucket rule, exactness, and error bound when calculable.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A zero-item sample is not accepted as evidence of absence."
+        },
+        {
+          "id": "AC-02",
+          "text": "Repeated runs with the same source version and seed select the same sample."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "structural-and-statistical-profiling:reject zero-work profiling"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "structural-and-statistical-profiling:profile a large asset deterministically"
+        }
+      ]
+    },
+    {
+      "id": "FR-006",
+      "title": "Statistical profile",
+      "priority": "P0",
+      "statement": "The system shall calculate source-appropriate count, missingness, distinctness, distribution, format, entropy, temporal, outlier, and variant statistics for every eligible field or content unit.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Empty and all-null assets are represented without division errors."
+        },
+        {
+          "id": "AC-02",
+          "text": "Approximate counts are labeled as approximate."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "structural-and-statistical-profiling:profile null and empty assets"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "structural-and-statistical-profiling:profile a large asset deterministically"
+        }
+      ]
+    },
+    {
+      "id": "FR-007",
+      "title": "Evidence envelope",
+      "priority": "P0",
+      "statement": "Every observation, inference, validation, rejection, curation decision, and usage proof shall be stored in the common evidence envelope.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Every record carries provenance, confidence, maturity, outcome, validity window, source version, and payload hash."
+        },
+        {
+          "id": "AC-02",
+          "text": "Contradictory evidence is retained rather than overwritten."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:require the complete common evidence envelope"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:retain contradictory evidence"
+        }
+      ]
+    },
+    {
+      "id": "FR-008",
+      "title": "Semantic extraction",
+      "priority": "P0",
+      "statement": "The system shall infer field roles, asset purpose, domain, lineage hints, freshness behavior, quality concerns, related fields, aliases, and business meaning from bounded evidence packs.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Generated output must match a strict schema."
+        },
+        {
+          "id": "AC-02",
+          "text": "Every referenced asset or field must resolve to harvested structure."
+        },
+        {
+          "id": "AC-03",
+          "text": "Malformed output receives at most one corrective retry before an unavailable outcome."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "semantic-and-business-model:extract structured semantics"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "semantic-and-business-model:reject invented field references"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "semantic-and-business-model:recover from malformed generated output"
+        }
+      ]
+    },
+    {
+      "id": "FR-009",
+      "title": "Deterministic semantic fallback",
+      "priority": "P0",
+      "statement": "When generated semantics omit structured facts that are recoverable from validated text and schema, deterministic parsers shall produce lower-confidence hypotheses without claiming validation.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Only exact harvested field paths may be emitted."
+        },
+        {
+          "id": "AC-02",
+          "text": "Alternative identity expressions produce distinct candidates."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "semantic-and-business-model:recover structured identity from narrative"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "semantic-and-business-model:do not recover an unknown field"
+        }
+      ]
+    },
+    {
+      "id": "FR-010",
+      "title": "Identity and grain distinction",
+      "priority": "P0",
+      "statement": "The system shall model scope, local identity, row version, content identity, and row grain separately and shall validate their non-empty and uniqueness claims.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A local identifier is not promoted globally when scope collisions exist."
+        },
+        {
+          "id": "AC-02",
+          "text": "A version marker is required for row identity when entities repeat across versions."
+        },
+        {
+          "id": "AC-03",
+          "text": "Unavailable validation remains unavailable."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "identity-and-relationships:validate a scoped identity"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "identity-and-relationships:distinguish entity identity from versioned row grain"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "identity-and-relationships:preserve unavailable identity validation"
+        }
+      ]
+    },
+    {
+      "id": "FR-011",
+      "title": "Broad relationship hypothesis generation",
+      "priority": "P0",
+      "statement": "The system shall generate deduplicated relationship hypotheses from contracts, verified identities, names, roles, formats, value overlap, semantic similarity, scenarios, explicit references, lineage, and successful usage.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Each candidate records all independent discovery techniques."
+        },
+        {
+          "id": "AC-02",
+          "text": "Quadratic broad pairing without a concrete signal is forbidden."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "identity-and-relationships:merge duplicate hypotheses"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "identity-and-relationships:do not generate blind cross-products"
+        }
+      ]
+    },
+    {
+      "id": "FR-012",
+      "title": "Relationship validation",
+      "priority": "P0",
+      "statement": "A relationship shall not become query-ready until a source-appropriate validator records matches, bilateral coverage, cardinality, normalization, sample receipt, and confidence, or an authoritative constraint proves it.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Zero matches reject the candidate rather than failing the run."
+        },
+        {
+          "id": "AC-02",
+          "text": "Validator failure produces unavailable, not rejection."
+        },
+        {
+          "id": "AC-03",
+          "text": "Composite keys validate all components together."
+        },
+        {
+          "id": "AC-04",
+          "text": "A relationship spanning two authorization scopes is rejected unless an explicit cross-scope grant is recorded in the evidence."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "identity-and-relationships:reject a plausible relationship with zero overlap"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "identity-and-relationships:preserve validator unavailability"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "identity-and-relationships:validate a composite relationship"
+        },
+        {
+          "acceptanceId": "AC-04",
+          "scenarioRef": "identity-and-relationships:reject an unauthorized cross-scope relationship"
+        }
+      ]
+    },
+    {
+      "id": "FR-013",
+      "title": "Sparse and high-cardinality validation",
+      "priority": "P0",
+      "statement": "The validator shall avoid independent random samples and sample-before-filter plans that can erase rare or sparse keys, using exact distinct scans, deterministic hash buckets, or one-side sample and full-side probe as appropriate.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A populated sparse field is not reported empty because the sample missed non-null values."
+        },
+        {
+          "id": "AC-02",
+          "text": "A high-cardinality relationship is not rejected solely because two independent samples do not intersect."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "identity-and-relationships:validate a sparse key population"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "identity-and-relationships:validate a high-cardinality relationship"
+        }
+      ]
+    },
+    {
+      "id": "FR-014",
+      "title": "Candidate scheduling",
+      "priority": "P0",
+      "statement": "The system shall rank hypotheses by evidence strength and estimated validation cost, validate direct-evidence candidates inline, and persist remaining work to a restart-safe queue.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Foreground profiling is bounded."
+        },
+        {
+          "id": "AC-02",
+          "text": "Deferred candidates survive restart."
+        },
+        {
+          "id": "AC-03",
+          "text": "Previously validated signatures are not reprocessed unless source or policy version changed or revalidation is requested."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "identity-and-relationships:defer weak hypotheses durably"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "identity-and-relationships:reclaim deferred relationship candidates after restart"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "identity-and-relationships:reuse prior validation safely"
+        }
+      ]
+    },
+    {
+      "id": "FR-015",
+      "title": "Trusted graph paths",
+      "priority": "P0",
+      "statement": "Indirect paths shall be derived only from trusted direct edges, shall avoid cycles and incompatible intermediate keys, and shall remain marked as inferred paths rather than direct evidence.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "An unvalidated edge cannot seed path inference."
+        },
+        {
+          "id": "AC-02",
+          "text": "Path score includes hop penalty and weakest-edge effects."
+        },
+        {
+          "id": "AC-03",
+          "text": "An inferred path never reports direct matching rows."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "identity-and-relationships:block path expansion from an untrusted edge"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "identity-and-relationships:infer a path from trusted edges"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "identity-and-relationships:infer a path from trusted edges"
+        }
+      ]
+    },
+    {
+      "id": "FR-016",
+      "title": "Quality model",
+      "priority": "P0",
+      "statement": "The system shall score completeness, freshness, validity, consistency, uniqueness, referential integrity, and distribution stability at their actual granularity and preserve not-applicable or unavailable dimensions.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A table-level score is not represented as a field score."
+        },
+        {
+          "id": "AC-02",
+          "text": "A failed check is counted and surfaced."
+        },
+        {
+          "id": "AC-03",
+          "text": "All-null optional fields are distinguishable from failed ingestion."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "structural-and-statistical-profiling:score quality at the declared granularity"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:surface degraded quality checks"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "structural-and-statistical-profiling:profile null and empty assets"
+        }
+      ]
+    },
+    {
+      "id": "FR-017",
+      "title": "Business model extraction",
+      "priority": "P0",
+      "statement": "The system shall derive candidate domains, entities, events, actors, processes, states, measures, dimensions, metrics, glossary terms, and analysis scenarios from structural, semantic, lineage, relationship, and usage evidence.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Every business object cites source evidence."
+        },
+        {
+          "id": "AC-02",
+          "text": "Metric formulas identify grain, aggregation, time semantics, filters, units, and required relationships."
+        },
+        {
+          "id": "AC-03",
+          "text": "Scenario-required relationships remain hypotheses until validated."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "semantic-and-business-model:derive a business entity and event"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "semantic-and-business-model:derive a metric contract"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "semantic-and-business-model:keep scenario relationships provisional"
+        }
+      ]
+    },
+    {
+      "id": "FR-018",
+      "title": "Usage learning",
+      "priority": "P1",
+      "statement": "The system shall normalize successful and failed usage traces, remove literals and direct identifiers, fingerprint patterns, and use repeated outcomes to rank or suppress future hypotheses without bypassing validation.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Raw caller identity is not persisted."
+        },
+        {
+          "id": "AC-02",
+          "text": "One transient miss cannot permanently suppress a relationship."
+        },
+        {
+          "id": "AC-03",
+          "text": "New usage patterns can trigger targeted revalidation."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:normalize usage without retaining caller identity"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:expire negative suppression"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "operations-and-governance:trigger targeted revalidation from a new usage pattern"
+        }
+      ]
+    },
+    {
+      "id": "FR-019",
+      "title": "Immutable profile manifest",
+      "priority": "P0",
+      "statement": "The system shall publish an immutable, source-version-scoped profile manifest containing curated structure, statistics, identities, grain, validated relationships, business model, quality, freshness, lineage, indexes, conflicts, coverage, and evidence references.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A requested historical version never falls back to latest."
+        },
+        {
+          "id": "AC-02",
+          "text": "Missing sections and failed stages are explicit."
+        },
+        {
+          "id": "AC-03",
+          "text": "Raw sensitive values are absent by default."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "agent-consumption:retrieve a historical manifest"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "agent-consumption:report incomplete manifest coverage"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "operations-and-governance:redact sensitive samples before model use"
+        }
+      ]
+    },
+    {
+      "id": "FR-020",
+      "title": "Capability manifest",
+      "priority": "P0",
+      "statement": "The system shall publish a compact capability manifest mapping question patterns to required assets, validated relationships, metrics, result shapes, constraints, confidence, warnings, and evidence.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A capability requiring an unavailable relationship is unavailable, not advertised as validated."
+        },
+        {
+          "id": "AC-02",
+          "text": "Capabilities distinguish hypothesis, validated, and usage-proven states."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "agent-consumption:route a question through a validated capability"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "agent-consumption:withhold an unsupported capability"
+        }
+      ]
+    },
+    {
+      "id": "FR-021",
+      "title": "Hybrid intelligence retrieval",
+      "priority": "P0",
+      "statement": "The system shall retrieve intelligence through lexical, semantic, graph, temporal, and faceted indexes, apply hard policy and version gates, rank results, diversify them, and return supporting and counter-evidence within a token budget.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Authorization and source version are hard filters, not rank features."
+        },
+        {
+          "id": "AC-02",
+          "text": "Every result has evidence references and caveats."
+        },
+        {
+          "id": "AC-03",
+          "text": "A token budget cannot silently truncate without a coverage receipt."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "agent-consumption:apply authorization before ranking"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "agent-consumption:return evidence references"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "agent-consumption:report token-budget truncation"
+        }
+      ]
+    },
+    {
+      "id": "FR-022",
+      "title": "Privacy classification before semantics",
+      "priority": "P0",
+      "statement": "The system shall classify and redact sensitive, secret, and direct-identifier content before sending samples or content to semantic models or publishing indexes.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Detected secrets never reach prompts or manifests."
+        },
+        {
+          "id": "AC-02",
+          "text": "Group statistics below minimum group size are suppressed."
+        },
+        {
+          "id": "AC-03",
+          "text": "Embeddings inherit source access controls and deletion policy."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:redact sensitive samples before model use"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:enforce minimum group size"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "operations-and-governance:delete derived embeddings"
+        }
+      ]
+    },
+    {
+      "id": "FR-023",
+      "title": "Untrusted-content boundary",
+      "priority": "P0",
+      "statement": "Documents, records, metadata, comments, and model outputs shall be handled as untrusted content and cannot change tools, policy, authorization, stages, or system prompts.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Instruction-like source text is indexed as content but never executed."
+        },
+        {
+          "id": "AC-02",
+          "text": "Tool arguments are generated only from typed plans and allowlisted operations."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:treat source text as untrusted data"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:reject a source-driven tool request"
+        }
+      ]
+    },
+    {
+      "id": "FR-024",
+      "title": "Evidence feedback lifecycle",
+      "priority": "P1",
+      "statement": "Human, agent, and policy feedback shall be append-only evidence that can confirm, reject, supersede, or request revalidation without deleting the original claim.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Feedback identifies the evidence version it reviewed."
+        },
+        {
+          "id": "AC-02",
+          "text": "Conflicts remain visible until a policy resolves them."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:record feedback without overwriting evidence"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:retain a review conflict"
+        }
+      ]
+    },
+    {
+      "id": "FR-025",
+      "title": "Source-specific profiling",
+      "priority": "P0",
+      "statement": "The common pipeline shall dispatch source-specific profilers for nested records, documents, APIs, streams, graphs, and multimodal assets while emitting the same evidence envelope and manifests.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Each source kind declares supported stages and validators."
+        },
+        {
+          "id": "AC-02",
+          "text": "Unsupported semantics are unavailable, not synthesized from another source model."
+        },
+        {
+          "id": "AC-03",
+          "text": "At least one non-empty extension vector proves closed payload shape, coordinate parity, evidence resolution, and a trusted redaction signature."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "universal-source-types:reconcile source-kind stage and validator declarations"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "universal-source-types:unsupported source semantics remain unavailable"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "universal-source-types:publish a signed source extension"
+        }
+      ]
+    },
+    {
+      "id": "FR-026",
+      "title": "Source consistency boundary",
+      "priority": "P0",
+      "statement": "Every run shall bind its observations to a connector-provided snapshot, transaction, watermark, offset range, ETag set, or explicit before-and-after consistency check; material concurrent change shall prevent publication as one coherent version.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Every terminal run records its consistency boundary and status."
+        },
+        {
+          "id": "AC-02",
+          "text": "A source change during profiling produces completed-partial or failed evidence rather than a coherent-looking current manifest."
+        },
+        {
+          "id": "AC-03",
+          "text": "Expired resume boundaries cannot be reused."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "source-onboarding:profile within a stable source boundary"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "source-onboarding:detect source change during profiling"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "source-onboarding:handle an unavailable consistency boundary"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "source-onboarding:reject an expired resume boundary"
+        }
+      ]
+    },
+    {
+      "id": "FR-027",
+      "title": "Authenticated agent execution journey",
+      "priority": "P0",
+      "statement": "The API shall support authenticated capability inspection, version-scoped retrieval, typed read-plan validation, execution of an unexpired validated plan, evidence lookup, run cancellation, feedback, revocation, deletion, and receipt retrieval.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Actor identity and authorization scope are derived from validated claims."
+        },
+        {
+          "id": "AC-02",
+          "text": "A plan executes only when its receipt matches caller, source version, policy, and authorization scope."
+        },
+        {
+          "id": "AC-03",
+          "text": "Serving is blocked synchronously on revocation before asynchronous cleanup."
+        },
+        {
+          "id": "AC-04",
+          "text": "An absent or inaccessible protected identifier yields the same fixed response contract and does not expose resource existence."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "agent-consumption:complete the authenticated agent lifecycle"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "agent-consumption:validate and execute a typed read plan"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "operations-and-governance:block serving before asynchronous deletion"
+        },
+        {
+          "acceptanceId": "AC-04",
+          "scenarioRef": "operations-and-governance:hide protected resource existence"
+        }
+      ]
+    },
+    {
+      "id": "FR-028",
+      "title": "Isolated untrusted-content parsing",
+      "priority": "P0",
+      "statement": "Documents, archives, and media shall be decoded only in a credential-free worker with no outbound network or external-reference resolution, under declared CPU, memory, expansion, file-count, recursion, duration, frame, and output limits, and shall emit a parser receipt.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A hostile or malformed input cannot reach source credentials or the network."
+        },
+        {
+          "id": "AC-02",
+          "text": "Exceeding any limit produces an explicit partial or blocked outcome with cleanup."
+        },
+        {
+          "id": "AC-03",
+          "text": "Detected media type is recorded independently of the declared type."
+        },
+        {
+          "id": "AC-04",
+          "text": "A failed sandbox teardown is recorded with a reason code and residual artifact count rather than suppressed."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "universal-source-types:isolate hostile parser execution"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "universal-source-types:reject a malformed or expanding file"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "universal-source-types:bound hostile media processing"
+        },
+        {
+          "acceptanceId": "AC-04",
+          "scenarioRef": "universal-source-types:record a failed parser cleanup"
+        }
+      ]
+    },
+    {
+      "id": "FR-029",
+      "title": "Model admission and cache governance",
+      "priority": "P0",
+      "statement": "Semantic model use shall be denied by default and admitted only against a versioned policy binding registered deployment, region and residency, permitted input classification, provider retention, training use, and abuse-monitoring posture, and every cache entry shall be bound to that decision.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "An unregistered deployment or disallowed classification fails closed before invocation."
+        },
+        {
+          "id": "AC-02",
+          "text": "Cache entries cannot be shared across differing source, scope, policy, model-admission decision, model, prompt, contract, or parameter versions."
+        },
+        {
+          "id": "AC-03",
+          "text": "A malformed cached output is quarantined rather than retried as a live response."
+        },
+        {
+          "id": "AC-04",
+          "text": "A cache entry produced under a superseded admission decision is invalidated rather than served."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:deny an unregistered or policy-incompatible model deployment"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:isolate cache entries across semantic versions"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "operations-and-governance:quarantine a malformed cached semantic result"
+        },
+        {
+          "acceptanceId": "AC-04",
+          "scenarioRef": "operations-and-governance:invalidate a cache entry after admission policy tightens"
+        }
+      ]
+    },
+    {
+      "id": "FR-030",
+      "title": "Secure source registration boundary",
+      "priority": "P0",
+      "statement": "Registration shall scan every caller-controlled string for secrets, accept only opaque credential-registry identifiers, and canonicalize connector-native relative locators against a registered endpoint before any network access.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Secret-like content in any accepted field fails before persistence with a non-echoing reason code."
+        },
+        {
+          "id": "AC-02",
+          "text": "Unlabelled high-entropy values and recognized credential token families are detected while benign opaque identifiers remain accepted."
+        },
+        {
+          "id": "AC-03",
+          "text": "Absolute URIs, IP literals, traversal, encoded separators, queries, fragments, and redirect escapes are rejected."
+        },
+        {
+          "id": "AC-04",
+          "text": "No caller-provided string is echoed in logs or errors."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "source-onboarding:reject secrets hidden in allowed registration fields"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "source-onboarding:reject an unlabelled high-entropy credential"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "source-onboarding:reject a locator authority escape"
+        },
+        {
+          "acceptanceId": "AC-04",
+          "scenarioRef": "source-onboarding:reject secrets hidden in allowed registration fields"
+        }
+      ]
+    },
+    {
+      "id": "FR-031",
+      "title": "Immutable projection coordinate",
+      "priority": "P0",
+      "statement": "Structural source version and projection manifest version shall be distinct coordinates, and every manifest, index, plan receipt, and retrieval response shall pin scope, policy, evidence cutoff, and method versions.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "An evidence, policy, or method change creates a new manifest version without changing structural source version."
+        },
+        {
+          "id": "AC-02",
+          "text": "Historical lookup never resolves through the current pointer."
+        },
+        {
+          "id": "AC-03",
+          "text": "Indexes and receipts carry the same projection coordinate as their manifest."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:create a new manifest version after evidence or policy mutation"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "agent-consumption:retrieve a historical manifest"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "agent-consumption:complete the authenticated agent lifecycle"
+        }
+      ]
+    },
+    {
+      "id": "NFR-001",
+      "title": "Fail-closed validation",
+      "priority": "P0",
+      "statement": "A gate shall fail when zero work executes, when expected work remains not run, or when required evidence cannot be verified.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Zero tests, zero profiled fields, and zero validated candidates cannot masquerade as success."
+        },
+        {
+          "id": "AC-02",
+          "text": "Every declared package gate is runtime-dispatched once in registry order and records a positive executed-check count."
+        },
+        {
+          "id": "AC-03",
+          "text": "Production validation rejects an older correctly signed control unless its exact bytes match an independently governed current-control SHA-256 pin."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "structural-and-statistical-profiling:reject zero-work profiling"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:reject an empty validation run"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:reject a declared gate that executes no checks"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "operations-and-governance:reject replay of an older signed validation control"
+        }
+      ]
+    },
+    {
+      "id": "NFR-002",
+      "title": "Observability",
+      "priority": "P0",
+      "statement": "Every run, stage, connector call, validation plan, semantic call, cache decision, fallback, and terminal outcome shall emit correlated traces, metrics, and structured logs.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A trace links registration, stage work, evidence writes, manifest publication, and retrieval."
+        },
+        {
+          "id": "AC-02",
+          "text": "Silent catch-and-skip behavior is prohibited."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:trace a profiling run end to end"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:surface degraded quality checks"
+        }
+      ]
+    },
+    {
+      "id": "NFR-003",
+      "title": "Bounded resource use",
+      "priority": "P0",
+      "statement": "Every connector call, model call, stage, run, prompt, queue, query, traversal, and manifest shall have configurable budgets and cancellation behavior.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Budget exhaustion produces completed-partial with a receipt."
+        },
+        {
+          "id": "AC-02",
+          "text": "Foreground stages cannot be held indefinitely by exhaustive relationship validation."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:stop at a run budget"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "identity-and-relationships:defer weak hypotheses durably"
+        }
+      ]
+    },
+    {
+      "id": "NFR-004",
+      "title": "Idempotent evolution",
+      "priority": "P0",
+      "statement": "Additive metadata-schema changes and repeated writes shall be idempotent, versioned, and safe against partial failure.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Existing stores receive additive fields without drop-and-recreate."
+        },
+        {
+          "id": "AC-02",
+          "text": "Manifest readers select latest evidence by stable logical keys."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:evolve an existing evidence store"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:deduplicate append-only evidence"
+        }
+      ]
+    },
+    {
+      "id": "NFR-005",
+      "title": "Benchmark-governed tuning",
+      "priority": "P0",
+      "statement": "Changes to sampling, ranking, thresholds, prompts, or validators shall be accepted only after comparison against a fixed corpus containing positive, negative, sparse, skewed, high-cardinality, scoped, versioned, adversarial, and no-evidence cases.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Precision, recall, coverage, latency, bytes read, model usage, and calibration are reported before and after."
+        },
+        {
+          "id": "AC-02",
+          "text": "A cleaner metric cannot replace a degraded correctness metric."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:accept a tuning change with measured improvement"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:reject a tuning change that hides misses"
+        }
+      ]
+    },
+    {
+      "id": "NFR-006",
+      "title": "Deletion and revocation propagation",
+      "priority": "P0",
+      "statement": "Source deletion, access revocation, or policy change shall propagate to evidence, indexes, caches, manifests, and retrieval within the configured service objective.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Revoked content is not retrievable from any derived index."
+        },
+        {
+          "id": "AC-02",
+          "text": "Deletion propagation is auditable."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:delete derived embeddings"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:revoke source access"
+        }
+      ]
+    },
+    {
+      "id": "NFR-007",
+      "title": "Calibration and honesty",
+      "priority": "P0",
+      "statement": "Confidence scores shall be calibrated by evidence class and shall never replace maturity, outcome, coverage, or caveat fields.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Confidence bins are periodically compared with observed correctness."
+        },
+        {
+          "id": "AC-02",
+          "text": "A high-confidence unavailable claim remains unavailable."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:report calibration drift"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:preserve unavailable outcome despite high confidence"
+        }
+      ]
+    },
+    {
+      "id": "FR-032",
+      "title": "Tamper-evident audit chain",
+      "priority": "P0",
+      "statement": "Every security-relevant action shall append an immutable audit event whose digest covers the event body and its predecessor link, so rewriting or re-linking history is detectable.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "The digest preimage and canonicalization are declared, so two implementations compute the same value."
+        },
+        {
+          "id": "AC-02",
+          "text": "Only the genesis event may omit a predecessor link."
+        },
+        {
+          "id": "AC-03",
+          "text": "Altering any recorded field breaks digest recomputation."
+        },
+        {
+          "id": "AC-04",
+          "text": "A denied authorization decision cannot report success or granted permissions, and write receipts resolve to matching action-specific audit events."
+        },
+        {
+          "id": "AC-05",
+          "text": "Trusted receipts are valid only during the issuer purpose window and cannot be replayed across assets, epochs, connectors, or evidence sets."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:compute the audit digest from a declared canonical preimage"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:require predecessor links after the audit genesis event"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "operations-and-governance:detect a rewritten audit event"
+        },
+        {
+          "acceptanceId": "AC-04",
+          "scenarioRef": "operations-and-governance:reject an inconsistent audit authorization narrative"
+        },
+        {
+          "acceptanceId": "AC-05",
+          "scenarioRef": "operations-and-governance:reject a trusted receipt outside issuer validity"
+        }
+      ]
+    },
+    {
+      "id": "FR-033",
+      "title": "Scope containment in served projections",
+      "priority": "P0",
+      "statement": "A served manifest shall describe only assets and relationship endpoints within its own source and authorization scope, and a cross-scope relationship shall require an explicit authorization receipt derived from its endpoint scopes.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A foreign-scope asset, field path, or policy tag is not disclosed in any served projection."
+        },
+        {
+          "id": "AC-02",
+          "text": "The cross-scope indicator is recomputed from endpoint scopes and a mismatch is rejected."
+        },
+        {
+          "id": "AC-03",
+          "text": "A relationship spanning scopes without a grant is not published."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "agent-consumption:withhold a foreign-scope asset"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "identity-and-relationships:derive the cross-scope indicator from endpoint scopes"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "identity-and-relationships:reject an unauthorized cross-scope relationship"
+        }
+      ]
+    },
+    {
+      "id": "FR-034",
+      "title": "Data handling in served projections",
+      "priority": "P0",
+      "statement": "Manifest assets and fields shall carry their own data-handling record, and published statistics shall be aggregate-only with the minimum group size applied.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A served projection cannot carry raw source values, sample rows, or value exemplars."
+        },
+        {
+          "id": "AC-02",
+          "text": "Every asset and field declares classification, redaction method, and applied minimum group size."
+        },
+        {
+          "id": "AC-03",
+          "text": "Aggregates below the configured group size are suppressed rather than published."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "operations-and-governance:reject raw values in a served projection"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "operations-and-governance:require data handling on every served asset and field"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "operations-and-governance:enforce minimum group size"
+        }
+      ]
+    },
+    {
+      "id": "FR-035",
+      "title": "Bounded, provenance-marked agent responses",
+      "priority": "P0",
+      "statement": "Every free-text field returned to an agent shall be length-bounded and marked as service-generated or source-derived, and the response shall carry the revocation epoch it was gated on.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "Source-derived text is distinguishable from service-generated text in the response."
+        },
+        {
+          "id": "AC-02",
+          "text": "No response field is unbounded, so a poisoned source cannot exhaust the caller's budget."
+        },
+        {
+          "id": "AC-03",
+          "text": "Omission counts use a closed section vocabulary and reconcile exactly to returned items and truncation state."
+        },
+        {
+          "id": "AC-04",
+          "text": "Every caveat and both sides of every conflict cite resolvable evidence under the response coordinate."
+        },
+        {
+          "id": "AC-05",
+          "text": "A stale revocation epoch re-presented for plan validation is refused."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "agent-consumption:mark source-derived response text"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "agent-consumption:mark source-derived response text"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "agent-consumption:report token-budget truncation"
+        },
+        {
+          "acceptanceId": "AC-04",
+          "scenarioRef": "agent-consumption:ground caveats and conflicts in evidence"
+        },
+        {
+          "acceptanceId": "AC-05",
+          "scenarioRef": "agent-consumption:refuse a stale revocation epoch during plan validation"
+        }
+      ]
+    },
+    {
+      "id": "FR-036",
+      "title": "Policy-bound sandbox limits and single-writer fencing",
+      "priority": "P0",
+      "statement": "Parser receipts shall copy their resource ceilings from the governing isolation policy, and every evidence write shall carry the writing run's fencing token under a per-source lease.",
+      "acceptance": [
+        {
+          "id": "AC-01",
+          "text": "A receipt whose declared ceiling exceeds the policy is rejected."
+        },
+        {
+          "id": "AC-02",
+          "text": "A running run holds a lease and a terminal run has released it."
+        },
+        {
+          "id": "AC-03",
+          "text": "A write bearing a stale fencing token is rejected and auditable."
+        }
+      ],
+      "bdd": [
+        {
+          "acceptanceId": "AC-01",
+          "scenarioRef": "universal-source-types:reject a parser receipt with self-inflated ceilings"
+        },
+        {
+          "acceptanceId": "AC-02",
+          "scenarioRef": "source-onboarding:hold and release the per-source run lease"
+        },
+        {
+          "acceptanceId": "AC-03",
+          "scenarioRef": "source-onboarding:concurrent registration of the same source"
+        }
+      ]
+    }
+  ]
+}

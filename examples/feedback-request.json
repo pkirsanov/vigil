@@ -1,0 +1,10 @@
+{
+  "reviewedEvidenceId": "22222222-2222-4222-8222-222222222222",
+  "idempotencyKey": "87000000-0000-4000-8000-000000000001",
+  "decision": "request-revalidation",
+  "reason": "The source changed after this evidence was produced.",
+  "sourceVersion": "sha256:68fc3e599c5dcb5523a2d65c2d9586bfbec34d8b0dae0660659cf8b965533b13",
+  "evidenceVersionHash": "937408b4e3d70e54da08a33ae4b9a0d624a76f8c931a34299717b9624cd1da23",
+  "reviewPolicyId": "review-policy-default",
+  "reviewPolicyVersion": "1.0.0"
+}
